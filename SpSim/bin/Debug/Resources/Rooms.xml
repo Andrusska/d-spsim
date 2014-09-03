@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Setting>
+  <Rooms>
+    <Room>
+      <Id>1</Id>
+      <Name>Your room</Name>
+      <Desc>This is your room</Desc>
+      <Links>2</Links>
+    </Room>
+    <Room>
+      <Id>2</Id>
+      <Name>Corridor</Name>
+      <Desc>This is a corridor</Desc>
+      <Links>1,3</Links>
+    </Room>
+    <Room>
+      <Id>3</Id>
+      <Name>Another room</Name>
+      <Desc>This is anther room</Desc>
+      <Links>2</Links>
+    </Room>
+  </Rooms>
+</Setting>

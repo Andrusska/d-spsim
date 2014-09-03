@@ -1,0 +1,9 @@
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\bin\Debug\SpSim.exe.config
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\bin\Debug\SpSim.exe
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\bin\Debug\SpSim.pdb
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\obj\Debug\SpSim.csprojResolveAssemblyReference.cache
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\obj\Debug\SpSim.exe
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\obj\Debug\SpSim.pdb
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\obj\Debug\SpSim.csproj.GenerateResource.Cache
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\obj\Debug\SpSim.Properties.Resources.resources
+C:\Users\trau\Source\Repos\d-spsim\SpSim\SpSim\bin\Debug\Resources\Rooms.xml
