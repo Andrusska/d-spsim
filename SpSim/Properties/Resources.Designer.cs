@@ -59,36 +59,5 @@ namespace SpSim.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Setting&gt;
-        ///  &lt;Rooms&gt;
-        ///    &lt;Room&gt;
-        ///      &lt;Id&gt;1&lt;/Id&gt;
-        ///      &lt;Name&gt;Your room&lt;/Name&gt;
-        ///      &lt;Desc&gt;This is your room&lt;/Desc&gt;
-        ///      &lt;Links&gt;2&lt;/Links&gt;
-        ///    &lt;/Room&gt;
-        ///    &lt;Room&gt;
-        ///      &lt;Id&gt;2&lt;/Id&gt;
-        ///      &lt;Name&gt;Corridor&lt;/Name&gt;
-        ///      &lt;Desc&gt;This is a corridor&lt;/Desc&gt;
-        ///      &lt;Links&gt;1,3&lt;/Links&gt;
-        ///    &lt;/Room&gt;
-        ///    &lt;Room&gt;
-        ///      &lt;Id&gt;3&lt;/Id&gt;
-        ///      &lt;Name&gt;Another room&lt;/Name&gt;
-        ///      &lt;Desc&gt;This is anther room&lt;/Desc&gt;
-        ///      &lt;Links&gt;2&lt;/Links&gt;
-        ///    &lt;/Room&gt;
-        ///  &lt;/Rooms&gt;
-        ///&lt;/Setting&gt;.
-        /// </summary>
-        internal static string Rooms {
-            get {
-                return ResourceManager.GetString("Rooms", resourceCulture);
-            }
-        }
     }
 }

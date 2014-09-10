@@ -1,22 +1,28 @@
-﻿using SpSim.Setting;
+﻿using SpSim.Forms;
+using SpSim.Setting;
 using SpSim.Util;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml;
 
 namespace SpSim
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            Location location = IOHelper.ImportFile(@"Resources/Rooms.xml");
-            location.PrintRooms();
-
-            //Waiting to terminate
-            Console.ReadKey();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new GUI());
         }
     }
 }

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<setting>
+  <rooms>
+    <room>
+      <id>1</id>
+      <name>Your room</name>
+      <description>This is your room</description>
+      <links>2</links>
+      <bendplace>your desk</bendplace>
+      <lieplace>your bed</lieplace>
+    </room>
+    <room>
+      <id>2</id>
+      <name>Corridor</name>
+      <description>This is a corridor</description>
+      <links>1,3</links>
+    </room>
+    <room>
+      <id>3</id>
+      <name>Another room</name>
+      <description>
+        This is another room,
+        nothing special
+      </description>
+      <links>2</links>
+      <bendplace>the sofa</bendplace>
+      <lieplace>the sofa</lieplace>
+      <sitplace>the sofa</sitplace>
+    </room>
+  </rooms>
+  <protagonist>
+    <name>I</name>
+    <gender>male</gender>
+    <lore>Just a normal guy</lore>
+    <own_room>1</own_room>
+  </protagonist>
+</setting>

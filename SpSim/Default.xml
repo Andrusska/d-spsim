@@ -1,0 +1,1431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+
+	<!-- Defines the place the game takes place. Most things in this game have an <id>, which is then used
+		to reference it elsewhere. <name> is the room's name and <description> is the room's description. Easy no?
+		
+		Since this is a game where we want to find reasons to spank girls, I'll need to add something to 
+		dynamically changes a room description later, showing as it gets more or less messy. But since in theory 
+		different girls can produce different kinds of mess, and since things can can always get messier, 
+		I'm totally not touching that until I have a clearer idea of how to implement it. For now, the descriptions 
+		are static and assume that your house is in a permanent mess. You're welcome.
+		
+		sitplace, lieplace and bendplace are the used during the positioning for a spanking. So an otk spanking 
+		on the living room has the protagonist sitting on the sofa, for example. <links> define how the place is 
+		connected. The numbers refer to the <id> of other rooms. If you link room 1 to room 2, remember to link 
+		room 2 to room 1 too, or you'll create an one way passage!
+		%G1 is changed to "<name> of the Girl with <id> 1", so during game it appears like Miyu's room.
+	-->
+	<rooms>
+		<room>
+			<id>1</id>
+			<name>the living room</name>
+			<description>An ample living room. my old man personally installed this room's wooden floor and 
+			considers it one of his prides. There's a recess in one of the walls for my family's altar. I 
+			barely used this room in the past since I never used to pray or watch TV. Now that the house is 
+			fuller, I've been spending more time here.</description>
+			<sitplace>the sofa</sitplace>
+			<lieplace>the sofa</lieplace>
+			<bendplace>the sofa</bendplace>
+			<fixture>TV</fixture>
+			<fixture>sofa</fixture>
+			<links>2,3,4</links>
+		</room>
+		<room>
+			<id>2</id>
+			<name>the corridor</name>
+			<description>The corridor linking the inner part of my house. From here one can access the
+			living room, all the bedrooms and the bathroom.</description>
+			<sitplace>the floor</sitplace>
+			<lieplace>the floor</lieplace>
+			<bendplace>none</bendplace>
+			<links>1,5,6,7,8,10</links>
+		</room>
+		<room>
+			<id>3</id>
+			<name>the dining room</name>
+			<description>A western style dining room, complete with a long wooden table and chairs. my family 
+			Mon is proudly displayed on one of the walls. A set of four very old Chinese vases adorn the corners.
+			</description>
+			<sitplace>a chair</sitplace>
+			<lieplace>the floor</lieplace>
+			<bendplace>the table</bendplace>
+			<fixture>dining table</fixture>
+			<links>1,9</links>
+		</room>
+		<room>
+			<id>4</id>
+			<name>the entrance</name>
+			<description>A traditional entrance room. It used to be just my shoes neatly arranged beyond the
+			raised floor, but now three more pairs are there. Not neatly arranged.</description>
+			<sitplace>the entrance's step</sitplace>
+			<lieplace>the floor</lieplace>
+			<bendplace>none</bendplace>
+			<fixture>house entrance</fixture>
+      <links>1</links>
+		</room>
+		<room>
+			<id>5</id>
+			<name>Miyu's room</name>
+			<description>Miyu has been living in what used to be this house's guest room. That seemed to suit her
+			because this is a western style room, complete with a four post bed. Now, I'll give that Miyu
+			at very least cares to keep her own room on a "non-catastrophic" mess level. She never makes her bed
+			(she expected me to do that), but other than that, the place still resembles how it looked before she arrived.</description>
+			<fixture>bed</fixture>
+			<fixture>desk</fixture>
+			<fixture>wardrobe</fixture>
+			<sitplace>Miyu's bed</sitplace>
+			<lieplace>Miyu's bed</lieplace>
+			<bendplace>Miyu's desk</bendplace>
+			<links>2</links>
+		</room>
+		<room>
+			<id>6</id>
+			<name>Haruko's room</name>
+			<description>Haruko's room used to serve as a temporary storage place. It's an Eastern style room
+			as Haruko prefers. It's already showing the signs of abuse of being inhabited by her, though: the sliding
+			doors have stopped sliding smoothly and everything else looks somewhat battered. Her study desk is 
+			covered by what I'm sure is undone homework. Some lifting weighs are haphazardly left in a corner.</description>
+			<fixture>futon</fixture>
+			<fixture>wardrobe</fixture>
+			<sitplace>Haruko's chair</sitplace>
+			<lieplace>the floor</lieplace>
+			<bendplace>Haruko's desk</bendplace>
+			<links>2</links>
+		</room>
+		<room>
+			<id>7</id>
+			<name>Shino's room</name>
+			<description>When my parents went to live overseas, they took all their bedroom furniture with
+			them. Their room was left empty and I've been keeping it clean but unused. Until Shino arrived, 
+			that's it. my old man called and told me to let Shino stay in their room. I'm not sure if that was 
+			a wise decision. The room is unrecognizable now, crammed with loads and loads of manga and plastic 
+			models. I can't even see the floor here. After checking Shino's preferences, I bought her a western 
+			style bed and a desk for her computer, but right now they're just more surfaces to be covered with 
+			stuff.</description>
+			<fixture>bed</fixture>
+			<fixture>desk</fixture>
+			<fixture>computer</fixture>
+			<fixture>videogame</fixture>
+			<fixture>wardrobe</fixture>
+			<sitplace>Shino's bed</sitplace>
+			<lieplace>Shino's bed</lieplace>
+			<bendplace>Shino's desk</bendplace>
+			<links>2</links>
+		</room>
+		<room>
+			<id>8</id>
+			<name>my room</name>
+			<description>my room is the only place that still looks like it always was: A clean, western
+			style room with a bed, a closet, a study desk and a bookshelf. Even during the time I was
+			alone in this house, I used to spend most of my time here preparing for the entrance exams. 
+			I still do that whenever I can, but it's harder now.</description>
+			<fixture>bed</fixture>
+			<fixture>desk</fixture>
+			<fixture>computer</fixture>
+			<fixture>wardrobe</fixture>
+			<sitplace>my bed</sitplace>
+			<lieplace>my bed</lieplace>
+			<bendplace>my desk</bendplace>
+			<links>2</links>
+		</room>
+		<room>
+			<id>9</id>
+			<name>the kitchen</name>
+			<description>A large, modern kitchen. In theory, it should be very easy to always keep this place
+			clean, but since these three girls started living here, there seems to always be some wet spot on
+			the floor, assorted foodstuffs left out of the fridge, and dirty dishes on the counter to wash.</description>
+			<fixture>sink</fixture>
+			<fixture>fridge</fixture>
+			<fixture>stove</fixture>
+			<sitplace>a chair</sitplace>
+			<lieplace>the floor</lieplace>
+			<bendplace>the table</bendplace>
+			<links>3</links>
+		</room>
+		<room>
+			<id>10</id>
+			<name>the bathroom</name>
+			<description>A place to take relaxing baths. I should pray at the family's altar in gratitude that this room
+			has been left mostly intact. Other than the fact that I always seem to find somebody's panties here,
+			I mean.</description>
+			<fixture>sink</fixture>
+			<fixture>bathtub</fixture>
+			<sitplace>the bathtub's rim</sitplace>
+			<lieplace>the floor</lieplace>
+			<bendplace>the sink</bendplace>
+			<links>2</links>
+		</room>
+	</rooms>
+
+	<!-- Define who's giving the spankings in this game.
+		<name> is how the protagonist calls him or herself. It has two special values:
+			"I" will set the game on a first person narrative. This is the default mode.
+			"you" will set the game on a second person narrative.
+			anything else, the game will use a third person narrative. You'll then be the responsible
+				for adjusting all the messages to avoid hulk-speech: "Shiji go to kitchen." 
+
+		<gender> will define how the possessive looks like when you're on the third person.
+		
+		<textcolor> is the the #RGB color for messages said by the protagonist. Since the protagonist is also
+		the narrator, choose a nice neutral color here. #000000 works well.
+		
+		Thanks to the possibility of the protagonist having a room and the certainty of having a hand,
+		you can use %Isp and %Rsp when a girl is referring to a Room or Implement.
+		
+		<startingroom> is the room <id> where the game starts.
+		
+		<own_room> is the id for the protagonist's room. Used for activities.
+		
+		<register_activity> lets you decide what things the protagonist can do, other than spanking girls.
+		
+	-->
+	<protagonist>
+		<name>I</name>
+		<gender>male</gender>
+		<textcolor>#000000</textcolor>
+		
+		<lore>On paper, my life should be awesome; the son of a traditional 
+		family dealing with the [i]security[/i] business, I've been living alone since 
+		my parents took a job that required them to live overseas about 
+		a year ago. I decided to stay because I want to join this country's 
+		[color=#FF0000]most prestigious University[/color], something I knew I had a good shot at. 
+		I'm a high school senior year now and have managed to turn my house 
+		into a perfect, calm place to study. But then, through a ridiculous series 
+		of circumstances, I ended up having to house three girls with me. They're 
+		not the best girls. Wait, never mind that - they're terrible girls, 
+		each one in her own special way. Now my house is a mess and my dreams 
+		are shaky. I better start doing something to fix this, quickly.</lore>
+		
+		<own_room>8</own_room>
+		
+		<register_activity>8</register_activity>
+		<register_activity>9</register_activity>
+		<register_activity>10</register_activity>
+		
+	</protagonist>
+	
+	<!-- Define who's receiving the spankings. <id> and <name> are just what you think they are.
+	
+		<textcolor> is the the #RGB color for messages said by this girl. Maybe this can allow the text
+		to become more readable. If you don't like colors, set everything to #000000.
+		
+		<description> allows you to look at the girls and has no more uses for now. 
+		
+		<lore> is what you know about the girl. In the future, this field will be expanded to show the reasons 
+		you have to spank the girl in game. But right now, I just wrote something that should make you want to 
+		spank them right away.
+		
+		<resistance> show how much of a hardass each girl is, literally.
+
+		<affection> is how much the girl likes you
+			0 : hate
+			1 : dislike
+			2 : neutral
+			3 : like
+			4 : love
+			This should serve to more interesting things later, but right now it serves to determine how contrite
+				the girl is at the spanking's start. girls that hate or dislike you start the spanking defiant
+				neutral girls start it unsure, and girls that like or love you start it repentful. The repent
+				values, by their turn, serve to filter messages during the spankings.
+
+		<spankable> true or false, defines if you can spank a girl. A request, it allows you to mod somebody 
+		who'll only watch now. If a girl has spankable false you can't spank or even hold her. To do a watcher,
+		mod in a girl with <spankable>false and add custom messages to her that reflect that she's not afraid.
+		
+		<register_activity> allows you to set the things each girl does. in a future release, you'll add attributes
+			to this to determine for example the time when each girl goes to sleep or that she REALLY LIKES
+			doing a particular thing, but right now each girl just picks a possible registered activity at random.
+			
+		<own_room> is the room each girl calls her own. Nothing is keeping you from housing more than one person
+			per room. Used with activities.
+			
+		We're doing away with roompref now. Activities will determine where every girl is likely to be found.
+		
+		Choosing the clothes for a girl involve the nodes <clothpref>, <undpref>, <sockpref> and <footpref>.
+		sockpref and footpref can have an item with id=0, which represents the chances of the girl deciding
+		to not wear that part. Haruko is always barefoot when she's at home, for instance.
+		
+		The ch attribute on each item node represents a (10 x ch)% chance that the girl will pick that item. 
+		If the ch attribute for all items add up to 10 or more, the girl won't ever pick an item outside that 
+		list (and normalizing that list is up to you). For example, when dressing up, Miyu picks a dress 80% 
+		of the time, and a sweater/skirt combo on the other 20. The logic for this is that a dress is a "complete" 
+		clothing (covers = 3), but a sweater and a skirt require another piece to be worn to cover bottom and top, 
+		respectively. The game doesn't support girls walking around naked, top or bottomless. Naked sweaters 
+		are supported if you create a sweater that is a complete clothing.
+				
+		When the ch attribute sum is less than 10, the girl has some chance to pick any item. For example,
+		other than one particular item, Shino wears completely random clothes all the time.
+		
+		Finally, each girl can have her own messages, giving them a small measure of personality. Read the 
+		heading before <messages> to understand how messages work and then come back here. If a girl has 
+		custom messages for a situation, the game will always try to use them before falling back to the 
+		generic message list. I only added a couple of messages to Miyu to show how it's done.
+		
+	-->
+	<girls>
+		<girl>
+			<id>1</id>
+			<name>Miyu</name>
+			<textcolor>#FF00FF</textcolor>
+			
+			<description>Miyu has reddish-brown eyes and long black hair, 
+			going down to her waist, in a somewhat stylish hime cut. She's 
+			the shortest student of her class and is very conscious of her 
+			(non-existent) cup size. Miyu gets angry easily and her neutral 
+			state is one that most people would call "annoyed".</description>
+			
+			<lore>I met Miyu about six months ago, when I saved her life. 
+			She claims to be the daughter of a powerful and shady business rival 
+			to my family, who had to disappear for a time. While her story's main 
+			details match (her "dad" exists and actually disappeared, she's registered 
+			with the correct family name, etc.), there remains the fact that it was 
+			widely known that that family didn't have heirs, as everybody I
+			consulted about Miyu could confirm. Nobody in the business remembers seeing
+			or hearing about Miyu before and nobody wanted to take care of her. What I 
+			know for sure is that she will certainly die if I kick her out of this 
+			house (I actually did that two days after meeting her, and had to save 
+			her life again, like, 15 minutes later). Miyu is nasty and arrogant and acts 
+			as if she never had to help with housekeeping before. Her expensive tastes 
+			are entirely at odds with her complete lack of funds (but amazingly, all 
+			her school expenses are already paid for until she graduates). Since I 
+			don't have the heart to boot her, I decided to start teaching her better 
+			manners.</lore>
+			
+			<resistance>4</resistance>
+			<affection>1</affection>
+			<spankable>true</spankable>
+			
+			<register_activity>1</register_activity>
+			<register_activity>2</register_activity>
+			<register_activity>10</register_activity>
+
+			<own_room>5</own_room>
+			
+			<clothpref>
+				<item id="8" ch="8" />
+				<item id="2" ch="1" />
+				<item id="7" ch="1" />
+			</clothpref>
+			<undpref>
+				<item id="10" ch="10" />
+			</undpref>
+			<sockpref>
+				<item id="13" ch="10" />
+			</sockpref>
+			<footpref>
+				<item id="0" ch="2" />
+			</footpref>
+
+			<messages>
+				<status>
+					<call>you</call>
+				</status>
+				<holding>
+					<reactannounce reqalert="3">Miyu looks at me defiantly.</reactannounce>
+					<reactstart reqby="ear">"Wait, you stupid -- ow, that hurts!"</reactstart>
+					<reactstart reqby="hand">Miyu glares at me and says: "Release my hand at once!"</reactstart>
+				</holding>
+				<spanking>
+					<reactannounce>"Are you crazy?!" Miyu says: "You can't do this to me!"</reactannounce>
+				</spanking>
+			</messages>
+		</girl>
+		<girl>
+			<id>2</id>
+			<name>Haruko</name>
+			<textcolor>#006600</textcolor>
+			
+			<description>Haruko has green eyes and light brown sunburned hair usually 
+			tied in a pony-tail. She's of average height and has a tanned and athletic 
+			body (she's on the track and swimming clubs). When Haruko opens her mouth or 
+			grins, which happen most of the time, a fang is visible.</description>
+			
+			<lore>my family and Haruko's family have an ancestral bond of friendship.
+			Her and I are about the same age and I got to know Haruko during 
+			yearly vacations spent in her distant rural village when her and I were 
+			but little kids. She was always a carefree tomboy, despite how strict 
+			her family is. I remember acting very carefully when housing with them to avoid 
+			the harsh punishments her parents dished out there, but Haruko had this knack 
+			of walking right into them almost daily. She's very energetic, but she's also 
+			constantly breaking or losing things, and her grades were always abysmal. When 
+			against all odds Haruko was admitted to the prestigious school I attend, 
+			her parents sent her to live with me, with the express request that I must 
+			keep her in line exactly like they did.</lore>
+			
+			<resistance>5</resistance>
+			<affection>3</affection>
+			<spankable>true</spankable>
+			
+			<register_activity>6</register_activity>
+			<register_activity>7</register_activity>
+			<register_activity>10</register_activity>
+
+			<own_room>6</own_room>
+			
+			<clothpref>
+				<item id="1" ch="5" />
+				<item id="2" ch="1" />
+				<item id="5" ch="2" />
+				<item id="6" ch="2" />
+			</clothpref>
+			<undpref>
+			</undpref>
+			<sockpref>
+				<item id="0" ch="10" />
+			</sockpref>
+			<footpref>
+				<item id="0" ch="10" />
+			</footpref>
+
+			<messages>
+				<status>
+					<call>Ta-kun</call>
+				</status>
+			</messages>
+		</girl>
+		<girl>
+			<id>3</id>
+			<name>Shino</name>
+			<textcolor>#666666</textcolor>
+			
+			<description>Shino's eyes and hair are black, with almost no highlights 
+			or reflections. Her skin is pale and her hair is wavy, reaching the mid 
+			of her back and done in a way that partially covers her eyes. 
+			Shino's interests are mostly geeky and she can stay out of sight for 
+			days if left unchecked.</description>
+			
+			<lore>Shino is technically my sister. Half-sister, whatever. They didn't 
+			tell me the whole story, but showed enough proof that I had no choice 
+			but to accept her here about one month ago. I think I saw her about 6 
+			times since then. Her room is like a portal to the otaku dimension: I
+			have no idea how she managed to cram all those manga and model 
+			kits there but she's seriously getting on my nerves: She has the power 
+			to completely evade any chore I give her and the Internet has slowed to a crawl
+			since she arrived. She has started attending my school, and her homeroom 
+			teacher already told me that she has been skipping classes. I'll need to 
+			take some drastic measures.</lore>
+			
+			<resistance>3</resistance>
+			<affection>2</affection>
+			<spankable>true</spankable>
+			
+			<register_activity>3</register_activity>
+			<register_activity>4</register_activity>
+			<register_activity>5</register_activity>
+			<register_activity>10</register_activity>
+
+			<own_room>7</own_room>
+			
+			<clothpref>
+			</clothpref>
+			<undpref>
+				<item id="12" ch="10" />
+			</undpref>
+			<sockpref>
+				<item id="0" ch="2" />
+			</sockpref>
+			<footpref>
+				<item id="0" ch="2" />
+			</footpref>
+
+			<messages>
+				<status>
+					<call>nii-san</call>
+				</status>
+			</messages>
+		</girl>
+	</girls>
+
+	<!-- Define the things you'll be using to give the spankings. Ignoring the obvious <id> and <name>,
+		<strength> is still unused, but will serve to tell how much a spanking hurt and <sfx> is one of
+		several sounds a strike with said implement can produce.
+		The implement with <id> 0 should always be "hand". I suppose that if you mod the game so that the
+		protagonist is a tentacle monster, then it should be "tentacle". The implement <id> 0 should always
+		exist and you're hardcoded to start with it. It's also hardcoded that it becomes something like 
+		"my hand" when you're describing it, and "your hand" when the girls are.
+		On messages, %I becomes the current implement, %Isfx becomes a random sfx associated with it and
+		%Isp becomes the current implement, as described by one of the girls.
+	 -->
+	<implements>
+		<implement>
+			<id>0</id>
+			<name>hand</name>
+			<strength>2</strength>
+			<sfx>SLAP!</sfx>
+		</implement>
+		<implement>
+			<id>1</id>
+			<name>slipper</name>
+			<strength>3</strength>
+			<sfx>SLAP!</sfx>
+			<sfx>SMACK!</sfx>
+		</implement>
+		<implement>
+			<id>2</id>
+			<name>belt</name>
+			<strength>3</strength>
+			<sfx>VAPT!</sfx>
+			<sfx>CRACK!</sfx>
+		</implement>
+		<implement>
+			<id>3</id>
+			<name>hairbrush</name>
+			<strength>4</strength>
+			<sfx>SMACK!</sfx>
+		</implement>
+		<implement>
+			<id>4</id>
+			<name>cane</name>
+			<strength>5</strength>
+			<sfx>CRACK!</sfx>
+			<sfx>VAPT!</sfx>
+		</implement>
+		<implement>
+			<id>5</id>
+			<name>paddle</name>
+			<strength>5</strength>
+			<sfx>SMACK!</sfx>
+			<sfx>SLAP!</sfx>
+		</implement>
+	</implements>
+	
+	<!-- Define the positions the spankings will be happening. You know what <id> is. <name> is kind of
+		misleading right now, in that it's actually the description used when populating the options.
+		<form> is the key node here: it influences a lot of messages later.
+	 -->
+	<positions>
+		<position>
+			<id>1</id>
+			<name>tell her to lie down</name>
+			<form>lie</form>
+		</position>
+		<position>
+			<id>2</id>
+			<name>tell her to bend over</name>
+			<form>bend</form>
+		</position>
+		<position>
+			<id>3</id>
+			<name>hold her under my arm</name>
+			<form>underarm</form>
+		</position>
+		<position>
+			<id>4</id>
+			<name>put her over my knees</name>
+			<form>otk</form>
+		</position>
+		<position>
+			<id>5</id>
+			<name>tell her to touch her toes</name>
+			<form>stand</form>
+		</position>
+	</positions>
+
+	<!-- Define how the girls will be dressed before you inevitably undress them for the spankings.
+		Other than <id>, <name> and <description> that should be kind of boring by now, 
+		<reqart> says if when describing this piece of clothing we should use an indefinite article or not. 
+		So the game right now produces "she's wearing shorts" and "she's wearing a skirt".
+		<resistance> is how much wearing that clothing helps to absorb the strength of a spanking. It should
+			be 1 for light pieces (mostly everything), 2 for thick clothing, like denim.
+		<covers> is 1 for the top (shirts, tank-tops, sweaters), 
+					2 for the bottom (pants, shorts, skirts),
+					3 for one-pieces, like dresses, school swimsuits and such,
+					4 for underwear
+					5 for socks
+					6 for footwear
+		Right now, a girl will use a single piece of clothing with <covers> 3, or a set with a piece that covers 1 
+		and another that covers 2. <und> defines how that piece of clothing is removed, which is important when 
+		the undressing part comes. The possible values right now are 
+			<up> ("I pull her skirt up."), 
+			<down> ("I pull her shorts down.") and
+			<off> ("I take her tie-up panties off")
+		
+		Finally, the game mostly uses <description> when you're looking to a clothing, and <name> when that piece 
+		is mentioned as part of an action. So it's "Haruko is wearing denim cuttoff shorts.", 
+		"You lower Haruko's shorts, exposing her strawberry print panties." and "You lower Haruko's panties, 
+		exposing her bare bottom."
+	 -->
+	<clothes>
+		<clothing>
+			<id>1</id>
+			<name>shorts</name>
+			<description>denim cutoff shorts</description>
+			<reqart>false</reqart>
+			<resistance>2</resistance>
+			<covers>2</covers>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>2</id>
+			<name>skirt</name>
+			<description>floral print skirt</description>
+			<reqart>true</reqart>
+			<resistance>1</resistance>
+			<covers>2</covers>
+			<und>up</und>
+		</clothing>
+		<clothing>
+			<id>3</id>
+			<name>sweatpants</name>
+			<description>sweatpants</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<covers>2</covers>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>4</id>
+			<name>jeans</name>
+			<description>washed out jeans</description>
+			<reqart>false</reqart>
+			<resistance>2</resistance>
+			<covers>2</covers>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>5</id>
+			<name>t-shirt</name>
+			<description>white raglan-sleeved t-shirt</description>
+			<reqart>true</reqart>
+			<covers>1</covers>
+			<und>up</und>
+		</clothing>
+		<clothing>
+			<id>6</id>
+			<name>tank top</name>
+			<description>black tank top</description>
+			<reqart>true</reqart>
+			<covers>1</covers>
+			<und>up</und>
+		</clothing>
+		<clothing>
+			<id>7</id>
+			<name>sweater</name>
+			<description>purple sweater</description>
+			<reqart>true</reqart>
+			<covers>1</covers>
+			<und>up</und>
+		</clothing>
+		<clothing>
+			<id>8</id>
+			<name>dress</name>
+			<description>frilly white dress</description>
+			<reqart>true</reqart>
+			<resistance>1</resistance>
+			<covers>3</covers>
+			<und>up</und>
+		</clothing>
+		<clothing>
+			<id>9</id>
+			<name>panties</name>
+			<description>white panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<covers>4</covers>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>10</id>
+			<name>panties</name>
+			<description>white and blue striped panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<covers>4</covers>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>11</id>
+			<name>panties</name>
+			<description>strawberry print panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<covers>4</covers>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>12</id>
+			<name>panties</name>
+			<description>black panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<covers>4</covers>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>13</id>
+			<name>socks</name>
+			<description>white socks</description>
+			<reqart>false</reqart>
+			<covers>5</covers>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>14</id>
+			<name>socks</name>
+			<description>pink socks</description>
+			<reqart>false</reqart>
+			<covers>5</covers>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>15</id>
+			<name>socks</name>
+			<description>black socks</description>
+			<reqart>false</reqart>
+			<covers>5</covers>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>16</id>
+			<name>slippers</name>
+			<description>slippers</description>
+			<reqart>false</reqart>
+			<covers>6</covers>
+			<und>off</und>
+		</clothing>
+	</clothes>	
+	
+	<!-- Here we define how naked the girl's bottom will be for the spanking. As with Positions,
+		<form> influences messages later.
+	 -->
+	<undressings>
+		<undressing>
+			<id>1</id>
+			<name>her clothed bottom</name>
+			<form>clothed</form>
+		</undressing>
+		<undressing>
+			<id>2</id>
+			<name>her underwear</name>
+			<form>underwear</form>
+		</undressing>
+		<undressing>
+			<id>3</id>
+			<name>her bare bottom</name>
+			<form>bare</form>
+		</undressing>
+	</undressings>
+	
+	<!-- Lets try to vary the ways you can hold a girl here, with the future possibility
+		of having special ways to hold some girls. NOT WORKING FOR NOW. -->
+	<holdings>
+		<holding>
+			<id>1</id>
+			<name>by her ear</name>
+			<form>ear</form>
+		</holding>
+		<holding>
+			<id>2</id>
+			<name>by her hand</name>
+			<form>hand</form>
+		</holding>
+	</holdings>
+	
+	<!-- an <activity> defines what people can do in this sim, other than being spanked. <id>'s use is obvious.
+	
+		When a character decides to do an activity, first they need to check where they will do that. The first
+		step for this is to check if the activity has one or more <require_room_fixture> nodes.
+		
+		each <require_room_fixture> node has to be fullfilled. When you write <requires_room_fixture>A,B
+		the game understands that the character needs a room with A or B. For an activity that requires 
+		A AND B, write two <require_room_fixture> nodes.
+		
+		If there's at least one room where the activity is possible, the character then checks if a 
+		<prefers_own_room /> node exists and if their own room is among the possible ones. If it is, it'll
+		be selected in preference to any other. If not, the choosen room will be picked at random among all
+		the possibilities.
+		
+		<lasts>is how much time, in game turns, the character will spend doing that activity, written as
+		minimum time-maximum time. The game will pick a number between these.
+		
+		The <position> node determines how people need to be to do that activity. As with room fixtures,
+		writing something like <position>lie,stand means the character will pick a position at random from these. 
+		
+		<name> is how people in the world talk about the activity. <during> is how they look while doing it.
+		When a character starts doing something, the generic message is: 
+			CHARACTER NAME [sits down/lies down] and starts to <name>.
+		For some activities, this looks strange, so you can add a <starts> node. With a <starts> node, the message
+		becomes CHARACTER NAME [sits down/lies down] and <starts>. The analogous situation happens when the character
+		finishes the activity: The generic message for that is:
+			CHARACTER NAME stops <during> [and stands up].
+			
+		Once a character finishes an activity, it'll immediately find something else to do.
+		
+		Finally, use <sets_alertness_to> to make people distracted or asleep depending on the activity.
+		
+		For actions that the progagonist can also do, the logic is somewhat different. Whenever you're on the 
+		room you'd pick to do an activity, you'll have the chance to start it. Once you start it, you'll become
+		distracted/asleep as determined by the activity and time will pass. The idea is that if something happens
+		to interrupt you, you'll become alert and resume acting right away, but right now there's nothing to do 
+		that, so you'll end doing the activity at the determined time.
+	 -->
+	<activities>
+	
+		<activity>
+			<id>1</id>
+			<name>watch TV</name>
+			<during>watching TV</during>
+			<lasts>20-40</lasts>
+			<requires_room_fixture>TV</requires_room_fixture>
+			<position>lie,sit</position>
+			<sets_alertness_to>2</sets_alertness_to>
+		</activity>
+		
+		<activity>
+			<id>2</id>
+			<name>read a magazine</name>
+			<starts>picks up a magazine</starts>
+			<during>reading a magazine</during>
+			<ends>drops a magazine</ends>
+			<lasts>20-40</lasts>
+			<requires_room_fixture>sofa</requires_room_fixture>
+			<position>lie,sit</position>
+			<sets_alertness_to>2</sets_alertness_to>
+		</activity>
+		
+		<activity>
+			<id>3</id>
+			<name>read a magazine</name>
+			<starts>picks up a magazine</starts>
+			<during>reading a magazine</during>
+			<ends>drops a magazine</ends>
+			<lasts>20-40</lasts>
+			<requires_room_fixture>bed</requires_room_fixture>
+			<position>lie,sit</position>
+			<sets_alertness_to>2</sets_alertness_to>
+			<prefers_own_room />
+		</activity>
+		
+		<activity>
+			<id>4</id>
+			<name>play a videogame</name>
+			<starts>turns on the videogame</starts>
+			<during>playing a videogame</during>
+			<ends>turns off the videgame</ends>
+			<lasts>20-40</lasts>
+			<requires_room_fixture>videogame</requires_room_fixture>
+			<position>sit</position>
+			<sets_alertness_to>2</sets_alertness_to>
+			<prefers_own_room />
+		</activity>
+		
+		<activity>
+			<id>5</id>
+			<name>use the computer</name>
+			<starts>turns on the computer</starts>
+			<during>using the computer</during>
+			<ends>turns off the computer</ends>
+			<lasts>20-40</lasts>
+			<requires_room_fixture>computer</requires_room_fixture>
+			<position>sit</position>
+			<sets_alertness_to>2</sets_alertness_to>
+			<prefers_own_room />
+		</activity>
+		
+		<activity>
+			<id>6</id>
+			<name>lift weights</name>
+			<starts>picks up the weights</starts>
+			<during>lifting weights</during>
+			<ends>drops the weights</ends>
+			<lasts>20-40</lasts>
+			<position>sit,stand</position>
+			<prefers_own_room />
+		</activity>
+		
+		<activity>
+			<id>7</id>
+			<name>do calisthenics</name>
+			<during>doing calisthenics</during>
+			<lasts>20-40</lasts>
+			<position>sit,stand</position>
+			<prefers_own_room />
+		</activity>
+		
+		<activity>
+			<id>8</id>
+			<name>study</name>
+			<during>studying</during>
+			<lasts>20-40</lasts>
+			<position>sit</position>
+			<sets_alertness_to>2</sets_alertness_to>
+			<prefers_own_room />
+		</activity>
+		
+		<activity>
+			<id>9</id>
+			<name>do homework</name>
+			<during>doing homework</during>
+			<lasts>20-40</lasts>
+			<position>sit</position>
+			<sets_alertness_to>2</sets_alertness_to>
+			<prefers_own_room />
+		</activity>
+		
+		<activity>
+			<id>10</id>
+			<name>sleep</name>
+			<starts>%[close,closes] %possessive eyes</starts>
+			<during>sleeping</during>
+			<ends>%[open,opens] %possessive eyes, yawns</ends>
+			<lasts>140-160</lasts>
+			<requires_room_fixture>bed,futon</requires_room_fixture>
+			<requires_cloth_change>sleeping</requires_cloth_change>
+			<position>lie</position>
+			<sets_alertness_to>1</sets_alertness_to>
+			<prefers_own_room />
+		</activity>
+		
+	</activities>
+	
+	<!-- Here we define how people talk to each other. -->
+	<dialogues>
+	</dialogues>
+	
+	<!-- Here we define most of the game's text. <holding> serves to take girls by the hand or ear and drag 
+		them by the house. You have three chances to guess for what <spanking> is used. <implement> is how
+		they react when you pick up something nasty. <status> describe how do they look, besides appearance 
+		(use this to show that a girl in pain is crying, etc) and other details.
+		
+		The important thing to take note here is that the game will randomly pick a message from all
+		the ones with the same tag when that kind of message is called. So if the game is narrating a spanking,
+		it'll pick a random <spanking><during> message. You can limit when a message appears by adding the 
+		attribute reqpos, which requires that the spanking is happening in one of the forms listed, or 
+		reqund, which requires one (or more) forms of undress. Likewise, you can use reqby on a <holding> tag,
+		to require that the girl is being held by the ear or hand.
+		
+		If the game can't find an useable message when it calls for one, it'll print a "...", so take care to 
+		not be too restrictive with your req attributes.
+		
+		The main spanking part can last for up to 12 steps now. It uses 4 message filters: reqpos and reqund, 
+		which we already explained, plus two new ones:
+		reqpain, that filters in how much pain the girl is, on the following scale:
+			0: no pain
+			1: a bit of pain
+			2: some pain
+			3: enough pain
+			4: a lot of pain
+			5: overwhelming pain. Let's no go there.
+		and reqrepnt, that filters how much the girl agree that she should be spanked, on the following scale:
+			0: girl is defiant
+			1: girl is unsure
+			2: girl is repentful
+		
+		Because the <during> stage repeats itself up to 12 times, the game keeps a list of used messages and
+		tries to not repeat them, inside a single spanking. Be sure to have enough variety of messages.
+				
+		Finally, see that the messages are listed in a logical order. Don't add the reqpos attribute to messages
+		before <spanking><position>, because the game will hang up (it doesn't know what position you'll use it 
+		yet). Likewise, don't add reqund before <spanking><reactundress> and reqby before <holding><start>.
+		reqrepnt only makes sense from <spanking><announce> onwards. reqpain can be used whenever you want, though.
+		The idea is that all girls start at pain 0, and stay at the pain level you left them after the spanking.
+		This will slowly heal back to 0 so you should totally be able to have a girl that was already spanked 
+		have a <holding><reactannounce reqpain="1,2,3,4,5"> like "W-wait, you already spanked me!" message.
+		 -->
+
+	<messages>
+		<status>
+			<!-- call is how the girls refer to the protagonist. Unlike typical messages, call serves
+				to be inserted on other messages. In correct English, this should usually be just "you". Even
+				"Sir" or "Ma'am" will look unnatural on a lot of cases. But since we're doing an anime based
+				sim, we need to have girls calling you onii-chan, Shinji-kun or Sempai. If call is 
+				different from "you", the game assumes the call uses third person syntax, so %Prsptb in
+				"%Prsptb hurting me..." becomes "Onii-chan is hurting me..." instead of "You're hurting me..." 
+				YOU'RE WELCOME. 
+				
+				Additionally, if you have girls calling you something other than "you", you can add %OCB Before
+				the start of her lines or %OCA After them. This becomes an "Optional Call." Say you have a girl 
+				that calls you "Shinji-kun": Then "%OCBI-I was a bad girl..." becomes 
+				"Shinji-kun, I-I was a bad girl..."
+				while another girl that calls you "you" will say just "I-I was a bad girl..." on the same message.
+				
+				Likewise, "Please, forgive me%OCA." becomes "Please, forgive me, Shinji-kun." for the first girl 
+				and "Please, forgive me." for people who call you "you". -->
+			<call>you</call>
+			<!-- <call>Mr. Rogers</call> WHAT THE HELL IS WRONG WITH YOU?! D: -->
+			
+			<!-- look is what you see when you look at someone.
+				somebody who's not in pain will look back at you in a way that reflects their affection -->
+			<look reqalert="3" reqlike="0,1" reqpain="0">%povG glares back at me.</look>
+			<look reqalert="3" reqlike="0,1" reqpain="0">%povG avoids your eyes.</look>
+			<look reqalert="3" reqlike="2" reqpain="0">%povG looks back at me.</look>
+			<look reqalert="3" reqlike="3,4" reqpain="0">%povG looks at me and smiles.</look>
+			<look reqalert="3" reqlike="3,4" reqpain="0">%povG looks happily at me.</look>
+
+			<!-- somebody who's in pain looks back to you in a way that reflects their defiance or lack 
+			thereof. Nothing is keeping you from adding reqlike to these too, to create some very complex
+			messages: If the girl hates you but ended somehow repenting during the spanking, for example. Later
+			when we introduce actual reasons for the spankings, even a girl that likes you can end thinking
+			there was no reason for a spanking and being defiant, for example. -->
+			<look reqalert="3" reqrepnt="0" reqpain="1">%povG glares back at me.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="1">%povG avoids your eyes.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="2,3">%povG glares back at me with tearful eyes.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="2,3">%povG winces in pain and glowers at me.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="4">%povG tearfully clutches her sore bottom and avoids looking at me.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="4">%povG is crying angrily.</look>
+			
+			<look reqalert="3" reqrepnt="1" reqpain="1">%povG looks back at me, a bit uncomfortable.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="2">%povG shifts uncomfortably when I look at her.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="3">%povG sniffles and wipes some tears off her face.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="4">%povG is crying aloud.</look>
+			
+			<look reqalert="3" reqrepnt="2" reqpain="1,2">%povG looks at me with a sad and tearful smile.</look>
+			<look reqalert="3" reqrepnt="2" reqpain="3">%povG is sobbing: "%OCBI-I was a bad girl..."</look>
+			<look reqalert="3" reqrepnt="2" reqpain="3">%povG is sobbing: "I-I'm soooorry..."</look>
+			<look reqalert="3" reqrepnt="2" reqpain="4">%povG is crying aloud, with a sad expression.</look>
+
+			<!-- Yukiko's additions -->
+			<look reqalert="3" reqrepnt="0" reqpain="1" reqlike="0,1,2">%povG glares back at me angrily.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="1" reqlike="3,4" >%povG avoids my eyes.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="2,3" reqlike="0,1,2">%povG winces in pain and glares angrily at me.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="2,3" reqlike="3,4">%povG glares back at me with tearful eyes. </look>
+			<look reqalert="3" reqrepnt="0" reqpain="4" reqlike="0,1,2">%povG is crying angrily.</look>
+			<look reqalert="3" reqrepnt="0" reqpain="4" reqlike="3,4">%povG tearfully clutches her sore bottom and avoids looking at me.</look>
+			
+			<look reqalert="3" reqrepnt="1" reqpain="1" reqlike="0,1,2">%povG looks back at me, unconfortable.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="1" reqlike="3,4">%povG looks back at me, regretfully.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="2" reqlike="0,1,2">%povG shifts unconfortably when I look at her.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="2" reqlike="3,4">%povG shifts unconfortably, her face flushed, when I look at her.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="3" reqlike="0,1,2">%povG sniffles and wipes some tears off her face.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="3" reqlike="3,4">%povG sniffles full of shame and wipes some tears off her face.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="4" reqlike="0,1,2">%povG is crying aloud.</look>
+			<look reqalert="3" reqrepnt="1" reqpain="4" reqlike="3,4">%povG is crying aloud with puppy eyes.</look>
+			
+			<look reqalert="3" reqrepnt="2" reqpain="1,2" reqlike="0,1,2">%povG looks at me with a sad and tearful smile.</look>
+			<look reqalert="3" reqrepnt="2" reqpain="1,2" reqlike="3,4">%povG looks at me with a sad smile, full of regret.</look>
+			<look reqalert="3" reqrepnt="2" reqpain="3" reqlike="0,1,2">%povG is sobbing: "%OCBI-I was a bad girl..."</look>
+			<look reqalert="3" reqrepnt="2" reqpain="3" reqlike="3,4">%povG is sobbing: "I-I was such a bad girl, I won't do it again..."</look>
+			<look reqalert="3" reqrepnt="2" reqpain="3" reqlike="3,4">>%povG is sobbing: "%OCBI-I'm soooorry, I will never ever do it again..."</look>
+			<look reqalert="3" reqrepnt="2" reqpain="4" reqlike="0,1,2">%povG is crying aloud, with a sad expression.</look>
+			<look reqalert="3" reqrepnt="2" reqpain="4" reqlike="3,4">%povG is crying aloud, with a sad expression: "Please, forgive me%OCA."</look>
+
+			<look reqalert="2,1,0" reqpain="4,5" >%povG is %Aing, with a pained expression and tearful eyes.</look>
+			<look reqalert="2,1,0" reqpain="3" >%povG is %Aing, looking very unconfortable.</look>
+			<look reqalert="2,1,0" reqpain="2,1" >%povG is %Aing, looking a bit unconfortable.</look>
+			<look reqalert="2,1,0" reqpain="0" >%povG is %Aing.</look>
+			<!-- end of Yukiko's additions -->
+			
+			<!-- paindown is a kind of message that happens independently of your actions: If you're in
+			the same room with a girl as her pain level goes down, you'll see one of these. Remember to keep this
+			coherent with what you see by looking at her. reqpain reflects the current, lower level. 
+			
+			Right now, we use a very simple timekeeping model: Everytime you take an action, a turn passes.
+			The times required for a girl to go to a lower state of pain are:
+				From 5 to 4: 160 turns (you can only get to pain level 5 now with a lot of dedication)
+				From 4 to 3: 80 turns
+				From 3 to 2: 40 turns
+				From 2 to 1: 20 turns
+				From 1 to 0: 10 turns -->
+			<paindown reqpain="4">%povG crying diminishes somewhat.</paindown>
+
+			<paindown reqrepnt="0,1" reqpain="3">%povG stops crying.</paindown>
+			<paindown reqrepnt="2" reqpain="3">%povG stops crying, but remains sobbing.</paindown>
+
+			<paindown reqrepnt="0,1" reqpain="2">%povG looks a bit more comfortable now.</paindown>
+			<paindown reqrepnt="2" reqpain="2">%povG stops sobbing.</paindown>
+
+			<paindown reqpain="1">%povG wipes her eyes.</paindown>
+
+			<paindown reqlike="0,1" reqpain="0">%povG glances at me and shrugs her shoulders.</paindown>
+			<paindown reqlike="2" reqpain="0">%povG sighs in relief.</paindown>
+			<paindown reqlike="3,4" reqpain="0">%povG smiles happily.</paindown>
+			
+			<!-- reactenter is called when you enter a room without carrying something or dragging someone, 
+				and a girl is there. it uses reqalert to filter how alert the girl is when you enter: 
+					- 3 = the girl is alert, paying attention to the room; 
+					- 2 = the girl is distracted, not paying attention to the room. TV, books or internet can 
+						cause this. %Aing will explain what she's doing.
+					- 1 = the girl is sleeping. This is a normal, somewhat light sleep.
+					- 0 = the girl is passed out. Very deep sleep, took some sleeping pills, is very sick, etc. 
+						She won't react to what's happening to the room.
+					- Do we need more alertness modes?
+				we use this so that we don't have a "Shino smiles to you!" when you enter a room
+					and she's actually watching a LotGH's marathon, or, you know, sleeping. 
+				Feel free to use the other filters here, so that someone with reqpain="2,3,4,5" sleeps
+					with her bottom up and someone with reqlike="0,1" scowls when you enter the room. -->
+			<reactenter reqalert="3">%povG looks at me as I enter %R.</reactenter>
+			<reactenter reqalert="2">%povG is %Aing, oblivious to my presence.</reactenter>
+			<reactenter reqalert="1">%povG is %Aing on %Slie.</reactenter>
+			<reactenter reqalert="0">%povG is passed out on %Slie.</reactenter>
+			
+			<!-- enter is called when a girl is moving and enters the room you are. Somebody can be alert or 
+				distracted while walking around. The game doesn't support sleepwalkers ATM -->
+			<enter reqalert="3">%povG walks into %R and looks around.</enter>
+			<enter reqalert="2">%povG walks into %R, distracted.</enter>
+			
+			<!-- walk-ins happen when a girl is moving and enters a room where something interesting is ocurring:
+			 	- walkinspanking is when she walks in during a spanking
+			 	- walkinholding is when she walks in to you holding somebody
+			 	- walkinimplement is for walk ins where you're carrying a belt or something.
+			 	If a girl walks in a room and nothing interesting is happening, the enter message is used. -->
+			<walkinspanking>%povG walks into %R and stares in shock at me and %G.</walkinspanking>
+			
+			<walkinholding>%povG enters %R and gasps at me holding %G.</walkinholding>
+
+			<walkinimplement>%povG enters %R and gasps at me holding %I.</walkinimplement>
+			
+			<!-- leave is called when a girl is leaving the room you are. %R is the room she went. -->
+			<leave reqalert="3">%povG walks to %R.</leave>
+			<leave reqalert="2">%povG walks distractedly to %R.</leave>
+			
+			<!-- If you hold somebody, distracted people will start to pay attention. If you talk to somebody 
+				or initiate the spanking dialogue, that will wake up somebody that's just sleeping. 
+				alertnessup and alertnessdown messages are generated when a girl's alertness status changes 
+				on the room you are. reqalert refers to the new alertness value. -->
+			<alertnessup reqalert="3">%povG starts to pay attention to what's happening.</alertnessup>
+			<alertnessup reqalert="2">%povG wakes up and looks around, still half-asleep.</alertnessup>
+			<alertnessup reqalert="1">%povG grumbles and her sleep seems lighter now.</alertnessup>
+
+			<alertnessdown reqalert="2">%povG gets distracted.</alertnessdown>
+			<alertnessdown reqalert="1">%povG begins to sleep.</alertnessdown>
+			<alertnessdown reqalert="0">%povG sleep gets deeper.</alertnessdown>
+			
+		</status>
+		
+		<implement>
+			<pick>I pick up %I.</pick>
+			<pick>I get %I.</pick>
+
+			<reactpick reqalert="3">%povG looks at %I and audibly gulps.</reactpick>
+			<reactpick reqalert="3">%povG looks quickly at %I and then looks down.</reactpick>
+			<reactpick reqalert="3">%povG's eyes widen when she sees %I in my hand.</reactpick>
+			<reactpick reqalert="2,1,0">%povG is %Aing and doesn't notice when I pick %I.</reactpick>
+
+			<swap>I leave %FI and pick up %I.</swap>
+
+			<reactswap reqalert="3">%povG looks worriedly at what I'm doing.</reactswap>
+			<reactswap reqalert="2,1,0">%povG is %Aing and doesn't notice when I drop %FI and pick %I.</reactswap>
+
+			<reactworseswap reqalert="3">Seeing I trade %FI for %I, %povG looks even more worried.</reactworseswap>
+			<reactworseswap reqalert="2,1,0">%povG is %Aing and doesn't notice when I drop %FI and pick %I.</reactworseswap>
+
+			<entercarrying>I bring %I in my hand.</entercarrying>
+
+			<reactentercarrying reqalert="3">%povG looks at %I and gulps.</reactentercarrying>
+			<reactentercarrying reqalert="3">%povG looks quickly at %I and then looks down.</reactentercarrying>
+			<reactentercarrying reqalert="3">%povG's eyes widen when she sees %I in my hand.</reactentercarrying>
+			<reactentercarrying reqalert="2,1,0">%povG is %Aing and doesn't notice when I enter carrying %I.</reactentercarrying>
+
+			<drop>I put %I away.</drop>
+			<drop>I leave %I.</drop>
+			<drop>I drop %I.</drop>
+
+			<reactdrop reqalert="3">%povG looks relieved when I release %I.</reactdrop>
+			<reactdrop reqalert="3">"Whew..." says %povG.</reactdrop>
+			<reactdrop reqalert="2,1,0">%povG is %Aing and doesn't notice when I drop %I.</reactdrop>
+		</implement>
+		
+		<holding>
+			<announce>Having decided to get %G, I approach her.</announce>
+			<announce>I approach %G to get her.</announce>
+			
+			<reactannounce reqalert="3,2">%G's eyes widen.</reactannounce>
+			<reactannounce reqalert="3,2">%G says: "%OCBw-wait, this is too close!"</reactannounce>
+			<reactannounce reqalert="3,2">%G looks alarmed, eyeing me nervously.</reactannounce>
+			<reactannounce reqalert="1,0">%G is %Aing and doesn't notice when I come close.</reactannounce>
+			
+			<watchannounce reqalert="3,2">%povG looks at what I'm doing.</watchannounce>
+			<watchannounce reqalert="1,0">%povG is %Aing and doesn't notice when I approach %G.</watchannounce>
+			
+			<abort>I decide to not hold %G.</abort>
+			
+			<reactabort reqalert="3,2">%G looks somewhat relieved.</reactabort>
+			
+			<start reqby="hand">I hold %G by her hand.</start>
+			<start reqby="hand">I take %G's hand.</start>
+			<start reqby="ear">I hold %G by her ear.</start>
+			<start reqby="ear">I pinch %G's ear and hold it tightly.</start>
+			<start reqby="ear">I grab %G's ear tightly.</start>
+			
+			<reactstart>%G looks at me: "H-hey!"</reactstart>
+			<reactstart>%G says: "%OCBWh-what are you doing...!?"</reactstart>
+			<reactstart reqby="ear">%G cries: "W-wait! That hurts%OCA!"</reactstart>
+			<reactstart reqby="ear">%G grips my wrist, trying to keep me from tugging too hard.</reactstart>
+			<reactstart reqby="hand">%G looks fearfully at me.</reactstart>
+			<reactstart reqby="hand">%G shudders and looks at her feet.</reactstart>
+			<reactstart reqby="hand" reqlike="0,1">%G looks offended and attempts to pull her hand away.</reactstart>
+			
+			<watchstart reqalert="2,3">Seeing I take %G like that, %povG gulps hard.</watchstart>
+			<watchstart reqalert="2,3">When I grab %G, %povG shifts around uncomfortably.</watchstart>
+			<watchstart reqalert="2,3">%povG's expression becomes worried.</watchstart>
+			<watchstart reqalert="2,3">%povG looks away.</watchstart>
+			<watchstart reqalert="2,3">%povG bites her lip and pretends not to notice.</watchstart>
+			<watchstart reqalert="0,1">%povG is %Aing and doesn't notice when I hold %G.</watchstart>
+			
+			<drag>I bring %G with me.</drag>
+			<drag reqby="hand">I take %G by the hand to %R.</drag>
+			<drag reqby="hand">I hold %G's hand tightly and lead her to %R.</drag>
+			<drag reqby="hand">my hand firmly holds %G's as I move along.</drag>
+			<drag reqby="ear">I take %G by her ear to %R.</drag>
+			<drag reqby="ear">I readjust my grip on %G's ear as we enter %R.</drag>
+			
+			<reactdrag>"L-let me go%OCA!" %G says.</reactdrag>
+			<reactdrag>"%OCBL-let me go!" %G says.</reactdrag>
+			<reactdrag>"Where %Prtbsp taking me?" %G asks.</reactdrag>
+			<reactdrag>"%OCBWhere are you taking me?" %G asks.</reactdrag>
+			<reactdrag reqby="hand">%G gives my hand an experimental tug. I tighten my grip slightly.</reactdrag>
+			<reactdrag reqby="ear">%G groans loudly, and says: "Let go%OCA, that hurts!"</reactdrag>
+			<reactdrag reqby="ear">%G winces from her ear being tugged on.</reactdrag>
+			
+			<watchdrag reqalert="2,3">%povG looks worriedly at me and %G.</watchdrag>
+			<watchdrag reqalert="0,1">%povG is %Aing and doesn't notice when I enter %R carrying %G.</watchdrag>
+			
+			<stop>I let %G go.</stop>
+			<stop reqby="hand">I release %G's hand.</stop>
+			<stop reqby="ear">I release %G's ear.</stop>
+			
+			<reactstop>"Why did you bring me to %Rsp?" %G asks.</reactstop>
+			<reactstop reqby="ear">%G puts her hand on her ear and looks at me, somewhat worried.</reactstop>
+			<reactstop>%G looks at me, somewhat worried.</reactstop>
+			<reactstop>%G shifts on her feet, looking at me nervously.</reactstop>
+			
+			<reactstopwithoutdrag reqby="ear">%G puts her hand on her ear and looks at me, somewhat worried.</reactstopwithoutdrag>
+			<reactstopwithoutdrag>%G looks confused.</reactstopwithoutdrag>
+			<reactstopwithoutdrag>%G looks at me, somewhat worried.</reactstopwithoutdrag>
+			<reactstopwithoutdrag>"What was that for%OCA?" %G asks.</reactstopwithoutdrag>
+		</holding>
+		
+		<spanking>
+			<announce>I tell %G that she'll get a good spanking.</announce>
+			<announce>I grab %G by her ear and tell her she'll be spanked.</announce>
+			<announce reqby="hand">I pull %G closer by her hand and tell her she's going to be spanked.</announce>
+			<announce reqby="ear">I pull %G closer by her ear and tell her she's going to be spanked.</announce>
+			
+			<reactannounce>%G's eyes widen: "No..."</reactannounce>
+			<reactannounce>%G looks at me with pleading eyes, shaking her head.</reactannounce>
+			<reactannounce>%G fearfully covers her bottom and starts to back away.</reactannounce>
+			<reactannounce>"What? No!" %G shouts with a worried expression.</reactannounce>
+			<reactannounce>%G pulls her arms to her chest and rapidly shakes her head.</reactannounce>
+			
+			<watchannounce reqalert="2,3">%povG gasps and looks at %G.</watchannounce>
+			<watchannounce reqalert="2,3">%povG covers her mouth.</watchannounce>
+			<watchannounce reqalert="2,3">%povG looks very uncomfortable.</watchannounce>
+			<watchannounce reqalert="2,3">%povG looks around, as if she suddenly wishes to be elsewhere.</watchannounce>
+			<watchannounce reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchannounce>
+			
+			<implement>I tell %G that she'll be spanked with %I.</implement>
+			<implement>I show %I and tell %G she'll severely spanked with it.</implement>
+			<implement>I hold up %I to let %G know I'm going to use it on her.</implement>
+			<implement>I explain to %G that she'll be punished with %I.</implement> 
+			
+			<reactimplement>"No%OCA! %Isp hurts too much!" %G says, shaking her head.</reactimplement>
+			<reactimplement>"I don't want to be spanked with %Isp..." says %G.</reactimplement>
+			
+			<watchimplement reqalert="3,2">%povG subconsciously covers her own bottom.</watchimplement>
+			<watchimplement reqalert="3,2">%povG looks at %G with some sympathy.</watchimplement>
+			<watchimplement reqalert="3,2">%povG frowns, clearly feeling empathetic towards %G.</watchimplement>
+			<watchimplement reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchimplement>
+			
+			<position reqpos="lie">I order %G to lie down on %S.</position>
+			<position reqpos="bend">I order %G to bend over %S.</position>
+			<position reqpos="bend">I order %G to lean over %S.</position>
+			<position reqpos="underarm">I take %G under my left arm, lifting her off of her feet.</position>
+			<position reqpos="otk">I sit down on %S and put %G over my knees.</position>
+			<position reqpos="otk">Sitting on %S, I put %G over my lap and pin her arms against her back.</position>
+			<position reqpos="stand">I order %G to bend down and touches her toes.</position>
+
+			<reactposition>"No, %Prsp can't do that!" %G says.</reactposition>
+			<reactposition>%G starts to tear up.</reactposition>
+			<reactposition reqpos="otk,underarm">%G tries to escape, but I hold her firmly.</reactposition>
+			<reactposition reqpos="otk">%G clings tightly to my leg.</reactposition>
+			<reactposition reqpos="lie,bend,stand">Having assumed the position, %G looks at me with pleading eyes.</reactposition>
+			
+			<watchposition reqalert="3,2" reqpos="otk">%povG looks in horror as %G is placed on my lap like a naughty kid.</watchposition>
+			<watchposition reqalert="3,2" reqpos="underarm">%povG looks in horror as I hold %G under my arm like a naughty kid.</watchposition>
+			<watchposition reqalert="3,2" reqpos="lie,bend,stand">%povG watches as %G assumes the position with a mix of fear and fascination.</watchposition>
+			<watchposition reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchposition>
+			
+			<undress reqund="clothed">I decide to start the spanking over %G's clothed bottom.</undress>
+			<undress reqund="underwear">I %CGrem, exposing her %UndD.</undress>
+			<undress reqund="bare">I %CGrem and lower her %UndD, baring her bottom.</undress>
+			
+			<reactundress reqund="bare">"No%OCA! Not on the bare!" %G cries.</reactundress>
+			<reactundress reqund="bare">%G squirms, grabbing at her %UndN in a futile attempt to prevent being bared.</reactundress>
+			<reactundress reqund="underwear">"%OCBNo! %Prsp can see my %UndN!" %G cries.</reactundress>
+			<reactundress reqund="underwear">"P-please don't uncover me%OCA!" %G begs.</reactundress>
+			<reactundress reqund="underwear">"No!" %G exclaims. "Can't %Prsp do this over my clothes?"</reactundress>
+			<reactundress reqund="clothed">"This will hurt..." %G cries.</reactundress>
+			<reactundress reqund="clothed">"%OCBn-not too hard, please..." %G mutters.</reactundress>
+			
+			<watchundress reqalert="3,2">%povG turns her head away and closes her eyes.</watchundress>
+			<watchundress reqalert="3,2">As I %CGrem, %povG covers her eyes.</watchundress>
+			<watchundress reqalert="3,2" reqund="bare">Seeing %G's bare bottom exposed, %povG gasps loudly.</watchundress>
+			<watchundress reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchundress>
+			
+			<!-- reqrepnt = 0: defiant, reqrepnt = 1: unsure, reqrepnt = 2: repentful -->
+			<!-- reqpain = 0: not in pain. -->
+
+			<during>I spank %G severely.</during>
+			<during>I spank %G strictly.</during>
+			<during>[b]%Isfx[/b]</during>
+			<during>[b]%Isfx[/b] [b]%Isfx[/b]</during>
+			<during>[b]%Isfx[/b] [b]%Isfx[/b] [b]%Isfx[/b] ...</during>
+			<during>%I strikes %G on %U.</during>
+			<during>[b]%Isfx[/b] I spank %G firmly.</during>
+			<during>I bring %I down hard on %G's %U.</during> 
+			<during>[b]%Isfx[/b] "This is-" [b]%Isfx[/b] "what happens-" [b]%Isfx[/b] "to bad-" [b]%Isfx[/b] "girls!"</during>
+
+			<during reqpain="0" reqund="bare">%I hits %G pale ass.</during>
+			<during reqpain="1" reqund="bare">%I hits %G pink ass.</during>
+			<during reqpain="2" reqund="bare">%I hits %G's reddish-pink ass.</during>
+			<during reqpain="3" reqund="bare">%I hits %G's red ass.</during>
+			<during reqpain="4" reqund="bare">%I hits %G's purplish-red ass.</during>
+
+			<during reqpain="1" reqund="underwear">As I spank, I can see a hint of %G's pink ass below her %UndN.</during>
+			<during reqpain="2" reqund="underwear">As I spank, I can see a hint of %G's reddish-pink ass below her %UndN.</during>
+			<during reqpain="3" reqund="underwear">As I spank, I can see a hint of %G's red ass below her %UndN.</during>
+			<during reqpain="4" reqund="underwear">As I spank, I can see a hint of %G's purplish-red ass below her %UndN.</during>
+
+			<reactduring reqpain="0" reqrepnt="0">%G looks back at me clenching her teeth.</reactduring>
+			<reactduring reqpain="0" reqrepnt="0">%G angrily balls her hands into fists.</reactduring>
+			<reactduring reqpain="0" reqrepnt="0">%G glares angrily at me.</reactduring>
+			<reactduring reqpain="0" reqrepnt="0,1">%G doesn't react.</reactduring>
+			<reactduring reqpain="0" reqrepnt="0,1">%G squirms uncomfortably.</reactduring>
+			<reactduring reqpain="0" reqrepnt="0,1,2">"Ouch..." says %G.</reactduring>
+			<reactduring reqpain="0" reqrepnt="1,2">%G slumps her head and stays quiet.</reactduring>
+
+			<!-- reqpain = 1: a bit of pain. -->
+			<reactduring reqpain="1">%G yelps in surprised pain.</reactduring>
+			<reactduring reqpain="1" reqrepnt="0">"Stop, %Prsptb hurting me!" cries %G.</reactduring>
+			<reactduring reqpain="1" reqrepnt="0">%G glowers at me angrily. "I don't deserve this!"</reactduring>
+			<reactduring reqpain="1" reqrepnt="0,1">"Ouch!" cries %G, "%OCBThis hurts!"</reactduring>
+			<reactduring reqpain="1" reqrepnt="0,1">[b]%Isfx[/b] [b]%Isfx[/b] %G's body jerks with every hit.</reactduring>
+			<reactduring reqpain="1" reqrepnt="0,1">%G starts to look uncomfortable.</reactduring>
+			<reactduring reqpain="1" reqrepnt="2">%G's shoulders tremble as she sobs.</reactduring>
+			<reactduring reqpain="1" reqrepnt="2">%G sobs quietly.</reactduring>
+			
+			<!-- reqpain = 2: some pain -->
+			<reactduring reqpain="2" reqrepnt="0">%G looks back at me, her angry eyes wet with tears.</reactduring>
+			<reactduring reqpain="2" reqrepnt="0">%G squirms frustratedly.</reactduring>
+			<reactduring reqpain="2" reqrepnt="0">"Ow!" [b]%Isfx[/b] "Stop%OCA!" [b]%Isfx[/b] "No more!!"</reactduring>
+			<reactduring reqpain="2" reqrepnt="1">"%OCBI learned my lesson already, stop it!" cries %G.</reactduring>
+			<reactduring reqpain="2" reqrepnt="1">"Fine, I'm sorry...!" %G frantically says.</reactduring>
+			<reactduring reqpain="2" reqrepnt="1">"%OCBI-I get it, I'm sorry!" %G shouts. "Let me go!"</reactduring>
+			<reactduring reqpain="2" reqrepnt="2">"Aauu..." %G cries aloud.</reactduring>
+			
+			<!-- reqpain = 3: enough pain; 
+				 reqpain = 4: a lot of pain 
+				 reqpain = 5: stop already! -->
+			<reactduring reqpain="2,3,4" reqrepnt="0" reqpos="otk,underarm">"Stop it!" %G fiercely struggles, trying to get away from me.</reactduring>
+			<reactduring reqpain="2,3,4" reqrepnt="0,1" reqpos="bend,lie">%G tries to cover her bottom with her hand, but I hold her hand away.</reactduring>
+			<reactduring reqpain="2,3,4" reqpos="lie,underarm,otk">%G kicks her legs in pain.</reactduring>
+			<reactduring reqpain="2,3,4" reqrepnt="1,2">%G cries that she'll be a good girl.</reactduring>
+			<reactduring reqpain="2,3,4" reqrepnt="1,2">"%OCBPlease, stop!" cries %G.</reactduring>
+			<reactduring reqpain="1,2,3,4" reqrepnt="1,2">"I'm sorry%OCA!" cries %G.</reactduring>
+			<reactduring reqpain="2,3,4" reqrepnt="0,1">%G looks back at %I in panic: "It stings too much%OCA!"</reactduring>
+			<reactduring reqpain="3,4" reqrepnt="2">%G sobs and stutters out multiple apologies.</reactduring>
+			<reactduring reqpain="3,4">%G cries like a child.</reactduring>
+			<reactduring reqpain="3,4" reqpos="bend,stand">%G struggles to remain in place.</reactduring>
+			<reactduring reqpain="3,4" reqpos="stand">%G staggers forward with a loud whimper, and I tug her back into position.</reactduring>
+			<reactduring reqpain="3,4" reqpos="otk,underarm">%G's toes curl tightly against her feet.</reactduring>
+			<reactduring reqpain="3,4" reqpos="otk">%G frantically kicks her legs and wails.</reactduring>
+			<reactduring reqpain="3,4" reqrepnt="1">"I'll be good%OCA, I'll be good!" %G shouts.</reactduring>
+			<reactduring reqpain="3,4" reqrepnt="1">Crying openly, %G squirms in place.</reactduring>
+			<reactduring reqpain="4">%G buries her face in her hands and cries aloud.</reactduring>
+			<reactduring reqpain="4">With a pained squeal, %G shouts, "%OCBI'm sorry, I'm s-sorrrrry! P-please, stop, it h-h-hurts!"</reactduring>
+			<reactduring reqpain="5">%G shrieks, begging me to stop through tears.</reactduring>
+			<reactduring reqpain="5" reqrepnt="1,2">%G wails, her body tensing fiercely.</reactduring>
+			
+			<watchduring reqalert="3,2">%povG watches while I spank %G, terrified.</watchduring>
+			<watchduring reqalert="3,2">%povG plugs her ears, visibly wincing with every loud %Isfx</watchduring>
+			<watchduring reqalert="3,2">As %G is punished, %povG seems relieved it's not her getting spanked by %I.</watchduring>
+			<watchduring reqalert="3,2">%povG gasps as %I strikes %G's behind.</watchduring>
+			<watchduring reqalert="3,2" reqpain="1,2" reqund="bare">%povG looks wide-eyed at %G's reddening ass.</watchduring>
+			<watchduring reqalert="3,2" reqpain="3" reqund="bare">%povG looks wide-eyed at %G's red ass.</watchduring>
+			<watchduring reqalert="3,2" reqpain="4" reqund="bare">%povG looks horrified at %G's bright red ass.</watchduring>
+			<watchduring reqalert="3,2" reqpain="3,4">"%Prsptb hurting her!" cries %povG.</watchduring>
+			<watchduring reqalert="3,2" reqpain="3,4">%povG looks in horror at %G breaking down.</watchduring>
+			<watchduring reqalert="3,2" reqpain="3,4">Seeing %G crying like that, %povG looks very nervous.</watchduring>
+			<watchduring reqalert="3,2" reqpain="3,4">%PovG tenses, feeling sorry for %G.</watchduring>
+			<watchduring reqalert="3,2" reqpain="3,4" reqund="bare">%povG looks in disbelief at how red %G's ass is.</watchduring>
+			<watchduring reqalert="3,2" reqpain="3,4" reqpos="otk,underarm">%povG seems transfixed by the sight of %G kicking her legs and crying.</watchduring>
+			<watchduring reqalert="3,2" reqpain="4,5">"Stop it%OCA!" cries %povG: "She already learned her lesson!"</watchduring>
+			<watchduring reqalert="3,2" reqpain="4,5">"%OCBWhat are you doing?" %povG shouts. "Can't you see she's had enough!?"</watchduring>
+			<watchduring reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchduring>
+			
+			<scold>I tell %G that her behavior was unacceptable.</scold>
+			<scold>I tell %G that if she insists on behaving like a bad girl, then she'll be treated like one.</scold>
+			<scold>I tell %G that I'm very disappointed with her.</scold>
+			<scold>I chastise %G, telling her I know she can do better.</scold>
+			<scold>Taking a pause, I tell %G that she needs to correct her behavior.</scold>
+			<scold>Giving %G a gentle shake, I warn her to do better in the future.</scold>
+			<scold>I scold %G, reminding her that she earned her spanking.</scold>
+			<scold>Between spanks, I tell %G that she's really let me down.</scold>
+			<scold>I tell %G that I don't like punishing her, but that she's earned it.</scold>
+			
+			<reactscold reqrepnt="0">%G looks back and says: "No, %Prsp can't do this to me!"</reactscold>
+			<reactscold reqrepnt="0">"Ugh... Wh-whatever!"%G responds defiantly.</reactscold>
+			<reactscold reqrepnt="0" reqpos="otk,underarm">%G doesn't answer and stiffens her body.</reactscold>
+			<reactscold reqrepnt="0" reqpain="3,4">"No! No!" %G cries angrily.</reactscold>
+			<reactscold reqrepnt="1">%G looks back and says: "I-I understand%OCA! Now please, stop!"</reactscold>
+			<reactscold reqrepnt="1">%G looks back with a teary face: "Stop it%OCA, I'll behave myself..."</reactscold>
+			<reactscold reqrepnt="1">%G seems somewhat more contrite after hearing that.</reactscold>
+			<reactscold reqrepnt="1" reqpain="0,1">%G sheepishly looks away.</reactscold>
+			<reactscold reqrepnt="1" reqpain="0,1">Frowning, %G looks at me regretfully.</reactscold>
+			<reactscold reqrepnt="1" reqpain="3">"S-s-soooorryyyyy...! J-just stop already%OCA..." %G cries.</reactscold>
+			<reactscold reqrepnt="2">"Yes%OCA, I was bad..." says %G.</reactscold>
+			<reactscold reqrepnt="2">"S-sorrry%OCA! I'll b-be better!" %G responds between sobs.</reactscold>
+			<reactscold reqrepnt="2">%G nods, covering her face with her hands.</reactscold>
+			<reactscold reqrepnt="2">%G looses several sad sobs, nodding.</reactscold>
+			<reactscold reqrepnt="2" reqpain="3,4">"%OCBI'm sorryyy..." cries %G.</reactscold>
+			
+			<watchscold reqalert="3,2">%povG shuffles her feet, looking very uncomfortable to be here.</watchscold>
+			<watchscold reqalert="3,2">%povG turns her head away, pretending she didn't hear what I said to %G.</watchscold>
+			<watchscold reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchscold>
+			
+			<undressmore reqund="underwear">I make a pause to %CGrem, exposing her %UndD.</undressmore>
+			<undressmore reqund="bare">I lower %G's %UndN, baring her bottom.</undressmore>
+			
+			<reactundressmore reqund="underwear">"No%OCA! Wait!" cries %G, as her underwear is now on full display.</reactundressmore>
+			<reactundressmore reqund="underwear">"%G kicks her legs. "No! Stop%OCA!"</reactundressmore>
+			<reactundressmore reqund="bare">"%OCBNot on the bare!" says %G, looking back in horror.</reactundressmore>
+			<reactundressmore reqund="bare">%G looks back and whimpers in fright, trying to cover her exposed bottom.</reactundressmore>
+
+			<watchundressmore reqalert="3,2">%povG turns her head away and closes her eyes.</watchundressmore>
+			<watchundressmore reqalert="3,2">%povG squeezes her eyes shut tightly.</watchundressmore>
+			<watchundressmore reqalert="3,2" reqund="bare">Seeing %G's bare bottom exposed, %povG gasps loudly.</watchundressmore>
+			<watchundressmore reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchundressmore>
+			
+			<over>"The spanking is over." I finally say.</over>
+			<over>I tell %G the spanking is over.</over>
+			<over>I pat %G's back reassuringly to let her know its over.</over>
+			<over>Seeing her state, I tell %G the spanking is over.</over>
+			<over>I finish the spanking with a final [b]%Isfx[/b] before letting her out of position.</over>
+			<over reqpos="otk">I take my hand from %G's back and tell her the spanking is over.</over>
+			<over reqpos="bend">I lower %I, signaling the end of %G's spanking.</over>
+			<over reqrepnt="1,2">I lower %I and end the spanking, telling %G she's forgiven.</over>
+			<over reqrepnt="2">Ending the punishment, I help %G out of position, and give her a gentle hug before releasing her.</over>
+			<over reqrepnt="2">Seeing that %G has learned her lesson, I end the spanking with an affectionate pat on her head.</over>
+			
+			<reactover reqpain="0,1" reqrepnt="0">%G looks at me and grins: "Ha! That didn't hurt!"</reactover>
+			<reactover reqpain="0,1" reqrepnt="0">%G readjusts her clothing, looking frustrated. "Barely even hurt."</reactover>
+			<reactover reqpain="0,1" reqrepnt="1">%G holds her bottom and looks at me, confused.</reactover>
+			<reactover reqpain="0,1" reqrepnt="1">Glad to not have gotten it worse, %G sighs in relief.</reactover>
+			<reactover reqpain="0,1" reqrepnt="2">%G looks at me: "Thanks for not going hard on me%OCA... I learned my lesson!"</reactover>
+
+			<reactover reqpain="2" reqrepnt="0">%G stands up and steps back, sniffling and looking angrily at me with tearful eyes.</reactover>
+			<reactover reqpain="2" reqrepnt="1">%G stands up, sobbing.</reactover>
+			<reactover reqpain="2" reqrepnt="1">Wiping a few tears away, %G stands up.</reactover>
+			<reactover reqpain="2" reqrepnt="2">%G looks at me: "I-I'll be a better girl%OCA!"</reactover>
+
+			<reactover reqpain="3" reqrepnt="0">%G cries: "%OCBT-this was unfair!"</reactover>
+			<reactover reqpain="3" reqrepnt="0">"%Prsptb a jerk!" %G professes, rubbing her bottom.</reactover>
+			<reactover reqpain="3" reqrepnt="1">%G cries: "I-I learned my lesson%OCA."</reactover>
+			<reactover reqpain="3" reqrepnt="2">%G cries sadly: "%OCBI-I'm sorry..."</reactover>
+			
+			<reactover reqpain="4,5">%G cries convulsively.</reactover>
+			<reactover reqpos="otk" reqpain="3,4">%G remains on my lap, crying.</reactover>
+			<reactover reqpos="underarm" reqpain="2,3,4">I let a tearful %G down.</reactover>
+			<reactover reqpos="lie,bend,stand" reqpain="2,3,4">%G stands up, sobbing.</reactover>
+			
+			<watchover reqalert="3,2">%povG lets out a breath of relief seeing that %G's spanking is over.</watchover>
+			<watchover reqalert="3,2">%povG looks at %G with some sympathy.</watchover>
+			<watchover reqalert="3,2">%povG looks fearfully at me.</watchover>
+			<watchover reqalert="3,2" reqpain="4,5">%povG gives %G a sympathetic hug before going back to what she was doing.</watchover>
+			<watchover reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchover>
+			
+		</spanking>
+	</messages>
+	
+</game>
