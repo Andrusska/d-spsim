@@ -1,0 +1,35 @@
+4chan:
+======
+
+
+<!-- call is how the girls refer to the protagonist. Unlike typical messages, call serves
+
+to be inserted on other messages. In correct English, this should usually be just "you". Even
+
+"Sir" or "Ma'am" will look unnatural on a lot of cases. But since we're doing an anime based
+
+sim, we need to have girls calling you onii-chan, Shinji-kun or Sempai. If call is
+
+different from "you", the game assumes the call uses third person syntax, so %Prsptb in
+
+"%Prsptb hurting me..." becomes "Onii-chan is hurting me..." instead of "You're hurting me..."
+
+YOU'RE WELCOME.
+
+Additionally, if you have girls calling you something other than "you", you can add %OCB Before
+
+the start of her lines or %OCA After them. This becomes an "Optional Call." Say you have a girl
+
+that calls you "Shinji-kun": Then "%OCBI-I was a bad girl..." becomes
+
+"Shinji-kun, I-I was a bad girl..."
+
+while another girl that calls you "you" will say just "I-I was a bad girl..." on the same message.
+
+Likewise, "Please, forgive me%OCA." becomes "Please, forgive me, Shinji-kun." for the first girl
+
+and "Please, forgive me." for people who call you "you". -->
+
+<call>you</call>
+
+<!-- <call>Mr. Rogers</call> WHAT THE HELL IS WRONG WITH YOU?! D: -->
