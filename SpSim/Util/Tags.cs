@@ -11,6 +11,13 @@ namespace SpSim.Util
     /// </summary>
     public class Tags
     {
+        //Implements
+        public const string IMPLEMENT = "implement";
+        public const string IMPLEMENT_NAME = "name";
+        public const string IMPLEMENT_ID = "id";
+        public const string IMPLEMENT_STRENGTH = "strength";
+        public const string IMPLEMENT_SFX = "sfx";
+
         //Protagonist
         public const string PROTAGONIST = "protagonist";
         public const string PROTAGONIST_NAME = "name";
@@ -25,6 +32,7 @@ namespace SpSim.Util
         public const string ROOM_NAME = "name";
         public const string ROOM_DESCRIPTION = "description";
         public const string ROOM_LINKS = "links";
+        public const string ROOM_PRE = "pre";
         public const string ROOM_SITPLACE = "sitplace";
         public const string ROOM_LIEPLACE = "lieplace";
         public const string ROOM_BENDPLACE = "bendplace";

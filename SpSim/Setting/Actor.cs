@@ -13,6 +13,20 @@ namespace SpSim.Setting
     /// </summary>
     public class Actor
     {
+        /// <summary>
+        /// The actors id. Because it references this Actor
+        /// it should be unique.
+        /// </summary>
+        public long Id;
+
+        /// <summary>
+        /// The actor's name
+        /// </summary>
+        public string Name;
+
+        /// <summary>
+        /// The id of the containing room
+        /// </summary>
         public long CurrentRoom;
 
         /// <summary>

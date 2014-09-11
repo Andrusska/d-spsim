@@ -11,12 +11,14 @@ namespace SpSim.Setting
     /// </summary>
     public class Protagonist : Actor
     {
-        public string Name;
         public Gender Gender;
 
         public string Lore;
         public long OwnRoom;
         public long CurrentRoom;
+
+        public long LockedImplement = -1;
+        public long VariableImplement = -1;
 
         public override string ToString()
         {

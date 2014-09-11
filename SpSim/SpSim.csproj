@@ -57,12 +57,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Setting\Action.cs" />
     <Compile Include="Setting\Actor.cs" />
+    <Compile Include="Setting\Implement.cs" />
     <Compile Include="Setting\Location.cs" />
     <Compile Include="Setting\Protagonist.cs" />
     <Compile Include="Setting\Room.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ActorUtil.cs" />
     <Compile Include="Util\IOHelper.cs" />
     <Compile Include="Util\StringHelper.cs" />
     <Compile Include="Util\Tags.cs" />
@@ -81,9 +84,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.xml" />
+    <Content Include="Default.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Setting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SpSim.Setting;
 using System.Xml;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SpSim.Util
 {
@@ -15,7 +16,7 @@ namespace SpSim.Util
         /// <summary>
         /// Imports the Xml-File and creates the Setting
         /// </summary>
-        public static Location ImportFile(string filename)
+        public static Location ImportFile(string filename, TextBox display)
         {
             XmlDataDocument xml = new XmlDataDocument();
 
@@ -23,9 +24,12 @@ namespace SpSim.Util
             xml.Load(fs);
 
             Location output = new Location();
+            output.Display = display;
             output.Protagonist = ImportProtagonist(xml);
             output.Rooms.AddRange(ImportRooms(xml));
+            output.Implements.AddRange(ImportImplements(xml));
 
+            output.Prepare();
             return output;
         }
 
@@ -57,6 +61,10 @@ namespace SpSim.Util
                     r.Links.Add(Convert.ToInt64(s));
                 }
 
+                if (xn[Tags.ROOM_PRE] != null)
+                {
+                    r.Pre = xn[Tags.ROOM_PRE].InnerText.Trim();
+                }
                 if (xn[Tags.ROOM_BENDPLACE] != null)
                 {
                     r.BendPlace = xn[Tags.ROOM_BENDPLACE].InnerText.Trim();
@@ -76,6 +84,9 @@ namespace SpSim.Util
             return output;
         }
 
+        /// <summary>
+        /// Imports the protagonist
+        /// </summary>
         private static Protagonist ImportProtagonist(XmlDocument xml)
         {
             XmlNodeList xmlnode;
@@ -96,6 +107,43 @@ namespace SpSim.Util
             else
             {
                 output.Gender = Gender.Female;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Imports the implements
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        private static List<Implement> ImportImplements(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<Implement> output = new List<Implement>();
+            Implement impl;
+            string[] sfx;
+
+            xmlnode = xml.GetElementsByTagName(Tags.IMPLEMENT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                impl = new Implement();
+
+                impl.Id = Convert.ToInt64(xn[Tags.IMPLEMENT_ID].InnerText.Trim());
+
+                impl.Name = xn[Tags.IMPLEMENT_NAME].InnerText.Trim();
+
+                impl.Strength = Convert.ToInt32(xn[Tags.IMPLEMENT_STRENGTH].InnerText.Trim());
+
+                sfx = xn[Tags.IMPLEMENT_SFX].InnerText.Split(',');
+                foreach (string s in sfx)
+                {
+                    impl.SFX.Add(s);
+                }
+
+                output.Add(impl);
             }
 
             return output;

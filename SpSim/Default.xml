@@ -458,35 +458,55 @@
 			<id>1</id>
 			<name>slipper</name>
 			<strength>3</strength>
-			<sfx>SLAP!</sfx>
-			<sfx>SMACK!</sfx>
+			<sfx>SLAP!,SMACK!</sfx>
 		</implement>
 		<implement>
 			<id>2</id>
 			<name>belt</name>
-			<strength>3</strength>
-			<sfx>VAPT!</sfx>
-			<sfx>CRACK!</sfx>
+			<strength>4</strength>
+			<sfx>VAPT!,CRACK!</sfx>
 		</implement>
 		<implement>
 			<id>3</id>
 			<name>hairbrush</name>
-			<strength>4</strength>
+			<strength>3</strength>
 			<sfx>SMACK!</sfx>
 		</implement>
 		<implement>
 			<id>4</id>
 			<name>cane</name>
 			<strength>5</strength>
-			<sfx>CRACK!</sfx>
-			<sfx>VAPT!</sfx>
+			<sfx>CRACK!,VAPT!</sfx>
 		</implement>
 		<implement>
 			<id>5</id>
 			<name>paddle</name>
 			<strength>5</strength>
+			<sfx>SMACK!,SLAP!</sfx>
+		</implement>
+		<implement>
+			<id>6</id>
+			<name>carpet beater</name>
+			<strength>5</strength>
+			<sfx>SMACK!,SLAP!</sfx>
+		</implement>
+		<implement>
+			<id>7</id>
+			<name>wooden spoon</name>
+			<strength>3</strength>
 			<sfx>SMACK!</sfx>
-			<sfx>SLAP!</sfx>
+		</implement>
+		<implement>
+			<id>7</id>
+			<name>switch</name>
+			<strength>4</strength>
+			<sfx>CRACK!,VAPT!</sfx>
+		</implement>
+		<implement>
+			<id>8</id>
+			<name>riding crop</name>
+			<strength>4</strength>
+			<sfx>CRACK!,VAPT!</sfx>
 		</implement>
 	</implements>
 	
@@ -1083,7 +1103,7 @@
 			
 		</status>
 		
-		<implement>
+		<msgimplement>
 			<pick>I pick up %I.</pick>
 			<pick>I get %I.</pick>
 
@@ -1114,7 +1134,7 @@
 			<reactdrop reqalert="3">%povG looks relieved when I release %I.</reactdrop>
 			<reactdrop reqalert="3">"Whew..." says %povG.</reactdrop>
 			<reactdrop reqalert="2,1,0">%povG is %Aing and doesn't notice when I drop %I.</reactdrop>
-		</implement>
+		</msgimplement>
 		
 		<holding>
 			<announce>Having decided to get %G, I approach her.</announce>
@@ -1203,11 +1223,11 @@
 			<watchannounce reqalert="2,3">%povG looks very uncomfortable.</watchannounce>
 			<watchannounce reqalert="2,3">%povG looks around, as if she suddenly wishes to be elsewhere.</watchannounce>
 			<watchannounce reqalert="0,1">%povG is %Aing and doesn't notice what's happening.</watchannounce>
-			
-			<implement>I tell %G that she'll be spanked with %I.</implement>
-			<implement>I show %I and tell %G she'll severely spanked with it.</implement>
-			<implement>I hold up %I to let %G know I'm going to use it on her.</implement>
-			<implement>I explain to %G that she'll be punished with %I.</implement> 
+
+      <announceimplement>I tell %G that she'll be spanked with %I.</announceimplement>
+      <announceimplement>I show %I and tell %G she'll severely spanked with it.</announceimplement>
+      <announceimplement>I hold up %I to let %G know I'm going to use it on her.</announceimplement>
+      <announceimplement>I explain to %G that she'll be punished with %I.</announceimplement> 
 			
 			<reactimplement>"No%OCA! %Isp hurts too much!" %G says, shaking her head.</reactimplement>
 			<reactimplement>"I don't want to be spanked with %Isp..." says %G.</reactimplement>

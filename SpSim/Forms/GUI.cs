@@ -34,15 +34,18 @@ namespace SpSim.Forms
             string Path = string.Empty;
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "sim files (*.xml)|*.xml |All files (*.*)|*.*";
+            openFileDialog.Filter = "XML-File (*.xml)|*.xml |All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK) { 
                 Path = openFileDialog.FileName;
             }
 
-            location = IOHelper.ImportFile(Path);
-            location.Display = Display;
+            location = IOHelper.ImportFile(Path, Display);
+
+            /*
+            //Import testing block
             location.PrintProtagonist();
             location.PrintRooms();
+            location.PrintImplements();*/
         }
     }
 }

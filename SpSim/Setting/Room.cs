@@ -30,6 +30,12 @@ namespace SpSim.Setting
         /// </summary>
         public List<long> Links = new List<long>();
 
+        /// <summary>
+        /// An optional attribute to correct some language-mistakes
+        /// e.g. "I'm in the roof" with <pre>at</pre> would change to -> "I'm at the roof"
+        /// </summary>
+        public string Pre = "in";
+
         /*
          *  Positionplaces during the spanking scenes with some defaults 
          */
@@ -40,6 +46,11 @@ namespace SpSim.Setting
         public override string ToString()
         {
             return String.Format("Room: {0} | {1} | {2} | {3} | {4} | {5} | {6}", Id, Name, Description, String.Join(",", Links.ToArray()), BendPlace, LiePlace, SitPlace);
+        }
+
+        public string GetStatus()
+        {
+            return Pre + " " + Name;
         }
     }
 }
