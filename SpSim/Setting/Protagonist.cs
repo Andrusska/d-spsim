@@ -15,7 +15,6 @@ namespace SpSim.Setting
 
         public string Lore;
         public long OwnRoom;
-        public long CurrentRoom;
 
         public long LockedImplement = -1;
         public long VariableImplement = -1;

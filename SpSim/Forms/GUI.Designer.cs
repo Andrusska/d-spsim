@@ -59,6 +59,7 @@
             this.Input.Name = "Input";
             this.Input.Size = new System.Drawing.Size(747, 20);
             this.Input.TabIndex = 1;
+            this.Input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Input_KeyDown);
             // 
             // menuStrip1
             // 

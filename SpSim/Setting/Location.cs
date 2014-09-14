@@ -83,13 +83,13 @@ namespace SpSim.Setting
 
         #endregion
 
-        #region Status/Options Methods
+        #region Status/Evaluate Actions
 
         /// <summary>
         /// Generally informs the player about the room
         /// and the actors after taking an action
         /// </summary>
-        private void PrintStatus()
+        public void PrintStatus()
         {
             string output = "";
 
@@ -143,7 +143,7 @@ namespace SpSim.Setting
         /// <summary>
         /// Refills the ActionList with all possible Actions
         /// </summary>
-        private void EvaluatePossibleAction()
+        public void EvaluatePossibleAction()
         {
             //Clear the ActionList
             PossibleActions.Clear();
@@ -164,7 +164,7 @@ namespace SpSim.Setting
             PossibleActions.Add(lookAround);
 
             //Think about yourself
-            PossibleActions.Add(new Action("Think about yourself", ActionType.THINK_ABOUT_YOURSELF, Protagonist.Lore));
+            PossibleActions.Add(new Action("Think about yourself", ActionType.THINK_ABOUT_YOURSELF, StringHelper.UnbreakLines(Protagonist.Lore)));
         }
 
         /// <summary>
@@ -178,9 +178,9 @@ namespace SpSim.Setting
             foreach (long l in ActorUtil.GetRoomById(Rooms, Protagonist.CurrentRoom).Links)
             {
                 room = ActorUtil.GetRoomById(Rooms, l);
-                action = new Action(String.Format("Move to the {0}", room.Name), ActionType.MOVE_TO_ROOM);
+                action = new Action(String.Format("Move to {0}", room.Name), ActionType.MOVE_TO_ROOM);
                 action.Params.Add(room.Id);
-                action.ActionText = String.Format("I go to the {0}", room.Name);
+                action.ActionText = String.Format("I go to {0}", room.Name);
                 PossibleActions.Add(action);
             }
         }
@@ -213,7 +213,7 @@ namespace SpSim.Setting
         /// Prints the available options of the protagonist
         /// for the player to choose from
         /// </summary>
-        private void PrintAvailableActions()
+        public void PrintAvailableActions()
         {
             string output = "";
 
@@ -223,6 +223,111 @@ namespace SpSim.Setting
             }
 
             Display.AppendText(Environment.NewLine + output + Environment.NewLine);
+        }
+
+        #endregion
+
+        #region ActionHandling
+
+        /// <summary>
+        /// Reacts to a players index selection
+        /// </summary>
+        public void HandleSelection(int input)
+        {
+            //Sort out illegal inputs
+            if (input < 0 || input >= PossibleActions.Count)
+            {
+                throw new Exception();
+            }
+
+            Action selectedAction = PossibleActions[input];
+
+            switch (selectedAction.Type)
+            {
+                case ActionType.LOOK_AROUND_ROOM:
+                    ReactLookAround(selectedAction);
+                    break;
+                case ActionType.THINK_ABOUT_YOURSELF:
+                    ReactThinkAboutYourself(selectedAction);
+                    break;
+                case ActionType.MOVE_TO_ROOM:
+                    ReactMoveToRoom(selectedAction);
+                    break;
+                case ActionType.PICK_UP_IMPLEMENT:
+                    ReactPickUpImplement(selectedAction);
+                    break;
+                case ActionType.DROP_IMPLEMENT:
+                    ReactDropImplement(selectedAction);
+                    break;
+                default: break;
+            }
+        }
+
+        /// <summary>
+        /// Reaction to the LookAround Action
+        /// </summary>
+        private void ReactLookAround(Action action)
+        {
+            string output = Environment.NewLine;
+            output += action.ActionText + Environment.NewLine;
+            Display.AppendText(output);
+        }
+
+        /// <summary>
+        /// Reaction to the ThinkAboutYourself Action
+        /// </summary>
+        private void ReactThinkAboutYourself(Action action)
+        {
+            string output = Environment.NewLine;
+            output += action.ActionText + Environment.NewLine;
+            Display.AppendText(output);
+        }
+
+        /// <summary>
+        /// Reaction to the MoveToRoom Action
+        /// </summary>
+        private void ReactMoveToRoom(Action action)
+        {
+            string output = Environment.NewLine;
+            Protagonist.CurrentRoom = (long)action.Params[0];
+            output += action.ActionText + Environment.NewLine;
+            Display.AppendText(output);
+        }
+
+        /// <summary>
+        /// Reaction to the PickUpImplement Action
+        /// </summary>
+        private void ReactPickUpImplement(Action action)
+        {
+            string output = Environment.NewLine;
+            Implement newImplement = ActorUtil.GetImplementById(Implements, (long)action.Params[0]);
+
+            //If the protagonist already holds an implement
+            if (Protagonist.VariableImplement != -1)
+            {
+                //Drop the current Implement
+                ActorUtil.GetImplementById(Implements, Protagonist.VariableImplement).CurrentRoom = Protagonist.CurrentRoom;
+                Protagonist.VariableImplement = -1;
+            }
+            Protagonist.VariableImplement = newImplement.Id;
+            newImplement.CurrentRoom = 0;
+
+            output += action.ActionText + Environment.NewLine;
+            Display.AppendText(output);
+        }
+
+        /// <summary>
+        /// Reaction to the DropImplement Action
+        /// </summary>
+        private void ReactDropImplement(Action action)
+        {
+            string output = Environment.NewLine;
+
+            ActorUtil.GetImplementById(Implements, Protagonist.VariableImplement).CurrentRoom = Protagonist.CurrentRoom;
+            Protagonist.VariableImplement = -1;
+
+            output += action.ActionText + Environment.NewLine;
+            Display.AppendText(output);
         }
 
         #endregion

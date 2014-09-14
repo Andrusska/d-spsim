@@ -47,5 +47,29 @@ namespace SpSim.Forms
             location.PrintRooms();
             location.PrintImplements();*/
         }
+
+        private void Input_KeyDown(object sender, KeyEventArgs e)
+        {
+            //Enter starts the Evaluation
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    location.HandleSelection(Convert.ToInt32(Input.Text)); 
+                }
+                catch (Exception)
+                {
+                    Display.AppendText(Environment.NewLine + "Invalid Input!" + Environment.NewLine);
+                }
+
+                Input.Text = "";
+
+                location.PrintStatus();
+                location.EvaluatePossibleAction();
+                location.PrintAvailableActions();
+            }
+        }
+
+
     }
 }

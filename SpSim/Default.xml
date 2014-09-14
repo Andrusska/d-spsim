@@ -497,13 +497,13 @@
 			<sfx>SMACK!</sfx>
 		</implement>
 		<implement>
-			<id>7</id>
+			<id>8</id>
 			<name>switch</name>
 			<strength>4</strength>
 			<sfx>CRACK!,VAPT!</sfx>
 		</implement>
 		<implement>
-			<id>8</id>
+			<id>9</id>
 			<name>riding crop</name>
 			<strength>4</strength>
 			<sfx>CRACK!,VAPT!</sfx>
