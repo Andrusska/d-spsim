@@ -28,6 +28,7 @@ namespace SpSim.Util
             output.Protagonist = ImportProtagonist(xml);
             output.Rooms.AddRange(ImportRooms(xml));
             output.Implements.AddRange(ImportImplements(xml));
+            output.Clothes.AddRange(ImportClothes(xml));
 
             output.Prepare();
             return output;
@@ -115,8 +116,6 @@ namespace SpSim.Util
         /// <summary>
         /// Imports the implements
         /// </summary>
-        /// <param name="xml"></param>
-        /// <returns></returns>
         private static List<Implement> ImportImplements(XmlDocument xml)
         {
             XmlNodeList xmlnode;
@@ -149,5 +148,44 @@ namespace SpSim.Util
             return output;
         }
 
+        /// <summary>
+        /// Imports the clothes
+        /// </summary>
+        private static List<Clothing> ImportClothes(XmlDocument xml)
+        {
+            List<Clothing> output = new List<Clothing>();
+            Clothing cloth;
+            XmlNodeList xmlnode;
+
+            xmlnode = xml.GetElementsByTagName(Tags.CLOTHING);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                cloth = new Clothing();
+
+                cloth.Id = Convert.ToInt64(xn[Tags.CLOTHING_ID].InnerText.Trim());
+
+                cloth.Name = StringHelper.UnbreakLines(xn[Tags.CLOTHING_NAME].InnerText.Trim());
+                cloth.Description = StringHelper.UnbreakLines(xn[Tags.CLOTHING_DESCRIPTION].InnerText.Trim());
+
+                cloth.Type = ActorUtil.GetClothingTypeByInt(Convert.ToInt32(xn[Tags.CLOTHING_TYPE].InnerText));
+                cloth.UndressT = ActorUtil.GetUndressTypeByInput(xn[Tags.CLOTHING_UNDRESSTYPE].InnerText);
+
+                cloth.Resistance = Convert.ToInt32(xn[Tags.CLOTHING_RESISTANCE]);
+
+                if (xn[Tags.CLOTHING_ARTICLE].InnerText == "true")
+                {
+                    cloth.Article = true;
+                }
+                else
+                {
+                    cloth.Article = false;
+                }
+
+                output.Add(cloth);
+            }
+
+            return output;
+        }
     }
 }

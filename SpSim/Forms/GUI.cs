@@ -34,20 +34,25 @@ namespace SpSim.Forms
             string Path = string.Empty;
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML-File (*.xml)|*.xml |All files (*.*)|*.*";
+            /*openFileDialog.Filter = "XML-File (*.xml)|*.xml |All files (*.*)|*.*";*/
+            openFileDialog.Filter = "All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK) { 
                 Path = openFileDialog.FileName;
+
+                location = IOHelper.ImportFile(Path, Display);
+
+                /*
+                //Import testing block
+                location.PrintProtagonist();
+                location.PrintRooms();
+                location.PrintImplements();*/
             }
 
-            location = IOHelper.ImportFile(Path, Display);
-
-            /*
-            //Import testing block
-            location.PrintProtagonist();
-            location.PrintRooms();
-            location.PrintImplements();*/
         }
 
+        /// <summary>
+        /// Handels the players input
+        /// </summary>
         private void Input_KeyDown(object sender, KeyEventArgs e)
         {
             //Enter starts the Evaluation

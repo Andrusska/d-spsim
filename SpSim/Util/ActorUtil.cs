@@ -47,5 +47,51 @@ namespace SpSim.Util
             return output;
         }
 
+        public static ClothingType GetClothingTypeByInt(int input)
+        {
+            switch (input)
+            {
+                case 1:
+                    return ClothingType.TOP;
+                    break;
+                case 2:
+                    return ClothingType.BOTTOM;
+                    break;
+                case 3:
+                    return ClothingType.ONEPIECE;
+                    break;
+                case 4:
+                    return ClothingType.BRA;
+                    break;
+                case 5:
+                    return ClothingType.PANTIES;
+                    break;
+                case 6:
+                    return ClothingType.SOCKS;
+                    break;
+                case 7:
+                    return ClothingType.SHOES;
+                    break;
+            }
+
+            return ClothingType.TOP;
+        }
+
+        public static UndressType GetUndressTypeByInput(string input)
+        {
+            switch (input)
+            {
+                case "down":
+                    return UndressType.DOWN;
+                case "off":
+                    return UndressType.OFF;
+                case "up":
+                    return UndressType.UP;
+                default: break;
+            }
+
+            return UndressType.DOWN;
+        }
+
     }
 }

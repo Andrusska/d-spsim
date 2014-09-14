@@ -32,6 +32,11 @@ namespace SpSim.Setting
         public List<Implement> Implements = new List<Implement>();
 
         /// <summary>
+        /// List of all clothes
+        /// </summary>
+        public List<Clothing> Clothes = new List<Clothing>();
+
+        /// <summary>
         /// The protagonist
         /// </summary>
         public Protagonist Protagonist = new Protagonist();

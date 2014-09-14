@@ -11,6 +11,16 @@ namespace SpSim.Util
     /// </summary>
     public class Tags
     {
+        //Clothes
+        public const string CLOTHING = "clothing";
+        public const string CLOTHING_ID = "id";
+        public const string CLOTHING_NAME = "name";
+        public const string CLOTHING_DESCRIPTION = "description";
+        public const string CLOTHING_TYPE = "type";
+        public const string CLOTHING_UNDRESSTYPE = "und";
+        public const string CLOTHING_RESISTANCE = "resistance";
+        public const string CLOTHING_ARTICLE = "reqart";
+
         //Implements
         public const string IMPLEMENT = "implement";
         public const string IMPLEMENT_NAME = "name";
