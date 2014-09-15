@@ -14,8 +14,6 @@ Currently I'm the only one working on this project, but help is always appreciat
 
 Update History:
 ===============
-11th September, 2014:
-  Nothing special so far. Rooms, the protagonist and the implements are importable...
 14th September, 2014:
   Tidy up your house edition
 	+ Basic Stuff
@@ -23,6 +21,10 @@ Update History:
 	+ Default Actions (Look around etc.)
 	+ Implement Actions (PickUp Drop)
 	+ Added some Implements in the Default.xml
+	
+11th September, 2014:
+  Nothing special so far. Rooms, the protagonist and the implements are importable...
+
 
 Broken/Not-Working-As-Planned-"Features"
 ========================================
@@ -49,7 +51,15 @@ Changes so far:
       </room>
       
   ~ Clothes need some rework
-    e.g. old:
+    ~ <covers> is changed to <type>
+    ~ type must be refactored due to the bras:
+    	type = 1 : Top 		(shirt, hoodie, etc)
+    	type = 2 : Bottom 	(pants, etc.)
+    	type = 3 : Onepiec	(dresses, etc)
+    	type = 4 : Bra	
+    	type = 5 : Panties
+    	type = 6 : Socks
+    	type = 7 : Footwear
       
 
   ~ Some tags in the message section were renamed due to C#s file wide scanning
