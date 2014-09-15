@@ -23,6 +23,7 @@ namespace SpSim.Setting
 
         /// <summary>
         /// Does it "tank" some hits?
+        /// Only interessting for things, covering her behind
         /// </summary>
         public int Resistance = 1;
 
@@ -36,6 +37,11 @@ namespace SpSim.Setting
         /// How is this clothing removed?
         /// </summary>
         public UndressType UndressT;
+
+        public override string ToString()
+        {
+            return String.Format("{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7}", Id, Name, Description, Type, Resistance, Article, UndressT, CurrentRoom);
+        }
 
     }
 

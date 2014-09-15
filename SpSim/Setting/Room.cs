@@ -43,6 +43,15 @@ namespace SpSim.Setting
         public string LiePlace = "the floor";
         public string BendPlace = "";
 
+        /// <summary>
+        /// Contains the types of starting clothes (start up)
+        /// </summary>
+        public List<ClothingType> ScatteredTypes = new List<ClothingType>();
+        /// <summary>
+        /// The approximate amount of clothes (start up)
+        /// </summary>
+        public int ClothCount = 0;
+
         public override string ToString()
         {
             return String.Format("Room: {0} | {1} | {2} | {3} | {4} | {5} | {6}", Id, Name, Description, String.Join(",", Links.ToArray()), BendPlace, LiePlace, SitPlace);

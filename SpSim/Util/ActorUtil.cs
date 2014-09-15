@@ -47,6 +47,50 @@ namespace SpSim.Util
             return output;
         }
 
+        public static Clothing GetClothingById(List<Clothing> clothes, long id)
+        {
+
+            foreach (Clothing c in clothes)
+            {
+                if (c.Id == id)
+                {
+                    return c;
+                }
+            }
+
+            return clothes[0];
+        }
+
+        public static List<Clothing> GetClothesByRoom(List<Clothing> clothes, long roomId)
+        {
+            List<Clothing> output = new List<Clothing>();
+
+            foreach (Clothing c in clothes)
+            {
+                if (c.CurrentRoom == roomId)
+                {
+                    output.Add(c);
+                }
+            }
+
+            return output;
+        }
+
+        public static List<Clothing> GetClothesByTypesAndRoom(List<Clothing> clothes, List<ClothingType> types, long roomId)
+        {
+            List<Clothing> output = new List<Clothing>();
+
+            foreach (Clothing c in clothes)
+            {
+                if (c.CurrentRoom == roomId && types.Contains(c.Type))
+                {
+                    output.Add(c);
+                }
+            }
+
+            return output;
+        }
+
         public static ClothingType GetClothingTypeByInt(int input)
         {
             switch (input)

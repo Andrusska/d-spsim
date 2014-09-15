@@ -60,6 +60,8 @@ namespace SpSim.Setting
             Protagonist.LockedImplement = 0;
             //Randomly place the in the house
             ScatterImplements();
+            //Place some clothes
+            ScatterClothes();
 
             //Display the status
             PrintStatus();
@@ -82,6 +84,39 @@ namespace SpSim.Setting
                 if (i.Id != 0)
                 {
                     i.CurrentRoom = Rooms[rnd.Next(Rooms.Count - 1) + 1].Id;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Places some clothes in the assigned rooms
+        /// </summary>
+        private void ScatterClothes()
+        {
+            Random rnd = new Random();
+            Clothing cloth;
+            int counter;
+            int breakCounter;
+
+            foreach (Room r in Rooms)
+            {
+
+                if (r.ScatteredTypes.Count > 0)
+                {
+                    counter = 0;
+                    breakCounter = 0;
+
+                    while (counter < r.ClothCount - 1 && breakCounter < 200)
+                    {
+                        cloth = Clothes[rnd.Next(Clothes.Count)];
+                        if (cloth.CurrentRoom == 0 && r.ScatteredTypes.Contains(cloth.Type))
+                        {
+                            cloth.CurrentRoom = r.Id;
+                            counter++;
+                        }
+
+                        breakCounter++;
+                    }
                 }
             }
         }
@@ -142,6 +177,12 @@ namespace SpSim.Setting
                 output += Environment.NewLine + implementStatus;
             }
 
+            //Some clothes Lieing around?
+            if (ActorUtil.GetClothesByRoom(Clothes, Protagonist.CurrentRoom).Count > 0)
+            {
+                output += Environment.NewLine + "There are some clothes scattered around the room.";
+            }
+
             Display.AppendText(Environment.NewLine + output + Environment.NewLine);
         }
 
@@ -156,6 +197,7 @@ namespace SpSim.Setting
             AddDefaultActions();
             AddMoveActions();
             AddImplementActions();
+            AddClothingActions();
         }
 
         /// <summary>
@@ -215,6 +257,25 @@ namespace SpSim.Setting
         }
 
         /// <summary>
+        /// Adds the Implement PickUp/Drop Actions
+        /// </summary>
+        private void AddClothingActions()
+        {
+            Action action;
+
+            //Pick up Actions
+            List<Clothing> locCloth = ActorUtil.GetClothesByRoom(Clothes, Protagonist.CurrentRoom);
+            foreach (Clothing cloth in locCloth)
+            {
+                action = new Action(String.Format("Pick up the {0}", cloth.Description), ActionType.PICK_UP_CLOTHING, String.Format("I pick up the {0}", cloth.Description));
+                action.Params.Add(cloth.Id);
+                PossibleActions.Add(action);
+            }
+
+            //Look at carried action
+        }
+
+        /// <summary>
         /// Prints the available options of the protagonist
         /// for the player to choose from
         /// </summary>
@@ -263,6 +324,9 @@ namespace SpSim.Setting
                     break;
                 case ActionType.DROP_IMPLEMENT:
                     ReactDropImplement(selectedAction);
+                    break;
+                case ActionType.PICK_UP_CLOTHING:
+                    ReactPickUpClothing(selectedAction);
                     break;
                 default: break;
             }
@@ -335,6 +399,21 @@ namespace SpSim.Setting
             Display.AppendText(output);
         }
 
+        /// <summary>
+        /// Reaction to the PickUpClothing Action
+        /// </summary>
+        private void ReactPickUpClothing(Action action)
+        {
+            string output = Environment.NewLine;
+            Clothing pickUp = ActorUtil.GetClothingById(Clothes, (long)action.Params[0]);
+
+            // A value of -1 "means in the protagonist's pocket"
+            pickUp.CurrentRoom = -1;
+
+            output += action.ActionText + Environment.NewLine;
+            Display.AppendText(output);
+        }
+
         #endregion
 
         #region Testingmethods
@@ -366,6 +445,17 @@ namespace SpSim.Setting
             foreach (Implement i in Implements)
             {
                 Display.AppendText(Environment.NewLine + StringHelper.UnbreakLines(i.ToString()) + Environment.NewLine);
+            }
+        }
+
+        /// <summary>
+        /// Prints all the clothes in the Location (dor Testing)
+        /// </summary>
+        public void PrintClothes()
+        {
+            foreach (Clothing c in Clothes)
+            {
+                Display.AppendText(Environment.NewLine + StringHelper.UnbreakLines(c.ToString()) + Environment.NewLine);
             }
         }
 

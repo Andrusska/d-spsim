@@ -14,7 +14,14 @@
 		on the living room has the protagonist sitting on the sofa, for example. <links> define how the place is 
 		connected. The numbers refer to the <id> of other rooms. If you link room 1 to room 2, remember to link 
 		room 2 to room 1 too, or you'll create an one way passage!
-		%G1 is changed to "<name> of the Girl with <id> 1", so during game it appears like Miyu's room.
+    
+    If you add <scatteredClothes> to a room, you mark it to contain some clothes around. appCount ("approximate count") sets how
+    many clothes will be scatter (+/- 1).
+    You can also define what type (written in the clothes section) of clothes is scattert.
+    e.g.
+    <scatteredClothes appCount="4">all</scatteredClothes> puts 3-5 random clothes in this room.
+    <scatteredClothes>6</scatteredClothes> puts some socks in this room.
+    <scatteredClothes appCount="2">4,5</scatteredClothes> puts 1-3 pieces of underwear (bras & panties) in this room
 	-->
 	<rooms>
 		<room>
@@ -78,6 +85,7 @@
 			<lieplace>Miyu's bed</lieplace>
 			<bendplace>Miyu's desk</bendplace>
 			<links>2</links>
+      <scatteredClothes>4,5,6</scatteredClothes>
 		</room>
 		<room>
 			<id>6</id>
@@ -92,6 +100,7 @@
 			<lieplace>the floor</lieplace>
 			<bendplace>Haruko's desk</bendplace>
 			<links>2</links>
+      <scatteredClothes>2,4,5,6</scatteredClothes>
 		</room>
 		<room>
 			<id>7</id>
@@ -112,6 +121,7 @@
 			<lieplace>Shino's bed</lieplace>
 			<bendplace>Shino's desk</bendplace>
 			<links>2</links>
+      <scatteredClothes>2,4,5,6</scatteredClothes>
 		</room>
 		<room>
 			<id>8</id>
@@ -155,6 +165,7 @@
 			<lieplace>the floor</lieplace>
 			<bendplace>the sink</bendplace>
 			<links>2</links>
+      <scatteredClothes>5</scatteredClothes>
 		</room>
 	</rooms>
 
@@ -547,14 +558,17 @@
 		<reqart> says if when describing this piece of clothing we should use an indefinite article or not. 
 		So the game right now produces "she's wearing shorts" and "she's wearing a skirt".
 		<resistance> is how much wearing that clothing helps to absorb the strength of a spanking. It should
-			be 1 for light pieces (mostly everything), 2 for thick clothing, like denim.
-		<covers> is 1 for the top (shirts, tank-tops, sweaters), 
+			be 1 for light pieces (mostly everything), 2 for thick clothing, like denim. This is only important
+			for clothes, that cover the girl's bottom (type 2,3,5) and can be ignored (left out, default will be 1) for the other parts.
+		<type> determines what kind of clothing this is
+					1 for the top (shirts, tank-tops, sweaters), 
 					2 for the bottom (pants, shorts, skirts),
 					3 for one-pieces, like dresses, school swimsuits and such,
-					4 for underwear
-					5 for socks
-					6 for footwear
-		Right now, a girl will use a single piece of clothing with <covers> 3, or a set with a piece that covers 1 
+					4 for the bra
+					5 for underwear
+					6 for socks
+					7 for footwear
+		Right now, a girl will use a single piece of clothing with <type> 3, or a set with a piece that covers 1 
 		and another that covers 2. <und> defines how that piece of clothing is removed, which is important when 
 		the undressing part comes. The possible values right now are 
 			<up> ("I pull her skirt up."), 
@@ -565,143 +579,341 @@
 		is mentioned as part of an action. So it's "Haruko is wearing denim cuttoff shorts.", 
 		"You lower Haruko's shorts, exposing her strawberry print panties." and "You lower Haruko's panties, 
 		exposing her bare bottom."
+		
+		If you want to have several copies of one Clothing (like maid dresses for everyone or one panty per day per person ),
+		just do the old Ctrl+C-Ctrl+V-thingy as often as you wish. Just remember to change the Id to make it unique.
 	 -->
 	<clothes>
+		<!-- Tops -->
 		<clothing>
 			<id>1</id>
-			<name>shorts</name>
-			<description>denim cutoff shorts</description>
-			<reqart>false</reqart>
-			<resistance>2</resistance>
-			<covers>2</covers>
-			<und>down</und>
+			<name>shirt</name>
+			<description>white sweatshirt</description>
+			<reqart>true</reqart>
+			<type>1</type>
+			<und>off</und>
 		</clothing>
 		<clothing>
 			<id>2</id>
-			<name>skirt</name>
-			<description>floral print skirt</description>
-			<reqart>true</reqart>
-			<resistance>1</resistance>
-			<covers>2</covers>
-			<und>up</und>
-		</clothing>
-		<clothing>
-			<id>3</id>
-			<name>sweatpants</name>
-			<description>sweatpants</description>
-			<reqart>false</reqart>
-			<resistance>1</resistance>
-			<covers>2</covers>
-			<und>down</und>
-		</clothing>
-		<clothing>
-			<id>4</id>
-			<name>jeans</name>
-			<description>washed out jeans</description>
-			<reqart>false</reqart>
-			<resistance>2</resistance>
-			<covers>2</covers>
-			<und>down</und>
-		</clothing>
-		<clothing>
-			<id>5</id>
-			<name>t-shirt</name>
-			<description>white raglan-sleeved t-shirt</description>
-			<reqart>true</reqart>
-			<covers>1</covers>
-			<und>up</und>
-		</clothing>
-		<clothing>
-			<id>6</id>
 			<name>tank top</name>
 			<description>black tank top</description>
 			<reqart>true</reqart>
-			<covers>1</covers>
-			<und>up</und>
+			<type>1</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>3</id>
+			<name>sport shirt</name>
+			<description>blue sport shirt</description>
+			<reqart>true</reqart>
+			<type>1</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>4</id>
+			<name>shirt</name>
+			<description>anime fan shirt</description>
+			<reqart>true</reqart>
+			<type>1</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>5</id>
+			<name>hoodie</name>
+			<description>purple hoodie</description>
+			<reqart>true</reqart>
+			<type>1</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>6</id>
+			<name>pyjama top</name>
+			<description>striped pyjama top</description>
+			<reqart>true</reqart>
+			<type>1</type>
+			<und>off</und>
 		</clothing>
 		<clothing>
 			<id>7</id>
-			<name>sweater</name>
-			<description>purple sweater</description>
+			<name>blouse</name>
+			<description>white blouse</description>
 			<reqart>true</reqart>
-			<covers>1</covers>
-			<und>up</und>
+			<type>1</type>
+			<und>off</und>
 		</clothing>
+		<!-- Pants etc. -->
 		<clothing>
 			<id>8</id>
-			<name>dress</name>
-			<description>frilly white dress</description>
-			<reqart>true</reqart>
+			<name>sweatpants</name>
+			<description>black sweatpants</description>
 			<resistance>1</resistance>
-			<covers>3</covers>
-			<und>up</und>
+			<reqart>false</reqart>
+			<type>2</type>
+			<und>down</und>
 		</clothing>
 		<clothing>
 			<id>9</id>
-			<name>panties</name>
-			<description>white panties</description>
-			<reqart>false</reqart>
+			<name>sport shorts</name>
+			<description>green sport shorts</description>
 			<resistance>1</resistance>
-			<covers>4</covers>
+			<reqart>false</reqart>
+			<type>2</type>
 			<und>down</und>
 		</clothing>
 		<clothing>
 			<id>10</id>
-			<name>panties</name>
-			<description>white and blue striped panties</description>
+			<name>shorts</name>
+			<description>denim cutoff shorts</description>
+			<resistance>2</resistance>
 			<reqart>false</reqart>
-			<resistance>1</resistance>
-			<covers>4</covers>
+			<type>2</type>
 			<und>down</und>
 		</clothing>
 		<clothing>
 			<id>11</id>
-			<name>panties</name>
-			<description>strawberry print panties</description>
+			<name>jeans</name>
+			<description>washed out jeans</description>
+			<resistance>2</resistance>
 			<reqart>false</reqart>
-			<resistance>1</resistance>
-			<covers>4</covers>
+			<type>2</type>
 			<und>down</und>
 		</clothing>
 		<clothing>
 			<id>12</id>
-			<name>panties</name>
-			<description>black panties</description>
+			<name>hotpants</name>
+			<description>blue hotpants</description>
+			<resistance>2</resistance>
 			<reqart>false</reqart>
-			<resistance>1</resistance>
-			<covers>4</covers>
+			<type>2</type>
 			<und>down</und>
 		</clothing>
 		<clothing>
 			<id>13</id>
-			<name>socks</name>
-			<description>white socks</description>
+			<name>yogapants</name>
+			<description>grey yogapants</description>
+			<resistance>1</resistance>
 			<reqart>false</reqart>
-			<covers>5</covers>
-			<und>off</und>
+			<type>2</type>
+			<und>down</und>
 		</clothing>
 		<clothing>
 			<id>14</id>
-			<name>socks</name>
-			<description>pink socks</description>
+			<name>pyjama pants</name>
+			<description>striped pyjama pants</description>
+			<resistance>1</resistance>
 			<reqart>false</reqart>
-			<covers>5</covers>
-			<und>off</und>
+			<type>2</type>
+			<und>down</und>
 		</clothing>
 		<clothing>
 			<id>15</id>
-			<name>socks</name>
-			<description>black socks</description>
-			<reqart>false</reqart>
-			<covers>5</covers>
+			<name>skirt</name>
+			<description>floral print skirt</description>
+			<resistance>1</resistance>
+			<reqart>true</reqart>
+			<type>2</type>
+			<und>up</und>
+		</clothing>
+		<!-- One pieces,dresses -->
+		<clothing>
+			<id>16</id>
+			<name>dress</name>
+			<description>frilly white dress</description>
+			<resistance>1</resistance>
+			<reqart>true</reqart>
+			<type>3</type>
+			<und>up</und>
+		</clothing>
+		<clothing>
+			<id>17</id>
+			<name>school uniform</name>
+			<description>summer school uniform</description>
+			<resistance>1</resistance>
+			<reqart>true</reqart>
+			<type>3</type>
+			<und>up</und>
+		</clothing>
+		<clothing>
+			<id>18</id>
+			<name>maid dress</name>
+			<description>black and white maid dress</description>
+			<resistance>1</resistance>
+			<reqart>true</reqart>
+			<type>3</type>
+			<und>up</und>
+		</clothing>
+		<!-- bras -->
+		<clothing>
+			<id>19</id>
+			<name>bra</name>
+			<description>light blue bra</description>
+			<reqart>true</reqart>
+			<type>4</type>
 			<und>off</und>
 		</clothing>
 		<clothing>
-			<id>16</id>
+			<id>20</id>
+			<name>sports bra</name>
+			<description>white sports bra</description>
+			<reqart>true</reqart>
+			<type>4</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>21</id>
+			<name>push up bra</name>
+			<description>red push up bra</description>
+			<reqart>true</reqart>
+			<type>4</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>22</id>
+			<name>bra</name>
+			<description>white bra</description>
+			<reqart>true</reqart>
+			<type>4</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>23</id>
+			<name>bra</name>
+			<description>elegant black bra</description>
+			<reqart>true</reqart>
+			<type>4</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>24</id>
+			<name>bikini top</name>
+			<description>light blue bikini top</description>
+			<reqart>true</reqart>
+			<type>4</type>
+			<und>off</und>
+		</clothing>
+		<!-- Panties -->
+		<clothing>
+			<id>25</id>
+			<name>panties</name>
+			<description>white panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>26</id>
+			<name>panties</name>
+			<description>white and blue striped panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>27</id>
+			<name>panties</name>
+			<description>strawberry print panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>28</id>
+			<name>panties</name>
+			<description>black panties</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>29</id>
+			<name>thong</name>
+			<description>black lacy thong</description>
+			<reqart>true</reqart>
+			<resistance>0</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>30</id>
+			<name>thong</name>
+			<description>red thong</description>
+			<reqart>true</reqart>
+			<resistance>0</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>31</id>
+			<name>g-string</name>
+			<description>light blue g-string</description>
+			<reqart>true</reqart>
+			<resistance>0</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+		<clothing>
+			<id>32</id>
+			<name>boxers</name>
+			<description>some of your boxers</description>
+			<reqart>false</reqart>
+			<resistance>1</resistance>
+			<type>5</type>
+			<und>down</und>
+		</clothing>
+    <clothing>
+      <id>33</id>
+      <name>bikini bottom</name>
+      <description>light blue bikini bottom</description>
+      <reqart>true</reqart>
+      <resistance>1</resistance>
+      <type>3</type>
+      <und>down</und>
+    </clothing>
+    <clothing>
+      <id>34</id>
+      <name>bikini thong</name>
+      <description>light blue bikini thong</description>
+      <reqart>true</reqart>
+      <resistance>0</resistance>
+      <type>5</type>
+      <und>down</und>
+    </clothing>
+		<!-- Socks -->
+		<clothing>
+			<id>35</id>
+			<name>socks</name>
+			<description>white socks</description>
+			<reqart>false</reqart>
+			<type>6</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>36</id>
+			<name>socks</name>
+			<description>pink socks</description>
+			<reqart>false</reqart>
+			<type>6</type>
+			<und>off</und>
+		</clothing>
+		<clothing>
+			<id>37</id>
+			<name>socks</name>
+			<description>black socks</description>
+			<reqart>false</reqart>
+			<type>6</type>
+			<und>off</und>
+		</clothing>
+		<!-- Footwear -->
+		<clothing>
+			<id>38</id>
 			<name>slippers</name>
 			<description>slippers</description>
 			<reqart>false</reqart>
-			<covers>6</covers>
+			<type>7</type>
 			<und>off</und>
 		</clothing>
 	</clothes>	

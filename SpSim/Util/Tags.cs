@@ -46,5 +46,7 @@ namespace SpSim.Util
         public const string ROOM_SITPLACE = "sitplace";
         public const string ROOM_LIEPLACE = "lieplace";
         public const string ROOM_BENDPLACE = "bendplace";
+        public const string ROOM_CLOTHES = "scatteredClothes";
+        public const string ROOM_CLOTHES_COUNT = "appCount";
     }
 }

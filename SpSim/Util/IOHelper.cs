@@ -78,6 +78,22 @@ namespace SpSim.Util
                 {
                     r.SitPlace = xn[Tags.ROOM_SITPLACE].InnerText.Trim();
                 }
+                if (xn[Tags.ROOM_CLOTHES] != null)
+                {
+                    string[] types = xn[Tags.ROOM_CLOTHES].InnerText.Split(',');
+                    foreach(string s in types){
+                        r.ScatteredTypes.Add(ActorUtil.GetClothingTypeByInt(Convert.ToInt32(s)));
+                    }
+
+                    if (xn[Tags.ROOM_CLOTHES].Attributes[Tags.ROOM_CLOTHES_COUNT] != null)
+                    {
+                        r.ClothCount = Convert.ToInt32(xn[Tags.ROOM_CLOTHES].Attributes[Tags.ROOM_CLOTHES_COUNT].Value);
+                    }
+                    else
+                    {
+                        r.ClothCount = 5;
+                    }
+                }
 
                 output.Add(r);
             }
@@ -162,17 +178,20 @@ namespace SpSim.Util
             foreach (XmlNode xn in xmlnode)
             {
                 cloth = new Clothing();
-
+    
                 cloth.Id = Convert.ToInt64(xn[Tags.CLOTHING_ID].InnerText.Trim());
-
+    
                 cloth.Name = StringHelper.UnbreakLines(xn[Tags.CLOTHING_NAME].InnerText.Trim());
                 cloth.Description = StringHelper.UnbreakLines(xn[Tags.CLOTHING_DESCRIPTION].InnerText.Trim());
-
+    
                 cloth.Type = ActorUtil.GetClothingTypeByInt(Convert.ToInt32(xn[Tags.CLOTHING_TYPE].InnerText));
                 cloth.UndressT = ActorUtil.GetUndressTypeByInput(xn[Tags.CLOTHING_UNDRESSTYPE].InnerText);
-
-                cloth.Resistance = Convert.ToInt32(xn[Tags.CLOTHING_RESISTANCE]);
-
+    
+                if (xn[Tags.CLOTHING_RESISTANCE] != null)
+                {
+                    cloth.Resistance = Convert.ToInt32(xn[Tags.CLOTHING_RESISTANCE].InnerText);
+                }
+    
                 if (xn[Tags.CLOTHING_ARTICLE].InnerText == "true")
                 {
                     cloth.Article = true;
@@ -181,8 +200,9 @@ namespace SpSim.Util
                 {
                     cloth.Article = false;
                 }
-
-                output.Add(cloth);
+    
+                
+                    output.Add(cloth);
             }
 
             return output;

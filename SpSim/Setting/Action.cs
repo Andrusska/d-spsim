@@ -27,11 +27,13 @@ namespace SpSim.Setting
         /// e.g.: What is picked up? Where does this lead?
         /// 
         /// List of Params by ActionType
-        /// LookAround:             -/-
-        /// Think about yourself:   -/-
-        /// Move to room x:         long RoomId
-        /// Pick up Implement:      long ImplementId
-        /// Drop Implement:         -/-
+        /// LookAround:                 -/-
+        /// Think about yourself:       -/-
+        /// Move to room x:             long RoomId
+        /// Pick up Implement:          long ImplementId
+        /// Drop Implement:             -/-
+        /// Pick up Clothing:           long clothingId
+        /// Look at carried Clothing:   -/-   
         /// </summary>
         public List<Object> Params = new List<Object>();
 
@@ -62,6 +64,8 @@ namespace SpSim.Setting
         //RoomActions
         LOOK_AT_ACTOR, MOVE_TO_ROOM, LOOK_AROUND_ROOM, THINK_ABOUT_YOURSELF,
         //ImplementActions
-        PICK_UP_IMPLEMENT, DROP_IMPLEMENT
+        PICK_UP_IMPLEMENT, DROP_IMPLEMENT,
+        //ClothingActions
+        PICK_UP_CLOTHING, LOOK_AT_CARRIED_CLOTHING
     }
 }

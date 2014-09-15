@@ -45,7 +45,8 @@ namespace SpSim.Forms
                 //Import testing block
                 location.PrintProtagonist();
                 location.PrintRooms();
-                location.PrintImplements();*/
+                location.PrintImplements();
+                location.PrintClothes();*/
             }
 
         }
