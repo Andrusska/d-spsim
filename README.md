@@ -14,22 +14,22 @@ Currently I'm the only one working on this project, but help is always appreciat
 
 Update History:
 ===============
-16th September, 2014: Pick up all the clothes edition
+- 16th September, 2014: Pick up all the clothes edition
 	- Added the clothes import
 	- Bras for the world
 	- Reworked the default.xml clothes-section
 	- Pick up/Drop clothes & ClothingInventory
 	- Scatter clothes around the house with the new <scatteredClothes> Tag
 	
-14th September, 2014: Tidy up your house edition
+- 14th September, 2014: Tidy up your house edition
 	- Basic Stuff
 	- Movement between rooms
 	- Default Actions (Look around etc.)
 	- Implement Actions (PickUp Drop)
 	- Added some Implements in the Default.xml
 	
-11th September, 2014:
-  Nothing special so far. Rooms, the protagonist and the implements are importable...
+- 11th September, 2014:
+  	- Nothing special so far. Rooms, the protagonist and the implements are importable...
 
 
 Broken/Not-Working-As-Planned-"Features"
