@@ -19,7 +19,8 @@ Update History:
 	- Bras for the world
 	- Reworked the default.xml clothes-section
 	- Pick up/Drop clothes & ClothingInventory
-	- Scatter clothes around the house with the new <scatteredClothes> Tag
+	- Scatter clothes around the rooms with the new Tag:
+	 ```<scatteredClothes>```
 	
 - 14th September, 2014: Tidy up your house edition
 	- Basic Stuff
@@ -42,22 +43,24 @@ Changes so far:
 ===============
 
   - Multiple links in one room and multiple sfx for one item are now wrapped in one tag and divided by commatar
-    e.g. old:
-      <room>
-        ...
-        <link>2</link>
-        <link>3</link>
-        <link>6</link>
-        ...
-      </room>
-    
+    e.g. the old
+	```
+	<room>
+		...
+		<link>2</link>
+		<link>3</link>
+		<link>6</link>
+		...
+	</room>
+	```
     is now replaced with:
-    
+    ```
     <room>
-        ...
-        <link>2,3,6</link>
-        ...
-      </room>
+    	...
+    	<link>2,3,6</link>
+    	...
+    </room>
+    ```
       
   - Rooms can now contain some clothes at startup using the <scatteredClothes>-Tag
   	for an example look at default.xml's room explanation
