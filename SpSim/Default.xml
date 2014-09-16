@@ -15,13 +15,13 @@
 		connected. The numbers refer to the <id> of other rooms. If you link room 1 to room 2, remember to link 
 		room 2 to room 1 too, or you'll create an one way passage!
     
-    If you add <scatteredClothes> to a room, you mark it to contain some clothes around. appCount ("approximate count") sets how
-    many clothes will be scatter (+/- 1).
+    If you add <scatteredClothes> to a room, you mark it to contain some clothes around. max sets how many clothes
+    will be maximal in this Room
     You can also define what type (written in the clothes section) of clothes is scattert.
     e.g.
-    <scatteredClothes appCount="4">all</scatteredClothes> puts 3-5 random clothes in this room.
+    <scatteredClothes max="4">all</scatteredClothes> puts 0-4 random clothes in this room.
     <scatteredClothes>6</scatteredClothes> puts some socks in this room.
-    <scatteredClothes appCount="2">4,5</scatteredClothes> puts 1-3 pieces of underwear (bras & panties) in this room
+    <scatteredClothes max="3">4,5</scatteredClothes> puts 0-3 pieces of underwear (bras and/or panties) in this room
 	-->
 	<rooms>
 		<room>
@@ -85,7 +85,7 @@
 			<lieplace>Miyu's bed</lieplace>
 			<bendplace>Miyu's desk</bendplace>
 			<links>2</links>
-      <scatteredClothes>4,5,6</scatteredClothes>
+      <scatteredClothes max="5">all</scatteredClothes>
 		</room>
 		<room>
 			<id>6</id>
@@ -100,7 +100,7 @@
 			<lieplace>the floor</lieplace>
 			<bendplace>Haruko's desk</bendplace>
 			<links>2</links>
-      <scatteredClothes>2,4,5,6</scatteredClothes>
+      <scatteredClothes max="5">all</scatteredClothes>
 		</room>
 		<room>
 			<id>7</id>
@@ -121,7 +121,7 @@
 			<lieplace>Shino's bed</lieplace>
 			<bendplace>Shino's desk</bendplace>
 			<links>2</links>
-      <scatteredClothes>2,4,5,6</scatteredClothes>
+      <scatteredClothes max="5">all</scatteredClothes>
 		</room>
 		<room>
 			<id>8</id>
@@ -165,7 +165,7 @@
 			<lieplace>the floor</lieplace>
 			<bendplace>the sink</bendplace>
 			<links>2</links>
-      <scatteredClothes>5</scatteredClothes>
+      <scatteredClothes max="3">5</scatteredClothes>
 		</room>
 	</rooms>
 
@@ -857,10 +857,10 @@
 		</clothing>
 		<clothing>
 			<id>32</id>
-			<name>boxers</name>
-			<description>some of your boxers</description>
-			<reqart>false</reqart>
-			<resistance>1</resistance>
+			<name>cheeky</name>
+			<description>a purple cheeky</description>
+			<reqart>true</reqart>
+			<resistance>0</resistance>
 			<type>5</type>
 			<und>down</und>
 		</clothing>

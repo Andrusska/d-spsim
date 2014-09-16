@@ -38,6 +38,16 @@ namespace SpSim.Setting
         /// </summary>
         public UndressType UndressT;
 
+        public string GetInventroyDescription()
+        {
+            if (Article) 
+            {
+                return String.Format("a {0}", Description);
+            }
+
+            return String.Format("some {0}", Description);
+        }
+
         public override string ToString()
         {
             return String.Format("{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7}", Id, Name, Description, Type, Resistance, Article, UndressT, CurrentRoom);

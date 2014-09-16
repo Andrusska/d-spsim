@@ -23,6 +23,11 @@ namespace SpSim.Setting
         public ActionType Type;
 
         /// <summary>
+        /// Defines which kind of 
+        /// </summary>
+        public ActionFollowedStatus FollowedStatus = ActionFollowedStatus.DEFAULT;
+
+        /// <summary>
         /// The parameters needed for this action,
         /// e.g.: What is picked up? Where does this lead?
         /// 
@@ -34,6 +39,8 @@ namespace SpSim.Setting
         /// Drop Implement:             -/-
         /// Pick up Clothing:           long clothingId
         /// Look at carried Clothing:   -/-   
+        /// Drop carried Clothing:       long clothingId
+        /// Return to default:          -/-
         /// </summary>
         public List<Object> Params = new List<Object>();
 
@@ -66,6 +73,12 @@ namespace SpSim.Setting
         //ImplementActions
         PICK_UP_IMPLEMENT, DROP_IMPLEMENT,
         //ClothingActions
-        PICK_UP_CLOTHING, LOOK_AT_CARRIED_CLOTHING
+        PICK_UP_CLOTHING, LOOK_AT_CARRIED_CLOTHING, DROP_CARRIED_CLOTHING, RETURN_TO_DEFAULT
+    }
+
+    public enum ActionFollowedStatus
+    {
+        DEFAULT,            //Default-,Roomactions
+        CLOTHING_IVENTORY   //ClothingInventoryActions
     }
 }

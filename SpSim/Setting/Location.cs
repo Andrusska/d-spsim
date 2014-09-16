@@ -64,9 +64,9 @@ namespace SpSim.Setting
             ScatterClothes();
 
             //Display the status
-            PrintStatus();
+            PrintDefaultStatus();
             //Evaluate Actions
-            EvaluatePossibleAction();
+            EvaluateDefaultActions();
             //Display possible Actions
             PrintAvailableActions();
         }
@@ -105,8 +105,9 @@ namespace SpSim.Setting
                 {
                     counter = 0;
                     breakCounter = 0;
+                    int limit = rnd.Next(r.ClothCount + 1);
 
-                    while (counter < r.ClothCount - 1 && breakCounter < 200)
+                    while (counter < limit - 1 && breakCounter < 200)
                     {
                         cloth = Clothes[rnd.Next(Clothes.Count)];
                         if (cloth.CurrentRoom == 0 && r.ScatteredTypes.Contains(cloth.Type))
@@ -123,13 +124,33 @@ namespace SpSim.Setting
 
         #endregion
 
-        #region Status/Evaluate Actions
+        #region General ActionMethods
+
+        /// <summary>
+        /// Prints the available options of the protagonist
+        /// for the player to choose from
+        /// </summary>
+        public void PrintAvailableActions()
+        {
+            string output = "";
+
+            for (int i = 0; i < PossibleActions.Count; i++)
+            {
+                output += String.Format("[{0}] {1}\t", i, PossibleActions[i].DisplayText);
+            }
+
+            Display.AppendText(Environment.NewLine + output + Environment.NewLine);
+        }
+
+        #endregion
+
+        #region DefaultActions
 
         /// <summary>
         /// Generally informs the player about the room
         /// and the actors after taking an action
         /// </summary>
-        public void PrintStatus()
+        public void PrintDefaultStatus()
         {
             string output = "";
 
@@ -187,17 +208,20 @@ namespace SpSim.Setting
         }
 
         /// <summary>
-        /// Refills the ActionList with all possible Actions
+        /// Refills the ActionList with all defaultActions
+        /// DefaultActions are the things you can do while walking around the
+        /// location like picking stuff up.
         /// </summary>
-        public void EvaluatePossibleAction()
+        public void EvaluateDefaultActions()
         {
             //Clear the ActionList
             PossibleActions.Clear();
 
             AddDefaultActions();
+            AddOpenClothingInventoryAction();
             AddMoveActions();
             AddImplementActions();
-            AddClothingActions();
+            AddClothingPickUpActions();
         }
 
         /// <summary>
@@ -212,6 +236,14 @@ namespace SpSim.Setting
 
             //Think about yourself
             PossibleActions.Add(new Action("Think about yourself", ActionType.THINK_ABOUT_YOURSELF, StringHelper.UnbreakLines(Protagonist.Lore)));
+        }
+
+        /// <summary>
+        /// Lets you open your ClothingInventory
+        /// </summary>
+        private void AddOpenClothingInventoryAction()
+        {
+            PossibleActions.Add(new Action("Look at carried Clothes", ActionType.LOOK_AT_CARRIED_CLOTHING, ""));
         }
 
         /// <summary>
@@ -259,7 +291,7 @@ namespace SpSim.Setting
         /// <summary>
         /// Adds the Implement PickUp/Drop Actions
         /// </summary>
-        private void AddClothingActions()
+        private void AddClothingPickUpActions()
         {
             Action action;
 
@@ -271,24 +303,98 @@ namespace SpSim.Setting
                 action.Params.Add(cloth.Id);
                 PossibleActions.Add(action);
             }
-
-            //Look at carried action
         }
 
+        #endregion
+
+        #region ClothingInventoryActions
+
         /// <summary>
-        /// Prints the available options of the protagonist
-        /// for the player to choose from
+        /// Informs the Player about the carried Clothes
         /// </summary>
-        public void PrintAvailableActions()
+        public void PrintClothingIventoryStatus()
         {
             string output = "";
 
-            for (int i = 0; i < PossibleActions.Count; i++)
+            //Are there any implements?
+            //locImpl = local Implements = Implements in your room
+            List<Clothing> carriedClothes = ActorUtil.GetClothesByRoom(Clothes, -1);
+            if (carriedClothes.Count > 0)
             {
-                output += String.Format("[{0}] {1}\t", i, PossibleActions[i].DisplayText);
+                string clothingStatus = "";
+
+                if (carriedClothes.Count == 1)
+                {
+                    clothingStatus = String.Format("I'm currently holding {0}.", carriedClothes[0].GetInventroyDescription());
+                }
+                else if (carriedClothes.Count == 2)
+                {
+                    clothingStatus = String.Format("I'm currently holding {0} and {1}.", carriedClothes[0].GetInventroyDescription(), carriedClothes[1].GetInventroyDescription());
+                }
+                else
+                {
+
+                    clothingStatus = "I'm currently holding ";
+                    for (int i = 0; i < carriedClothes.Count - 1; i++)
+                    {
+                        if (i == carriedClothes.Count - 2)
+                        {
+                            clothingStatus += String.Format("{0} and {1}.", carriedClothes[i].GetInventroyDescription(), carriedClothes[i + 1].GetInventroyDescription());
+                        }
+                        else
+                        {
+                            clothingStatus += String.Format("{0}, ", carriedClothes[i].GetInventroyDescription());
+                        }
+                    }
+                }
+
+                output += Environment.NewLine + clothingStatus;
+            }
+            else
+            {
+                output = "I'm not holding any clothes.";
             }
 
             Display.AppendText(Environment.NewLine + output + Environment.NewLine);
+        }
+
+        /// <summary>
+        /// Refills the ActionList with all defaultActions
+        /// Adds the stuff you can do with your carried clothes
+        /// </summary>
+        public void EvaluateClothingInventoryActions()
+        {
+            //Clear the ActionList
+            PossibleActions.Clear();
+
+            AddDropActions();
+            AddReturnAction();
+        }
+
+        /// <summary>
+        /// Adds all the dropActions for the carried clothes.
+        /// </summary>
+        private void AddDropActions()
+        {
+            Action action;
+
+            List<Clothing> carriedClothes = ActorUtil.GetClothesByRoom(Clothes, -1);
+            foreach (Clothing cloth in carriedClothes)
+            {
+                action = new Action(String.Format("Drop the {0}", cloth.Description), ActionType.DROP_CARRIED_CLOTHING);
+                action.Params.Add(cloth.Id);
+                action.ActionText = String.Format(String.Format("I put down the {0}", cloth.Description));
+                PossibleActions.Add(action);
+            }
+        }
+
+        /// <summary>
+        /// Adds the action to return to the default view.
+        /// </summary>
+        private void AddReturnAction()
+        {
+            Action action = new Action("Go back", ActionType.RETURN_TO_DEFAULT, "");
+            PossibleActions.Add(action);
         }
 
         #endregion
@@ -310,6 +416,7 @@ namespace SpSim.Setting
 
             switch (selectedAction.Type)
             {
+                //Default Actions
                 case ActionType.LOOK_AROUND_ROOM:
                     ReactLookAround(selectedAction);
                     break;
@@ -328,8 +435,34 @@ namespace SpSim.Setting
                 case ActionType.PICK_UP_CLOTHING:
                     ReactPickUpClothing(selectedAction);
                     break;
+
+                //ClothingInventory Actions
+                case ActionType.LOOK_AT_CARRIED_CLOTHING:
+                    ReactOpenClothingInventory(selectedAction);
+                    break;
+                case ActionType.DROP_CARRIED_CLOTHING:
+                    ReactDropClothing(selectedAction);
+                    break;
+                case ActionType.RETURN_TO_DEFAULT:
+                    ReactReturnToDefault();
+                    break;
+
+                //Break
                 default: break;
             }
+
+            PrintAvailableActions();
+        }
+
+        #region DefaultActions
+
+        /// <summary>
+        /// Finishes a DefaultAction
+        /// </summary>
+        private void FinishDefaultAction()
+        {
+            PrintDefaultStatus();
+            EvaluateDefaultActions();
         }
 
         /// <summary>
@@ -340,6 +473,8 @@ namespace SpSim.Setting
             string output = Environment.NewLine;
             output += action.ActionText + Environment.NewLine;
             Display.AppendText(output);
+
+            FinishDefaultAction();
         }
 
         /// <summary>
@@ -350,6 +485,8 @@ namespace SpSim.Setting
             string output = Environment.NewLine;
             output += action.ActionText + Environment.NewLine;
             Display.AppendText(output);
+
+            FinishDefaultAction();
         }
 
         /// <summary>
@@ -361,6 +498,8 @@ namespace SpSim.Setting
             Protagonist.CurrentRoom = (long)action.Params[0];
             output += action.ActionText + Environment.NewLine;
             Display.AppendText(output);
+
+            FinishDefaultAction();
         }
 
         /// <summary>
@@ -383,6 +522,8 @@ namespace SpSim.Setting
 
             output += action.ActionText + Environment.NewLine;
             Display.AppendText(output);
+
+            FinishDefaultAction();
         }
 
         /// <summary>
@@ -397,6 +538,8 @@ namespace SpSim.Setting
 
             output += action.ActionText + Environment.NewLine;
             Display.AppendText(output);
+
+            FinishDefaultAction();
         }
 
         /// <summary>
@@ -412,7 +555,55 @@ namespace SpSim.Setting
 
             output += action.ActionText + Environment.NewLine;
             Display.AppendText(output);
+
+            FinishDefaultAction();
         }
+
+        #endregion
+
+        #region ClothingInventoryActions
+
+        /// <summary>
+        /// Finishes an CLothingInventroyAction
+        /// </summary>
+        private void FinishClothingInventoryAction()
+        {
+            PrintClothingIventoryStatus();
+            EvaluateClothingInventoryActions();
+        }
+
+        /// <summary>
+        /// Opens the ClothingInventory
+        /// </summary>
+        private void ReactOpenClothingInventory(Action action)
+        {
+            FinishClothingInventoryAction();
+        }
+
+        /// <summary>
+        /// Drops a clothing in the current room
+        /// </summary>
+        private void ReactDropClothing(Action action)
+        {
+            string output = Environment.NewLine;
+
+            ActorUtil.GetClothingById(Clothes, (long)action.Params[0]).CurrentRoom = Protagonist.CurrentRoom;
+
+            output += action.ActionText + Environment.NewLine;
+            Display.AppendText(output);
+
+            FinishClothingInventoryAction();
+        }
+
+        /// <summary>
+        /// Goes back to the default actions
+        /// </summary>
+        private void ReactReturnToDefault()
+        {
+            FinishDefaultAction();
+        }
+
+        #endregion
 
         #endregion
 

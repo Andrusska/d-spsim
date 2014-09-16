@@ -87,6 +87,7 @@
   <ItemGroup>
     <Content Include="Default.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Setting.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

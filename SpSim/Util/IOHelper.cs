@@ -80,14 +80,28 @@ namespace SpSim.Util
                 }
                 if (xn[Tags.ROOM_CLOTHES] != null)
                 {
-                    string[] types = xn[Tags.ROOM_CLOTHES].InnerText.Split(',');
+                    string[] types;
+                    //If we want all types of clothes
+                    if (xn[Tags.ROOM_CLOTHES].InnerText.ToLower() == "all")
+                    {
+                        //Fill an array with all types
+                        types = new string[7];
+                        for (int i = 0; i < types.Length; i++)
+                        {
+                            types[i] = i + 1 + "";
+                        }
+                    }
+                    else {
+                        types = xn[Tags.ROOM_CLOTHES].InnerText.Split(',');
+                    }
+                    
                     foreach(string s in types){
                         r.ScatteredTypes.Add(ActorUtil.GetClothingTypeByInt(Convert.ToInt32(s)));
                     }
 
-                    if (xn[Tags.ROOM_CLOTHES].Attributes[Tags.ROOM_CLOTHES_COUNT] != null)
+                    if (xn[Tags.ROOM_CLOTHES].Attributes[Tags.ROOM_CLOTHES_MAX] != null)
                     {
-                        r.ClothCount = Convert.ToInt32(xn[Tags.ROOM_CLOTHES].Attributes[Tags.ROOM_CLOTHES_COUNT].Value);
+                        r.ClothCount = Convert.ToInt32(xn[Tags.ROOM_CLOTHES].Attributes[Tags.ROOM_CLOTHES_MAX].Value);
                     }
                     else
                     {

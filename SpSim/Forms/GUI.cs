@@ -32,6 +32,8 @@ namespace SpSim.Forms
         private void loadSetting_Click(object sender, EventArgs e)
         {
             string Path = string.Empty;
+            Display.Clear();
+
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             /*openFileDialog.Filter = "XML-File (*.xml)|*.xml |All files (*.*)|*.*";*/
@@ -48,6 +50,8 @@ namespace SpSim.Forms
                 location.PrintImplements();
                 location.PrintClothes();*/
             }
+
+            Input.Focus();
 
         }
 
@@ -66,13 +70,12 @@ namespace SpSim.Forms
                 catch (Exception)
                 {
                     Display.AppendText(Environment.NewLine + "Invalid Input!" + Environment.NewLine);
+                    location.PrintDefaultStatus();
+                    location.EvaluateDefaultActions();
+                    location.PrintAvailableActions();
                 }
 
                 Input.Text = "";
-
-                location.PrintStatus();
-                location.EvaluatePossibleAction();
-                location.PrintAvailableActions();
             }
         }
 
