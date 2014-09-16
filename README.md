@@ -5,7 +5,7 @@ Original Code (dropped) : www.mediafire.com/?gslt2ktoy3qhcbb
 
 Disclaimer:
 This little piece of "entertainment Software" is a rework of the original SpankinfSim, produced on 4chan/d spanking thread and
-this other website everybody likes (animeotk). Due to unknown reasons the original author left and published the Sim's code. After reviewing the code, I decieded to implement this project in a language I´m more familiar with to simplify and eventually
+this other website everybody likes (animeotkDOTcom). Due to unknown reasons the original author left and published the Sim's code. After reviewing the code, I decieded to implement this project in a language I´m more familiar with to simplify and eventually
 this project.
 This is just a port in another language (so far), but I´ll maybe add some features in the future.
 Idea and concept of this project belong to fellow anon, who left us some time ago.
@@ -41,7 +41,7 @@ Broken/Not-Working-As-Planned-"Features"
 Changes so far:
 ===============
 
-  ~ Multiple links in one room and multiple sfx for one item are now wrapped in one tag and divided by commatar
+  - Multiple links in one room and multiple sfx for one item are now wrapped in one tag and divided by commatar
     e.g. old:
       <room>
         ...
@@ -52,19 +52,20 @@ Changes so far:
       </room>
     
     is now replaced with:
+    
     <room>
         ...
         <link>2,3,6</link>
         ...
       </room>
       
-  ~ Rooms can now contain some clothes at startup using the <scatteredClothes>-Tag
+  - Rooms can now contain some clothes at startup using the <scatteredClothes>-Tag
   	for an example look at default.xml's room explanation
       
-  ~ Clothes need some rework
+  - Clothes need some rework
     - <covers> is changed to type and due to the introduction of bras, the value needs to be changed (depending on its old 		type). For the new typelisting look at default.xml's clothes explanation
 
-  ~ Some tags in the message section were renamed due to C#s file wide scanning
+  - Some tags in the message section were renamed due to C#s file wide scanning
     - messages/implement is now called msgimplement
     - spanking/implement is now called announceimplement
     
