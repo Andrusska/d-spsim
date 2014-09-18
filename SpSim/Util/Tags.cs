@@ -21,6 +21,25 @@ namespace SpSim.Util
         public const string CLOTHING_RESISTANCE = "resistance";
         public const string CLOTHING_ARTICLE = "reqart";
 
+        //Girls
+        public const string GIRL = "girl";
+        public const string GIRL_ID = "id";
+        public const string GIRL_NAME = "name";
+        public const string GIRL_DESCRIPTION = "description";
+        public const string GIRL_LORE = "lore";
+        public const string GIRL_RESISTANCE = "resistance";
+        public const string GIRL_AFFECTION = "affection";
+        public const string GIRL_SPANKABLE = "spankable";
+        public const string GIRL_OWN_ROOM = "own_room";
+        public const string GIRL_TOPCLOTH = "topcloth";
+        public const string GIRL_BOTCLOTH = "botcloth";
+        public const string GIRL_ONECLOTH = "onecloth";
+        public const string GIRL_BRACLOTH = "bracloth";
+        public const string GIRL_UNDCLOTH = "undcloth";
+        public const string GIRL_SOCCLOTH = "soccloth";
+        public const string GIRL_SHOCLOTH = "shocloth";
+
+
         //Implements
         public const string IMPLEMENT = "implement";
         public const string IMPLEMENT_NAME = "name";

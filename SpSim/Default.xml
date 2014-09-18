@@ -250,23 +250,16 @@
 			
 		<own_room> is the room each girl calls her own. Nothing is keeping you from housing more than one person
 			per room. Used with activities.
-			
-		We're doing away with roompref now. Activities will determine where every girl is likely to be found.
 		
-		Choosing the clothes for a girl involve the nodes <clothpref>, <undpref>, <sockpref> and <footpref>.
-		sockpref and footpref can have an item with id=0, which represents the chances of the girl deciding
-		to not wear that part. Haruko is always barefoot when she's at home, for instance.
-		
-		The ch attribute on each item node represents a (10 x ch)% chance that the girl will pick that item. 
-		If the ch attribute for all items add up to 10 or more, the girl won't ever pick an item outside that 
-		list (and normalizing that list is up to you). For example, when dressing up, Miyu picks a dress 80% 
-		of the time, and a sweater/skirt combo on the other 20. The logic for this is that a dress is a "complete" 
-		clothing (covers = 3), but a sweater and a skirt require another piece to be worn to cover bottom and top, 
-		respectively. The game doesn't support girls walking around naked, top or bottomless. Naked sweaters 
-		are supported if you create a sweater that is a complete clothing.
-				
-		When the ch attribute sum is less than 10, the girl has some chance to pick any item. For example,
-		other than one particular item, Shino wears completely random clothes all the time.
+		Choosing the clothes for a girl involve the nodes <topcloth>, <botcloth>, <onecloth>, <bracloth>,
+    <undcloth>, <soccloth> & <shocloth> wrapped by <clothpref>. The xxxcloth nodes contain two attributes
+    sepperated by ",". The first one is the clothings's Id, the second one the chance to pick this clothing.
+    When choosing a clothing for a part, the chances are summed up (max. total should be 10) and filled up
+    with a random element (when the sum < 10). When choosing between an onepiece or a top-bottom combo
+    the chances of the onepieces and tops are added up (to max. 20) and one of them will be selected.
+    If that Item is a top, the programm will select a bootm piece too.
+		You can add an element with id 0 to every note to add a chance to make this part naked. Naked girls
+    will be supported now ;)
 		
 		Finally, each girl can have her own messages, giving them a small measure of personality. Read the 
 		heading before <messages> to understand how messages work and then come back here. If a girl has 
@@ -312,21 +305,24 @@
 			<register_activity>10</register_activity>
 
 			<own_room>5</own_room>
-			
-			<clothpref>
-				<item id="8" ch="8" />
-				<item id="2" ch="1" />
-				<item id="7" ch="1" />
-			</clothpref>
-			<undpref>
-				<item id="10" ch="10" />
-			</undpref>
-			<sockpref>
-				<item id="13" ch="10" />
-			</sockpref>
-			<footpref>
-				<item id="0" ch="2" />
-			</footpref>
+
+      <clothpref>
+        <onecloth>16,  3</onecloth>
+        <onecloth>17,  3</onecloth>
+        <onecloth>17,  3</onecloth>
+
+        <bracloth>21,  8</bracloth>
+        <bracloth> 0,  2</bracloth>
+        
+        <undcloth>25,  3</undcloth>
+        <undcloth>26,  3</undcloth>
+        <undcloth>29,  3</undcloth>
+
+        <soccloth>36,  8</soccloth>
+        <soccloth> 0,  2</soccloth>
+
+        <shocloth> 0, 10</shocloth>
+      </clothpref>
 
 			<messages>
 				<status>
@@ -373,21 +369,29 @@
 			<register_activity>10</register_activity>
 
 			<own_room>6</own_room>
-			
-			<clothpref>
-				<item id="1" ch="5" />
-				<item id="2" ch="1" />
-				<item id="5" ch="2" />
-				<item id="6" ch="2" />
-			</clothpref>
-			<undpref>
-			</undpref>
-			<sockpref>
-				<item id="0" ch="10" />
-			</sockpref>
-			<footpref>
-				<item id="0" ch="10" />
-			</footpref>
+
+      <clothpref>
+        <topcloth> 1,  3</topcloth>
+        <topcloth> 2,  3</topcloth>
+        <topcloth> 3,  3</topcloth>
+
+        <botcloth> 8,  2</botcloth>
+        <botcloth> 9,  2</botcloth>
+        <botcloth>10,  2</botcloth>
+        <botcloth>11,  2</botcloth>
+
+        <bracloth>20,  5</bracloth>
+        <bracloth>22,  5</bracloth>
+
+        <undcloth>25,  2</undcloth>
+        <undcloth>30,  2</undcloth>
+        <undcloth>33,  2</undcloth>
+        <undcloth>34,  2</undcloth>
+
+        <soccloth> 0, 10</soccloth>
+
+        <shocloth> 0, 10</shocloth>
+      </clothpref>
 
 			<messages>
 				<status>
@@ -427,18 +431,30 @@
 			<register_activity>10</register_activity>
 
 			<own_room>7</own_room>
-			
-			<clothpref>
-			</clothpref>
-			<undpref>
-				<item id="12" ch="10" />
-			</undpref>
-			<sockpref>
-				<item id="0" ch="2" />
-			</sockpref>
-			<footpref>
-				<item id="0" ch="2" />
-			</footpref>
+
+      <clothpref>
+        <topcloth> 4,  3</topcloth>
+        <topcloth> 5,  3</topcloth>
+        <topcloth> 6,  3</topcloth>
+
+        <botcloth>12,  3</botcloth>
+        <botcloth>13,  3</botcloth>
+        <botcloth>14,  3</botcloth>
+
+        <bracloth>19,  5</bracloth>
+        <bracloth>23,  5</bracloth>
+
+        <undcloth>28,  2</undcloth>
+        <undcloth>29,  2</undcloth>
+        <undcloth>30,  2</undcloth>
+        <undcloth>31,  2</undcloth>
+        <undcloth>32,  2</undcloth>
+
+        <soccloth>35,  8</soccloth>
+        <soccloth> 0,  2</soccloth>
+
+        <shocloth> 0, 10</shocloth>
+      </clothpref>
 
 			<messages>
 				<status>

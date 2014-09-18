@@ -60,6 +60,7 @@
     <Compile Include="Setting\Action.cs" />
     <Compile Include="Setting\Actor.cs" />
     <Compile Include="Setting\Clothing.cs" />
+    <Compile Include="Setting\Girl.cs" />
     <Compile Include="Setting\Implement.cs" />
     <Compile Include="Setting\Location.cs" />
     <Compile Include="Setting\Protagonist.cs" />
