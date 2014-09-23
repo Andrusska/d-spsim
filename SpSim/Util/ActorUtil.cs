@@ -20,6 +20,19 @@ namespace SpSim.Util
             return new Room();
         }
 
+        public static Girl GetGirlById(List<Girl> girls, long targetId)
+        {
+            foreach (Girl g in girls)
+            {
+                if (g.Id == targetId)
+                {
+                    return g;
+                }
+            }
+
+            return girls[0];
+        }
+
         public static Implement GetImplementById(List<Implement> implements, long targetId)
         {
             foreach (Implement i in implements)
@@ -47,6 +60,21 @@ namespace SpSim.Util
             return output;
         }
 
+        public static List<Girl> GetGirlsByRoom(List<Girl> girls, long roomId)
+        {
+            List<Girl> output = new List<Girl>();
+
+            foreach (Girl girl in girls)
+            {
+                if (girl.CurrentRoom == roomId)
+                {
+                    output.Add(girl);
+                }
+            }
+
+            return output;
+        }
+
         public static Clothing GetClothingById(List<Clothing> clothes, long id)
         {
 
@@ -58,7 +86,7 @@ namespace SpSim.Util
                 }
             }
 
-            return clothes[0];
+            return new Clothing();
         }
 
         public static List<Clothing> GetClothesByRoom(List<Clothing> clothes, long roomId)
@@ -70,6 +98,21 @@ namespace SpSim.Util
                 if (c.CurrentRoom == roomId)
                 {
                     output.Add(c);
+                }
+            }
+
+            return output;
+        }
+
+        public static List<long> GetClothesByTypeAndRoom(List<Clothing> clothes, ClothingType type, long roomId)
+        {
+            List<long> output = new List<long>();
+
+            foreach (Clothing c in clothes)
+            {
+                if (c.CurrentRoom == roomId && type == c.Type)
+                {
+                    output.Add(c.Id);
                 }
             }
 

@@ -41,6 +41,13 @@ namespace SpSim.Setting
         /// Look at carried Clothing:   -/-   
         /// Drop carried Clothing:       long clothingId
         /// Return to default:          -/-
+        /// Look at girl:               long girlId
+        /// Think about girl:           long girlId
+        /// select girl:                long girlId
+        /// Take off:                   long currentGirl, long clothingId
+        /// Strip:                      long girlId
+        /// Wear:                       long girlId, long clothingId
+        /// Send to Room:               long girlId, long roomId
         /// </summary>
         public List<Object> Params = new List<Object>();
 
@@ -73,7 +80,9 @@ namespace SpSim.Setting
         //ImplementActions
         PICK_UP_IMPLEMENT, DROP_IMPLEMENT,
         //ClothingActions
-        PICK_UP_CLOTHING, LOOK_AT_CARRIED_CLOTHING, DROP_CARRIED_CLOTHING, RETURN_TO_DEFAULT
+        PICK_UP_CLOTHING, LOOK_AT_CARRIED_CLOTHING, DROP_CARRIED_CLOTHING, RETURN_TO_DEFAULT,
+        //GirlActions
+        LOOK_AT_GIRL, THINK_ABOUT_GIRL, SELECT_GIRL, TAKE_OFF, STRIP, WEAR, SEND_TO_ROOM
     }
 
     public enum ActionFollowedStatus

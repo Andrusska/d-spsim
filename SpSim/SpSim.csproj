@@ -68,6 +68,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ActorUtil.cs" />
+    <Compile Include="Util\ClothPrefItem.cs" />
     <Compile Include="Util\IOHelper.cs" />
     <Compile Include="Util\StringHelper.cs" />
     <Compile Include="Util\Tags.cs" />

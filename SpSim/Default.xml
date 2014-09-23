@@ -22,6 +22,10 @@
     <scatteredClothes max="4">all</scatteredClothes> puts 0-4 random clothes in this room.
     <scatteredClothes>6</scatteredClothes> puts some socks in this room.
     <scatteredClothes max="3">4,5</scatteredClothes> puts 0-3 pieces of underwear (bras and/or panties) in this room
+    
+    Finally <dumpclothes /> marks the room as clothing dump, all unused clothes will be dumped in the dump
+    with the smallest Id, after the girls are dressed up and the other clothes have been scattered. This tagg
+    is totally optional.
 	-->
 	<rooms>
 		<room>
@@ -46,7 +50,7 @@
 			<sitplace>the floor</sitplace>
 			<lieplace>the floor</lieplace>
 			<bendplace>none</bendplace>
-			<links>1,5,6,7,8,10</links>
+			<links>1,5,6,7,8,10,11</links>
 		</room>
 		<room>
 			<id>3</id>
@@ -167,6 +171,20 @@
 			<links>2</links>
       <scatteredClothes max="3">5</scatteredClothes>
 		</room>
+    <room>
+      <id>11</id>
+      <name>the washingroom</name>
+      <description>
+        A nearly empty room, containing only the washing mashine, the dryer and some lines to
+        hang up the clothes. Normally this room should be filled with drying clothes, but
+        because none of the girls does her laundry, theres just a big pile of clothes near 
+        the dryer.
+      </description>
+      <sitplace>the washing machine</sitplace>
+      <lieplace>the floor</lieplace>
+      <links>2</links>
+      <dumpclothes />
+    </room>
 	</rooms>
 
 	<!-- Define who's giving the spankings in this game.
@@ -258,9 +276,14 @@
     with a random element (when the sum < 10). When choosing between an onepiece or a top-bottom combo
     the chances of the onepieces and tops are added up (to max. 20) and one of them will be selected.
     If that Item is a top, the programm will select a bootm piece too.
+    All the xxxcloth-Taggs need the fitting girl-Id. This seems to be useless, but due to C#'s
+    global Xml-Scanning this is needed to decide which pref belongs to which girl. I'll sees if I can do
+    anything about that.
 		You can add an element with id 0 to every note to add a chance to make this part naked. Naked girls
     will be supported now ;)
 		
+    --- Currently not Supported ---
+    
 		Finally, each girl can have her own messages, giving them a small measure of personality. Read the 
 		heading before <messages> to understand how messages work and then come back here. If a girl has 
 		custom messages for a situation, the game will always try to use them before falling back to the 
@@ -307,21 +330,21 @@
 			<own_room>5</own_room>
 
       <clothpref>
-        <onecloth>16,  3</onecloth>
-        <onecloth>17,  3</onecloth>
-        <onecloth>17,  3</onecloth>
+        <onecloth id="1">16,  3</onecloth>
+        <onecloth id="1">17,  3</onecloth>
+        <onecloth id="1">17,  3</onecloth>
 
-        <bracloth>21,  8</bracloth>
-        <bracloth> 0,  2</bracloth>
-        
-        <undcloth>25,  3</undcloth>
-        <undcloth>26,  3</undcloth>
-        <undcloth>29,  3</undcloth>
+        <bracloth id="1">21,  8</bracloth>
+        <bracloth id="1"> 0,  2</bracloth>
 
-        <soccloth>36,  8</soccloth>
-        <soccloth> 0,  2</soccloth>
+        <undcloth id="1">25,  3</undcloth>
+        <undcloth id="1">26,  3</undcloth>
+        <undcloth id="1">29,  3</undcloth>
 
-        <shocloth> 0, 10</shocloth>
+        <soccloth id="1">36,  8</soccloth>
+        <soccloth id="1"> 0,  2</soccloth>
+
+        <shocloth id="1"> 0, 10</shocloth>
       </clothpref>
 
 			<messages>
@@ -371,26 +394,26 @@
 			<own_room>6</own_room>
 
       <clothpref>
-        <topcloth> 1,  3</topcloth>
-        <topcloth> 2,  3</topcloth>
-        <topcloth> 3,  3</topcloth>
+        <topcloth id="2"> 1,  3</topcloth>
+        <topcloth id="2"> 2,  3</topcloth>
+        <topcloth id="2"> 3,  3</topcloth>
 
-        <botcloth> 8,  2</botcloth>
-        <botcloth> 9,  2</botcloth>
-        <botcloth>10,  2</botcloth>
-        <botcloth>11,  2</botcloth>
+        <botcloth id="2"> 8,  2</botcloth>
+        <botcloth id="2"> 9,  2</botcloth>
+        <botcloth id="2">10,  2</botcloth>
+        <botcloth id="2">11,  2</botcloth>
 
-        <bracloth>20,  5</bracloth>
-        <bracloth>22,  5</bracloth>
+        <bracloth id="2">20,  5</bracloth>
+        <bracloth id="2">22,  5</bracloth>
 
-        <undcloth>25,  2</undcloth>
-        <undcloth>30,  2</undcloth>
-        <undcloth>33,  2</undcloth>
-        <undcloth>34,  2</undcloth>
+        <undcloth id="2">25,  2</undcloth>
+        <undcloth id="2">30,  2</undcloth>
+        <undcloth id="2">33,  2</undcloth>
+        <undcloth id="2">34,  2</undcloth>
 
-        <soccloth> 0, 10</soccloth>
+        <soccloth id="2"> 0, 10</soccloth>
 
-        <shocloth> 0, 10</shocloth>
+        <shocloth id="2"> 0, 10</shocloth>
       </clothpref>
 
 			<messages>
@@ -433,27 +456,27 @@
 			<own_room>7</own_room>
 
       <clothpref>
-        <topcloth> 4,  3</topcloth>
-        <topcloth> 5,  3</topcloth>
-        <topcloth> 6,  3</topcloth>
+        <topcloth id="3"> 4,  3</topcloth>
+        <topcloth id="3"> 5,  3</topcloth>
+        <topcloth id="3"> 6,  3</topcloth>
 
-        <botcloth>12,  3</botcloth>
-        <botcloth>13,  3</botcloth>
-        <botcloth>14,  3</botcloth>
+        <botcloth id="3">12,  3</botcloth>
+        <botcloth id="3">13,  3</botcloth>
+        <botcloth id="3">14,  3</botcloth>
 
-        <bracloth>19,  5</bracloth>
-        <bracloth>23,  5</bracloth>
+        <bracloth id="3">19,  5</bracloth>
+        <bracloth id="3">23,  5</bracloth>
 
-        <undcloth>28,  2</undcloth>
-        <undcloth>29,  2</undcloth>
-        <undcloth>30,  2</undcloth>
-        <undcloth>31,  2</undcloth>
-        <undcloth>32,  2</undcloth>
+        <undcloth id="3">28,  2</undcloth>
+        <undcloth id="3">29,  2</undcloth>
+        <undcloth id="3">30,  2</undcloth>
+        <undcloth id="3">31,  2</undcloth>
+        <undcloth id="3">32,  2</undcloth>
 
-        <soccloth>35,  8</soccloth>
-        <soccloth> 0,  2</soccloth>
+        <soccloth id="3">35,  8</soccloth>
+        <soccloth id="3"> 0,  2</soccloth>
 
-        <shocloth> 0, 10</shocloth>
+        <shocloth id="3"> 0, 10</shocloth>
       </clothpref>
 
 			<messages>

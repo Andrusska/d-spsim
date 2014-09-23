@@ -19,7 +19,7 @@ namespace SpSim.Setting
         /// <summary>
         /// What kind of clothing is it?
         /// </summary>
-        public ClothingType Type;
+        public ClothingType Type = ClothingType.SHOES;
 
         /// <summary>
         /// Does it "tank" some hits?
@@ -53,6 +53,41 @@ namespace SpSim.Setting
             return String.Format("{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7}", Id, Name, Description, Type, Resistance, Article, UndressT, CurrentRoom);
         }
 
+        public string GetClothingDescription()
+        {
+            if (Article)
+            {
+                return String.Format("a {0}", Description);
+            }
+            else
+            {
+                return String.Format("some {0}", Description);
+            }
+        }
+
+        public static string GetReadableTypeName(ClothingType type)
+        {
+            switch (type)
+            {
+                case ClothingType.BOTTOM:
+                    return "bottom part";
+                case ClothingType.BRA:
+                    return "bra";
+                case ClothingType.ONEPIECE:
+                    return "one piece";
+                case ClothingType.PANTIES:
+                    return "panties";
+                case ClothingType.SHOES:
+                    return "shoes";
+                case ClothingType.SOCKS:
+                    return "socks";
+                case ClothingType.TOP:
+                    return "top";
+                default: break;
+            }
+
+            return "Type";
+        }
     }
 
     /// <summary>

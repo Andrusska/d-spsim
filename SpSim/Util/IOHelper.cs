@@ -29,6 +29,7 @@ namespace SpSim.Util
             output.Rooms.AddRange(ImportRooms(xml));
             output.Implements.AddRange(ImportImplements(xml));
             output.Clothes.AddRange(ImportClothes(xml));
+            output.Girls.AddRange(ImportGirls(xml));
 
             output.Prepare();
             return output;
@@ -107,6 +108,10 @@ namespace SpSim.Util
                     {
                         r.ClothCount = 5;
                     }
+                }
+                if (xn[Tags.ROOM_CLOTHES_DUMP] != null)
+                {
+                    r.ClothingDump = true;
                 }
 
                 output.Add(r);
@@ -217,6 +222,167 @@ namespace SpSim.Util
     
                 
                     output.Add(cloth);
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Imports the girls
+        /// </summary>
+        private static List<Girl> ImportGirls(XmlDocument xml)
+        {
+            List<Girl> output = new List<Girl>();
+            Girl girl;
+            XmlNodeList xmlnode;
+            XmlNodeList clothPrefItems;
+
+            string[] clothVlaues;
+            ClothPrefItem item;
+
+            xmlnode = xml.GetElementsByTagName(Tags.GIRL);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                girl = new Girl();
+
+                girl.Id = Convert.ToInt64(xn[Tags.GIRL_ID].InnerText);
+
+                girl.Name = xn[Tags.GIRL_NAME].InnerText;
+                girl.Description = StringHelper.UnbreakLines(xn[Tags.GIRL_DESCRIPTION].InnerText);
+                girl.Lore = StringHelper.UnbreakLines(xn[Tags.GIRL_LORE].InnerText);
+
+                girl.Resistance = Convert.ToInt32(xn[Tags.GIRL_RESISTANCE].InnerText);
+                girl.Affection = Convert.ToInt32(xn[Tags.GIRL_AFFECTION].InnerText);
+                girl.OwnRoom = Convert.ToInt64(xn[Tags.GIRL_OWN_ROOM].InnerText);
+                girl.CurrentRoom = girl.OwnRoom;
+
+                if (xn[Tags.GIRL_SPANKABLE] != null)
+                {
+                    if (xn[Tags.GIRL_SPANKABLE].InnerText.ToLower() == "true")
+                    {
+                        girl.Spankable = true;
+                    }
+                    else
+                    {
+                        girl.Spankable = false;
+                    }
+                }
+
+                clothPrefItems = xml.GetElementsByTagName(Tags.GIRL_TOPCLOTH);
+                foreach (XmlNode cloth in clothPrefItems)
+                {
+                    if (Convert.ToInt64(cloth.Attributes["id"].Value) == girl.Id)
+                    {
+                        item = new ClothPrefItem();
+                        clothVlaues = cloth.InnerText.Split(',');
+
+                        item.Type = ClothingType.TOP;
+                        item.Id = Convert.ToInt64(clothVlaues[0]);
+                        item.Chance = Convert.ToInt32(clothVlaues[1]);
+
+                        girl.ClothPref.Add(item);
+                    }
+                }
+
+                clothPrefItems = xml.GetElementsByTagName(Tags.GIRL_BOTCLOTH);
+                foreach (XmlNode cloth in clothPrefItems)
+                {
+                    if (Convert.ToInt64(cloth.Attributes["id"].Value) == girl.Id)
+                    {
+                        item = new ClothPrefItem();
+                        clothVlaues = cloth.InnerText.Split(',');
+
+                        item.Type = ClothingType.BOTTOM;
+                        item.Id = Convert.ToInt64(clothVlaues[0]);
+                        item.Chance = Convert.ToInt32(clothVlaues[1]);
+
+                        girl.ClothPref.Add(item);
+                    }
+                }
+
+                clothPrefItems = xml.GetElementsByTagName(Tags.GIRL_ONECLOTH);
+                foreach (XmlNode cloth in clothPrefItems)
+                {
+                    if (Convert.ToInt64(cloth.Attributes["id"].Value) == girl.Id)
+                    {
+                        item = new ClothPrefItem();
+                        clothVlaues = cloth.InnerText.Split(',');
+
+                        item.Type = ClothingType.ONEPIECE;
+                        item.Id = Convert.ToInt64(clothVlaues[0]);
+                        item.Chance = Convert.ToInt32(clothVlaues[1]);
+
+                        girl.ClothPref.Add(item);
+                    }
+                }
+
+                clothPrefItems = xml.GetElementsByTagName(Tags.GIRL_BRACLOTH);
+                foreach (XmlNode cloth in clothPrefItems)
+                {
+                    if (Convert.ToInt64(cloth.Attributes["id"].Value) == girl.Id)
+                    {
+                        item = new ClothPrefItem();
+                        clothVlaues = cloth.InnerText.Split(',');
+
+                        item.Type = ClothingType.BRA;
+                        item.Id = Convert.ToInt64(clothVlaues[0]);
+                        item.Chance = Convert.ToInt32(clothVlaues[1]);
+
+                        girl.ClothPref.Add(item);
+                    }
+                }
+
+                clothPrefItems = xml.GetElementsByTagName(Tags.GIRL_UNDCLOTH);
+                foreach (XmlNode cloth in clothPrefItems)
+                {
+                    if (Convert.ToInt64(cloth.Attributes["id"].Value) == girl.Id)
+                    {
+                        item = new ClothPrefItem();
+                        clothVlaues = cloth.InnerText.Split(',');
+
+                        item.Type = ClothingType.PANTIES;
+                        item.Id = Convert.ToInt64(clothVlaues[0]);
+                        item.Chance = Convert.ToInt32(clothVlaues[1]);
+
+                        girl.ClothPref.Add(item);
+                    }
+                }
+
+                clothPrefItems = xml.GetElementsByTagName(Tags.GIRL_SOCCLOTH);
+                foreach (XmlNode cloth in clothPrefItems)
+                {
+                    if (Convert.ToInt64(cloth.Attributes["id"].Value) == girl.Id)
+                    {
+                        item = new ClothPrefItem();
+                        clothVlaues = cloth.InnerText.Split(',');
+
+                        item.Type = ClothingType.SOCKS;
+                        item.Id = Convert.ToInt64(clothVlaues[0]);
+                        item.Chance = Convert.ToInt32(clothVlaues[1]);
+
+                        girl.ClothPref.Add(item);
+                    }
+                }
+
+                clothPrefItems = xml.GetElementsByTagName(Tags.GIRL_SHOCLOTH);
+                foreach (XmlNode cloth in clothPrefItems)
+                {
+                    if (Convert.ToInt64(cloth.Attributes["id"].Value) == girl.Id)
+                    {
+                        item = new ClothPrefItem();
+                        clothVlaues = cloth.InnerText.Split(',');
+
+                        item.Type = ClothingType.SHOES;
+                        item.Id = Convert.ToInt64(clothVlaues[0]);
+                        item.Chance = Convert.ToInt32(clothVlaues[1]);
+
+                        girl.ClothPref.Add(item);
+                    }
+                }
+
+
+                output.Add(girl);
             }
 
             return output;

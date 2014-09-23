@@ -52,6 +52,11 @@ namespace SpSim.Setting
         /// </summary>
         public int ClothCount = 0;
 
+        /// <summary>
+        /// Defines if the room is filled with the leftover clothes
+        /// </summary>
+        public bool ClothingDump = false;
+
         public override string ToString()
         {
             return String.Format("Room: {0} | {1} | {2} | {3} | {4} | {5} | {6}", Id, Name, Description, String.Join(",", Links.ToArray()), BendPlace, LiePlace, SitPlace);
