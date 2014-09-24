@@ -14,6 +14,15 @@ Currently I'm the only one working on this project, but help is always appreciat
 
 Update History:
 ===============
+
+- 23th September, 2014: Dress up your girls edition
+	- Added the girls
+	- Added girl interaction (go to room X, take off this, put on that)
+	- Changed the ClothingPrefs
+	- Added another room
+	- All unused clothes can be dumped in one room with 
+	 ```<dumpclothes />```
+
 - 16th September, 2014: Pick up all the clothes edition
 	- Added the clothes import
 	- Bras for the world
@@ -35,12 +44,14 @@ Update History:
 
 Broken/Not-Working-As-Planned-"Features"
 ========================================
-
+- There are some problems with the onepieces on initial dress up
 - It was report that pushing the enter key is causing an Standart-Windows-Bing, I donn't know what could be causing this, but 	I'm on it
-- IMPORTANT: When using "older" xmls, you need to change them as desribed in the "Changes so far"-Section
+
 
 Changes so far:
 ===============
+
+- [b]IMPORTANT:[/b] When using "older" xmls, you need to change them as desribed in the "Changes so far"-Section
 
   - Multiple links in one room and multiple sfx for one item are now wrapped in one tag and divided by commatar
     e.g. the old
@@ -64,6 +75,8 @@ Changes so far:
       
   - Rooms can now contain some clothes at startup using the <scatteredClothes>-Tag
   	for an example look at default.xml's room explanation
+
+  - The clothing-preferences changed. Taggs are now individual for each clothingtype and got the id-Attribute to get the 		corresponding girl. Read the girl explanation in default.xml for the details
       
   - Clothes need some rework
     - <covers> is changed to type and due to the introduction of bras, the value needs to be changed (depending on its old 		type). For the new typelisting look at default.xml's clothes explanation
