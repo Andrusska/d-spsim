@@ -51,7 +51,7 @@ Broken/Not-Working-As-Planned-"Features"
 Changes so far:
 ===============
 
-- [b]IMPORTANT:[/b] When using "older" xmls, you need to change them as desribed in the "Changes so far"-Section
+- IMPORTANT: When using "older" xmls, you need to change them as described in the "Changes so far"-Section
 
   - Multiple links in one room and multiple sfx for one item are now wrapped in one tag and divided by commatar
     e.g. the old
