@@ -29,7 +29,7 @@ Update History:
 	- Reworked the default.xml clothes-section
 	- Pick up/Drop clothes & ClothingInventory
 	- Scatter clothes around the rooms with the new Tag:
-	 ```<scatteredClothes>```
+	 ```<scatteredClothes />```
 	
 - 14th September, 2014: Tidy up your house edition
 	- Basic Stuff
