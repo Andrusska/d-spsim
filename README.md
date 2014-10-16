@@ -88,5 +88,5 @@ Changes so far:
   - Clothes need some rework
     - <covers> is changed to type and due to the introduction of bras, the value needs to be changed (depending on its old 		type). For the new typelisting look at default.xml's clothes explanation
 
-  - Some tags in the message section were renamed due to C#s file wide scanning, compare them with the new default.xml. Most of 	the original Tags are untouched, so you should easyly recognize how there names changed
+  - Some tags were renamed due to C#s file wide scanning, compare them with the new default.xml. Most of the original Tags are untouched, so you should easyly recognize how there names changed
     
