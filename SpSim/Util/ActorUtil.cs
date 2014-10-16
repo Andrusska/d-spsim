@@ -89,6 +89,20 @@ namespace SpSim.Util
             return new Clothing();
         }
 
+        public static Holding GetHoldingById(List<Holding> holdings, long id)
+        {
+
+            foreach (Holding h in holdings)
+            {
+                if (h.Id == id)
+                {
+                    return h;
+                }
+            }
+
+            return new Holding();
+        }
+
         public static List<Clothing> GetClothesByRoom(List<Clothing> clothes, long roomId)
         {
             List<Clothing> output = new List<Clothing>();

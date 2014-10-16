@@ -48,6 +48,9 @@ namespace SpSim.Setting
         /// Strip:                      long girlId
         /// Wear:                       long girlId, long clothingId
         /// Send to Room:               long girlId, long roomId
+        /// Select Holding Girl:        long girlId
+        /// Hold girl:                  long girlId, long holdingId
+        /// Release girl:               -/-
         /// </summary>
         public List<Object> Params = new List<Object>();
 
@@ -71,7 +74,7 @@ namespace SpSim.Setting
     }
 
     /// <summary>
-    /// Collection of the differen ActionTypes
+    /// Collection of the different ActionTypes
     /// </summary>
     public enum ActionType
     {
@@ -82,7 +85,9 @@ namespace SpSim.Setting
         //ClothingActions
         PICK_UP_CLOTHING, LOOK_AT_CARRIED_CLOTHING, DROP_CARRIED_CLOTHING, RETURN_TO_DEFAULT,
         //GirlActions
-        LOOK_AT_GIRL, THINK_ABOUT_GIRL, SELECT_GIRL, TAKE_OFF, STRIP, WEAR, SEND_TO_ROOM
+        LOOK_AT_GIRL, THINK_ABOUT_GIRL, SELECT_GIRL, TAKE_OFF, STRIP, WEAR, SEND_TO_ROOM,
+        //HoldingActions
+        SELECT_HOLDING_GIRL, HOLD_GIRL, RELEASE_GIRL 
     }
 
     public enum ActionFollowedStatus

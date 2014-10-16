@@ -61,8 +61,11 @@
     <Compile Include="Setting\Actor.cs" />
     <Compile Include="Setting\Clothing.cs" />
     <Compile Include="Setting\Girl.cs" />
+    <Compile Include="Setting\Holding.cs" />
     <Compile Include="Setting\Implement.cs" />
     <Compile Include="Setting\Location.cs" />
+    <Compile Include="Setting\Message.cs" />
+    <Compile Include="Setting\MessagePool.cs" />
     <Compile Include="Setting\Protagonist.cs" />
     <Compile Include="Setting\Room.cs" />
     <Compile Include="Program.cs" />
@@ -70,6 +73,8 @@
     <Compile Include="Util\ActorUtil.cs" />
     <Compile Include="Util\ClothPrefItem.cs" />
     <Compile Include="Util\IOHelper.cs" />
+    <Compile Include="Util\RandomNumber.cs" />
+    <Compile Include="Util\Replacer.cs" />
     <Compile Include="Util\StringHelper.cs" />
     <Compile Include="Util\Tags.cs" />
   </ItemGroup>

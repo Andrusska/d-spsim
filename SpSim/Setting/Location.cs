@@ -37,6 +37,11 @@ namespace SpSim.Setting
         public List<Clothing> Clothes = new List<Clothing>();
 
         /// <summary>
+        /// List of all ways to hold a girl
+        /// </summary>
+        public List<Holding> Holdings = new List<Holding>();
+
+        /// <summary>
         /// The protagonist
         /// </summary>
         public Protagonist Protagonist = new Protagonist();
@@ -45,6 +50,11 @@ namespace SpSim.Setting
         /// List of Girls in this setting
         /// </summary>
         public List<Girl> Girls = new List<Girl>();
+
+        /// <summary>
+        /// MessagePool containing all the Messages
+        /// </summary>
+        public MessagePool Pool;
 
         /// <summary>
         /// Contains all the possible options for the protagonist
@@ -88,14 +98,13 @@ namespace SpSim.Setting
         /// </summary>
         private void ScatterImplements()
         {
-            Random rnd = new Random();
 
             foreach (Implement i in Implements)
             {
                 //Everything is places except for the locked item
                 if (i.Id != 0)
                 {
-                    i.CurrentRoom = Rooms[rnd.Next(Rooms.Count - 1) + 1].Id;
+                    i.CurrentRoom = Rooms[RandomNumber.Between(0, Rooms.Count - 1)].Id;
                 }
             }
         }
@@ -130,7 +139,6 @@ namespace SpSim.Setting
         /// </returns>
         private bool DressUpTopOrOnepiece(Girl girl)
         {
-            Random rnd = new Random();
 
             List<long> pool;
             Clothing cloth;
@@ -150,7 +158,7 @@ namespace SpSim.Setting
                 //Add the nude Element
                 pool.Add(0);
                 //Put one on
-                index = rnd.Next(pool.Count);
+                index = RandomNumber.Between(0, pool.Count - 1);
                 cloth = ActorUtil.GetClothingById(Clothes, pool[index]);
                 cloth.CurrentRoom = (girl.Id + 1) * -1;
                 girl.WornClothes[(int)cloth.Type - 1] = cloth.Id;
@@ -164,7 +172,7 @@ namespace SpSim.Setting
             else
             {
                 //Pick one by random
-                counter = rnd.Next(20) + 1;
+                counter = RandomNumber.Between(0, 20);
                 //Iterate over all Preferences
                 foreach (ClothPrefItem item in items)
                 {
@@ -193,7 +201,7 @@ namespace SpSim.Setting
                 //Add the nude Element
                 pool.Add(0);
                 //Put one on
-                index = rnd.Next(pool.Count);
+                index = RandomNumber.Between(0, pool.Count - 1);
                 cloth = ActorUtil.GetClothingById(Clothes, pool[index]);
                 cloth.CurrentRoom = (girl.Id + 1) * -1;
                 girl.WornClothes[(int)cloth.Type - 1] = pool[index];
@@ -211,8 +219,6 @@ namespace SpSim.Setting
         /// </summary>
         private void DressUpPart(Girl girl, ClothingType type)
         {
-            Random rnd = new Random();
-
             List<ClothPrefItem> items = ClothPrefItem.GetItemsByType(girl.ClothPref, type);
             List<long> pool;
             Clothing cloth;
@@ -228,7 +234,7 @@ namespace SpSim.Setting
                 //Add the nude Element
                 pool.Add(0);
                 //Put one on
-                index = rnd.Next(pool.Count);
+                index = RandomNumber.Between(0, pool.Count - 1);
                 cloth = ActorUtil.GetClothingById(Clothes, pool[index]);
                 cloth.CurrentRoom = (girl.Id + 1) * -1;
                 girl.WornClothes[(int)cloth.Type - 1] = pool[index];
@@ -236,7 +242,7 @@ namespace SpSim.Setting
             else
             {
                 //Pick one by random
-                counter = rnd.Next(10) + 1;
+                counter = RandomNumber.Between(0, 10);
                 //Iterate over all Preferences
                 foreach (ClothPrefItem item in items)
                 {
@@ -259,7 +265,7 @@ namespace SpSim.Setting
                 //Add the nude Element
                 pool.Add(0);
                 //Put one on
-                index = rnd.Next(pool.Count);
+                index = RandomNumber.Between(0, pool.Count - 1);
                 ActorUtil.GetClothingById(Clothes, pool[index]).CurrentRoom = (girl.Id + 1) * -1;
                 girl.WornClothes[(int)type - 1] = pool[index];
             }
@@ -270,7 +276,6 @@ namespace SpSim.Setting
         /// </summary>
         private void ScatterClothes()
         {
-            Random rnd = new Random();
             Clothing cloth;
             int counter;
             int breakCounter;
@@ -282,11 +287,11 @@ namespace SpSim.Setting
                 {
                     counter = 0;
                     breakCounter = 0;
-                    int limit = rnd.Next(r.ClothCount + 1);
+                    int limit = RandomNumber.Between(0, r.ClothCount + 1);
 
                     while (counter < limit - 1 && breakCounter < 200)
                     {
-                        cloth = Clothes[rnd.Next(Clothes.Count)];
+                        cloth = Clothes[RandomNumber.Between(0, Clothes.Count - 1)];
                         if (cloth.CurrentRoom == 0 && r.ScatteredTypes.Contains(cloth.Type))
                         {
                             cloth.CurrentRoom = r.Id;
@@ -321,7 +326,7 @@ namespace SpSim.Setting
 
         #endregion
 
-        #region General ActionMethods
+        #region General Methods
 
         /// <summary>
         /// Prints the available options of the protagonist
@@ -333,9 +338,21 @@ namespace SpSim.Setting
 
             for (int i = 0; i < PossibleActions.Count; i++)
             {
-                output += String.Format("[{0}] {1}\t", i, PossibleActions[i].DisplayText);
+                if (i == 0)
+                {
+                    output += String.Format("[{0}] {1}", i, PossibleActions[i].DisplayText);
+                }
+                else
+                {
+                    output += String.Format("\t[{0}] {1}", i, PossibleActions[i].DisplayText);
+                }
             }
 
+            Display.AppendText(Environment.NewLine + output + Environment.NewLine);
+        }
+
+        public void DisplayLine(string output)
+        {
             Display.AppendText(Environment.NewLine + output + Environment.NewLine);
         }
 
@@ -400,7 +417,16 @@ namespace SpSim.Setting
 
             foreach (Girl g in localGirls)
             {
-                output += Environment.NewLine + String.Format("{0} is here", g.Name);
+                if (g.Id != Protagonist.HoldingGirl)
+                {
+                    output += Environment.NewLine + String.Format("{0} is here.", g.Name);
+                }
+            }
+
+            //Am I holding anyone?
+            if (Protagonist.HoldingGirl != 0)
+            {
+                output += Environment.NewLine + String.Format("I'm holding {0} {1}.", ActorUtil.GetGirlById(Girls, Protagonist.HoldingGirl).Name, ActorUtil.GetHoldingById(Holdings, Protagonist.HoldingId).Name);
             }
 
             //Some clothes Lieing around?
@@ -428,6 +454,8 @@ namespace SpSim.Setting
             AddImplementActions();
             AddDefaultGirlActions();
             AddSelectGirlAction();
+            AddSelectHoldingGirlAction();
+            AddReleaseHoldingGirlAction();
             AddClothingPickUpActions();
         }
 
@@ -462,13 +490,49 @@ namespace SpSim.Setting
 
             foreach (Girl girl in Girls)
             {
-                if (girl.CurrentRoom == Protagonist.CurrentRoom)
+                if (girl.CurrentRoom == Protagonist.CurrentRoom && girl.Id != Protagonist.HoldingGirl)
                 {
                     action = new Action(String.Format("Tell {0} to...", girl.Name), ActionType.SELECT_GIRL);
                     action.Params.Add(girl.Id);
                     action.ActionText = String.Format("I talk to {0}", girl.Name);
                     PossibleActions.Add(action);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Prepares the holding of a girl
+        /// </summary>
+        private void AddSelectHoldingGirlAction()
+        {
+            Action action;
+
+            foreach (Girl girl in Girls)
+            {
+                if (girl.CurrentRoom == Protagonist.CurrentRoom && girl.Id != Protagonist.HoldingGirl)
+                {
+                    action = new Action(String.Format("Hold {0}", girl.Name), ActionType.SELECT_HOLDING_GIRL);
+                    action.Params.Add(girl.Id);
+                    action.ActionText = String.Format("I approach {0}", girl.Name);
+                    PossibleActions.Add(action);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prepares the holding of a girl
+        /// </summary>
+        private void AddReleaseHoldingGirlAction()
+        {
+            Action action;
+
+            if (Protagonist.HoldingGirl != 0)
+            {
+                Girl girl = ActorUtil.GetGirlById(Girls, Protagonist.HoldingGirl);
+
+                action = new Action(String.Format("Release {0}", girl.Name), ActionType.RELEASE_GIRL);
+                action.ActionText = String.Format("I release {0}", girl.Name);
+                PossibleActions.Add(action);
             }
         }
 
@@ -542,13 +606,16 @@ namespace SpSim.Setting
 
             foreach(Girl g in localGirls){
 
-                action = new Action(String.Format("Look at {0}", g.Name), ActionType.LOOK_AT_GIRL);
-                action.Params.Add(g.Id);
-                PossibleActions.Add(action);
+                if (g.Id != Protagonist.HoldingGirl)
+                {
+                    action = new Action(String.Format("Look at {0}", g.Name), ActionType.LOOK_AT_GIRL);
+                    action.Params.Add(g.Id);
+                    PossibleActions.Add(action);
 
-                action = new Action(String.Format("Think about {0}", g.Name), ActionType.THINK_ABOUT_GIRL);
-                action.Params.Add(g.Id);
-                PossibleActions.Add(action);
+                    action = new Action(String.Format("Think about {0}", g.Name), ActionType.THINK_ABOUT_GIRL);
+                    action.Params.Add(g.Id);
+                    PossibleActions.Add(action);
+                }
             }
         }
 
@@ -742,6 +809,65 @@ namespace SpSim.Setting
 
         #endregion
 
+        #region Girl Holding
+
+        /// <summary>
+        /// Informs about the girl he's about to hold
+        /// </summary>
+        public void PrintHoldingGirlStatus(long currentGirl)
+        {
+            string output = "";
+
+            Girl g = ActorUtil.GetGirlById(Girls, currentGirl);
+
+            output += g.GetClothesDescription(Clothes) + Environment.NewLine;
+            output += String.Format("How should I hold her?") + Environment.NewLine;
+
+            Display.AppendText(Environment.NewLine + output);
+        }
+
+        /// <summary>
+        /// Refills the ActionList with all holdingTypes
+        /// </summary>
+        public void EvaluateHoldingActions(long currentGirl)
+        {
+            //Clear the ActionList
+            PossibleActions.Clear();
+
+            Action action;
+            Girl girl = ActorUtil.GetGirlById(Girls, currentGirl);
+
+            foreach (Holding hold in Holdings)
+            {
+                //Are there required clothes to hold on?
+                if(hold.RequieredClothing.Count == 0){
+                    action = new Action(String.Format("Hold her {0}", hold.Name), ActionType.HOLD_GIRL);
+                    action.Params.Add(currentGirl);
+                    action.Params.Add(hold.Id);
+                    PossibleActions.Add(action);
+                }
+                else
+                {
+                    //Check the required clothes
+                    foreach (string s in hold.RequieredClothing)
+                    {
+                        if(girl.WornClothes[Convert.ToInt32(s) - 1] != 0){
+                            action = new Action(String.Format("Hold her {0}", hold.Name), ActionType.HOLD_GIRL);
+                            action.Params.Add(currentGirl);
+                            action.Params.Add(hold.Id);
+                            PossibleActions.Add(action);
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            AddReturnAction();
+        }
+
+        #endregion
+
         #region ActionHandling
 
         /// <summary>
@@ -813,6 +939,17 @@ namespace SpSim.Setting
                     ReactSendToRoom(selectedAction);
                     break;
 
+                //Girl Holding
+                case ActionType.SELECT_HOLDING_GIRL:
+                    ReactSelectHoldingGirl(selectedAction);
+                    break;
+                case ActionType.HOLD_GIRL:
+                    ReactHoldGirl(selectedAction);
+                    break;
+                case ActionType.RELEASE_GIRL:
+                    ReactReleaseGirl(selectedAction);
+                    break;
+
                 //Break
                 default: break;
             }
@@ -860,11 +997,101 @@ namespace SpSim.Setting
         /// </summary>
         private void ReactMoveToRoom(Action action)
         {
+            List<Object> messageParams;
+            string[] replacerParams;
+
             string output = Environment.NewLine;
+
             Protagonist.CurrentRoom = (long)action.Params[0];
             output += action.ActionText + Environment.NewLine;
-            Display.AppendText(output);
+            if (Protagonist.HoldingGirl != 0)
+            {
+                Girl girl = ActorUtil.GetGirlById(Girls, Protagonist.HoldingGirl);
+                Holding h = ActorUtil.GetHoldingById(Holdings, Protagonist.HoldingId);
+                girl.CurrentRoom = (long)action.Params[0];
+                Protagonist.Dragged = true;
 
+                //Dragging Message
+                messageParams = new List<Object>();
+                replacerParams = new string[Replacer.Placeholder.Length];
+
+                messageParams.Add((int)h.Id);
+                messageParams.Add((int)girl.Id);
+                replacerParams[5] = girl.Name;
+                replacerParams[7] = ActorUtil.GetRoomById(Rooms, Protagonist.CurrentRoom).Name;
+                if (h.RequieredClothing.Count > 0)
+                {
+                    replacerParams[6] = ActorUtil.GetClothingById(Clothes, girl.WornClothes[Convert.ToInt32(h.RequieredClothing[0]) - 1]).Description;
+                }
+                output += Replacer.Replace(Pool.GetMessage(MessageType.DRAG, messageParams), replacerParams) + Environment.NewLine;
+
+                //Girls Reaction
+                messageParams = new List<Object>();
+                replacerParams = new string[Replacer.Placeholder.Length];
+
+                messageParams.Add(girl.Affection);
+                messageParams.Add(girl.Pain);
+                messageParams.Add(girl.Contritement);
+                messageParams.Add((int)h.Id);
+                messageParams.Add((int)girl.Id);
+                replacerParams[0] = girl.Call;
+                replacerParams[1] = girl.Call;
+                replacerParams[5] = girl.Name;
+                if (h.RequieredClothing.Count > 0)
+                {
+                    replacerParams[6] = ActorUtil.GetClothingById(Clothes, girl.WornClothes[Convert.ToInt32(h.RequieredClothing[0]) - 1]).Description;
+                }
+                output += Replacer.Replace(Pool.GetMessage(MessageType.DRAG_REACT, messageParams), replacerParams) + Environment.NewLine;
+
+                //Spectator's reaction
+                foreach (Girl locGirl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+                {
+                    if (locGirl.Id != Protagonist.HoldingGirl)
+                    {
+                        messageParams = new List<Object>();
+                        replacerParams = new string[Replacer.Placeholder.Length];
+
+                        messageParams.Add(locGirl.Affection);
+                        messageParams.Add(locGirl.Pain);
+                        messageParams.Add(locGirl.Contritement);
+                        messageParams.Add((int)h.Id);
+                        messageParams.Add((int)locGirl.Id);
+                        replacerParams[2] = locGirl.Name;
+                        replacerParams[5] = girl.Name;
+                        if (h.RequieredClothing.Count > 0)
+                        {
+                            replacerParams[6] = ActorUtil.GetClothingById(Clothes, girl.WornClothes[Convert.ToInt32(h.RequieredClothing[0]) - 1]).Description;
+                        }
+
+                        output += Replacer.Replace(Pool.GetMessage(MessageType.DRAG_WATCH, messageParams), replacerParams) + Environment.NewLine;
+                    }
+                }
+            }
+            
+            //Entering with Implement
+            if (Protagonist.VariableImplement != -1)
+            {
+                Implement impl = ActorUtil.GetImplementById(Implements, Protagonist.VariableImplement);
+
+                foreach (Girl girl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+                {
+                    if (girl.Id != Protagonist.HoldingGirl)
+                    {
+                        messageParams = new List<Object>();
+                        replacerParams = new string[Replacer.Placeholder.Length];
+
+                        messageParams.Add(girl.Affection);
+                        messageParams.Add(girl.Pain);
+                        messageParams.Add(girl.Contritement);
+                        messageParams.Add((int)girl.Id);
+                        replacerParams[2] = girl.Name;
+                        replacerParams[3] = impl.Name;
+                        output += Replacer.Replace(Pool.GetMessage(MessageType.ENTER_IMPL, messageParams), replacerParams) + Environment.NewLine;
+                    }
+                }
+            }
+
+            Display.AppendText(output);
             FinishDefaultAction();
         }
 
@@ -873,22 +1100,79 @@ namespace SpSim.Setting
         /// </summary>
         private void ReactPickUpImplement(Action action)
         {
+            List<Object> messageParams;
+            string[] replacerParams;
             string output = Environment.NewLine;
+
             Implement newImplement = ActorUtil.GetImplementById(Implements, (long)action.Params[0]);
+            output += action.ActionText + Environment.NewLine;
 
             //If the protagonist already holds an implement
             if (Protagonist.VariableImplement != -1)
             {
+                Implement oldImpl = ActorUtil.GetImplementById(Implements, Protagonist.VariableImplement);
+
                 //Drop the current Implement
-                ActorUtil.GetImplementById(Implements, Protagonist.VariableImplement).CurrentRoom = Protagonist.CurrentRoom;
-                Protagonist.VariableImplement = -1;
+                oldImpl.CurrentRoom = Protagonist.CurrentRoom;
+                Protagonist.VariableImplement = newImplement.Id;
+                newImplement.CurrentRoom = 0;
+
+                if (newImplement.Strength > oldImpl.Strength)
+                {
+                    foreach (Girl girl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+                    {
+                        messageParams = new List<Object>();
+                        replacerParams = new string[Replacer.Placeholder.Length];
+
+                        messageParams.Add(girl.Affection);
+                        messageParams.Add(girl.Pain);
+                        messageParams.Add(girl.Contritement);
+                        messageParams.Add((int)girl.Id);
+                        replacerParams[2] = girl.Name;
+                        replacerParams[3] = newImplement.Name;
+                        replacerParams[4] = oldImpl.Name;
+                        output += Replacer.Replace(Pool.GetMessage(MessageType.SWAP_WORSE_IMPL, messageParams), replacerParams) + Environment.NewLine;
+                    }
+                }
+                else
+                {
+                    foreach (Girl girl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+                    {
+                        messageParams = new List<Object>();
+                        replacerParams = new string[Replacer.Placeholder.Length];
+
+                        messageParams.Add(girl.Affection);
+                        messageParams.Add(girl.Pain);
+                        messageParams.Add(girl.Contritement);
+                        messageParams.Add((int)girl.Id);
+                        replacerParams[2] = girl.Name;
+                        replacerParams[3] = newImplement.Name;
+                        replacerParams[4] = oldImpl.Name;
+                        output += Replacer.Replace(Pool.GetMessage(MessageType.SWAP_IMPL, messageParams), replacerParams) + Environment.NewLine;
+                    }
+                }
             }
-            Protagonist.VariableImplement = newImplement.Id;
-            newImplement.CurrentRoom = 0;
+            else
+            {
+                Protagonist.VariableImplement = newImplement.Id;
+                newImplement.CurrentRoom = 0;
 
-            output += action.ActionText + Environment.NewLine;
+                foreach (Girl girl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+                {
+                    messageParams = new List<Object>();
+                    replacerParams = new string[Replacer.Placeholder.Length];
+
+                    messageParams.Add(girl.Affection);
+                    messageParams.Add(girl.Pain);
+                    messageParams.Add(girl.Contritement);
+                    messageParams.Add((int)girl.Id);
+                    replacerParams[2] = girl.Name;
+                    replacerParams[3] = newImplement.Name;
+                    output += Replacer.Replace(Pool.GetMessage(MessageType.PICKUP_IMPL, messageParams), replacerParams) + Environment.NewLine;
+                }
+            }
+            
             Display.AppendText(output);
-
             FinishDefaultAction();
         }
 
@@ -897,14 +1181,32 @@ namespace SpSim.Setting
         /// </summary>
         private void ReactDropImplement(Action action)
         {
+            List<Object> messageParams;
+            string[] replacerParams;
+
             string output = Environment.NewLine;
 
-            ActorUtil.GetImplementById(Implements, Protagonist.VariableImplement).CurrentRoom = Protagonist.CurrentRoom;
+            Implement impl = ActorUtil.GetImplementById(Implements, Protagonist.VariableImplement);
+            impl.CurrentRoom = Protagonist.CurrentRoom;
             Protagonist.VariableImplement = -1;
 
             output += action.ActionText + Environment.NewLine;
-            Display.AppendText(output);
 
+            foreach (Girl girl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+            {
+                messageParams = new List<Object>();
+                replacerParams = new string[Replacer.Placeholder.Length];
+
+                messageParams.Add(girl.Affection);
+                messageParams.Add(girl.Pain);
+                messageParams.Add(girl.Contritement);
+                messageParams.Add((int)girl.Id);
+                replacerParams[2] = girl.Name;
+                replacerParams[3] = impl.Name;
+                output += Replacer.Replace(Pool.GetMessage(MessageType.DROP_IMPL, messageParams), replacerParams) + Environment.NewLine;
+            }
+
+            Display.AppendText(output);
             FinishDefaultAction();
         }
 
@@ -930,13 +1232,25 @@ namespace SpSim.Setting
         /// </summary>
         private void ReactLookAtGirl(Action action)
         {
+            List<Object> messageParams = new List<Object>();
+            string[] replacerParams = new string[Replacer.Placeholder.Length];
+
             string output = Environment.NewLine;
             Girl girl = ActorUtil.GetGirlById(Girls, (long)action.Params[0]);
 
             output += girl.Description + Environment.NewLine;
             output += girl.GetClothesDescription(Clothes) + Environment.NewLine;
-            Display.AppendText(output);
 
+            messageParams.Add(girl.Affection);
+            messageParams.Add(girl.Pain);
+            messageParams.Add(girl.Contritement);
+            messageParams.Add((int)girl.Id);
+            replacerParams[0] = girl.Call;
+            replacerParams[1] = girl.Call;
+            replacerParams[2] = girl.Name;
+            output += Replacer.Replace(Pool.GetMessage(MessageType.LOOK_AT_GIRL, messageParams), replacerParams) + Environment.NewLine;
+
+            Display.AppendText(output);
             FinishDefaultAction();
         }
 
@@ -1034,11 +1348,11 @@ namespace SpSim.Setting
 
             if (cloth.Article)
             {
-                output = String.Format("{0} takes off her {1} and hands them to me.", g.Name, cloth.Description);
+                output = String.Format("{0} takes off her {1} and hands it to me.", g.Name, cloth.Description);
             }
             else
             {
-                output = String.Format("{0} takes off her {1} and hands it to me.", g.Name, cloth.Description);
+                output = String.Format("{0} takes off her {1} and hands them to me.", g.Name, cloth.Description);
             }
             
             Display.AppendText(Environment.NewLine + output + Environment.NewLine);
@@ -1152,8 +1466,202 @@ namespace SpSim.Setting
             g.CurrentRoom = (long)action.Params[1];
 
             output = String.Format("{0} leaves the room.", g.Name);
-            Display.AppendText(Environment.NewLine + output + Environment.NewLine);
+            DisplayLine(output);
 
+            FinishDefaultAction();
+        }
+
+        #endregion
+
+        #region HoldingActions
+
+        /// <summary>
+        /// Finishes the holding selection
+        /// </summary>
+        private void FinishHoldingAction(long currentGirl)
+        {
+            PrintHoldingGirlStatus(currentGirl);
+            EvaluateHoldingActions(currentGirl);
+        }
+
+        /// <summary>
+        /// Reacts to the selection of a holdingGirl
+        /// </summary>
+        private void ReactSelectHoldingGirl(Action action)
+        {
+            string output = "";
+            List<Object> messageParams;
+            string[] replacerParams;
+
+            Girl girl = ActorUtil.GetGirlById(Girls, (long)action.Params[0]);
+
+            //Holding Announcement
+            messageParams = new List<Object>();
+            replacerParams = new string[Replacer.Placeholder.Length];
+
+            messageParams.Add((int)girl.Id);
+            replacerParams[5] = girl.Name;
+            output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_ANNOUNCE, messageParams), replacerParams) + Environment.NewLine;
+
+            //Girls Reaction
+            messageParams = new List<Object>();
+            replacerParams = new string[Replacer.Placeholder.Length];
+
+            messageParams.Add(girl.Affection);
+            messageParams.Add(girl.Pain);
+            messageParams.Add(girl.Contritement);
+            messageParams.Add((int)girl.Id);
+            replacerParams[0] = girl.Call;
+            replacerParams[1] = girl.Call;
+            replacerParams[5] = girl.Name;
+            output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_REACT_ANNOUNCE, messageParams), replacerParams) + Environment.NewLine;
+
+            //Spectator Message
+            foreach (Girl locGirl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+            {
+                if (locGirl.Id != girl.Id)
+                {
+                    messageParams = new List<Object>();
+                    replacerParams = new string[Replacer.Placeholder.Length];
+
+                    messageParams.Add(locGirl.Affection);
+                    messageParams.Add(locGirl.Pain);
+                    messageParams.Add(locGirl.Contritement);
+                    messageParams.Add((int)locGirl.Id);
+                    replacerParams[2] = locGirl.Name;
+                    output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_WATCH_ANNOUNCE, messageParams), replacerParams) + Environment.NewLine;
+                }
+            }
+            
+            DisplayLine(output);
+            FinishHoldingAction(girl.Id);
+        }
+
+        /// <summary>
+        /// Reacts to the actual holding of a girl
+        /// </summary>
+        private void ReactHoldGirl(Action action)
+        {
+            string output = "";
+            List<Object> messageParams;
+            string[] replacerParams;
+
+            Girl girl = ActorUtil.GetGirlById(Girls, (long)action.Params[0]);
+            Holding h = ActorUtil.GetHoldingById(Holdings, (long)action.Params[1]);
+
+            Protagonist.HoldingGirl = girl.Id;
+            Protagonist.HoldingId = h.Id;
+            Protagonist.Dragged = false;
+
+            //Holding Announcement
+            messageParams = new List<Object>();
+            replacerParams = new string[Replacer.Placeholder.Length];
+
+            messageParams.Add((int)h.Id);
+            messageParams.Add((int)girl.Id);
+            replacerParams[5] = girl.Name;
+            if (h.RequieredClothing.Count > 0)
+            {
+                replacerParams[6] = ActorUtil.GetClothingById(Clothes, girl.WornClothes[Convert.ToInt32(h.RequieredClothing[0]) - 1]).Description;
+            }
+            output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_START, messageParams), replacerParams) + Environment.NewLine;
+
+            //Girls Reaction
+            messageParams = new List<Object>();
+            replacerParams = new string[Replacer.Placeholder.Length];
+
+            messageParams.Add(girl.Affection);
+            messageParams.Add(girl.Pain);
+            messageParams.Add(girl.Contritement);
+            messageParams.Add((int)h.Id);
+            messageParams.Add((int)girl.Id);
+            replacerParams[0] = girl.Call;
+            replacerParams[1] = girl.Call;
+            replacerParams[5] = girl.Name;
+            output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_START_REACT, messageParams), replacerParams) + Environment.NewLine;
+
+            //Spectator's reaction
+            foreach (Girl locGirl in ActorUtil.GetGirlsByRoom(Girls, Protagonist.CurrentRoom))
+            {
+                if (locGirl.Id != Protagonist.HoldingGirl)
+                {
+                    messageParams = new List<Object>();
+                    replacerParams = new string[Replacer.Placeholder.Length];
+
+                    messageParams.Add(locGirl.Affection);
+                    messageParams.Add(locGirl.Pain);
+                    messageParams.Add(locGirl.Contritement);
+                    messageParams.Add((int)h.Id);
+                    messageParams.Add((int)locGirl.Id);
+                    replacerParams[2] = locGirl.Name;
+                    replacerParams[5] = girl.Name;
+                    if (h.RequieredClothing.Count > 0)
+                    {
+                        replacerParams[6] = ActorUtil.GetClothingById(Clothes, girl.WornClothes[Convert.ToInt32(h.RequieredClothing[0]) - 1]).Description;
+                    }
+
+                    output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_START_WATCH, messageParams), replacerParams) + Environment.NewLine;
+                }
+            }
+
+            DisplayLine(output);
+            FinishDefaultAction();
+        }
+
+        /// <summary>
+        /// Reacts to the release of a holdingGirl
+        /// </summary>
+        private void ReactReleaseGirl(Action action)
+        {
+            string output = "";
+            List<Object> messageParams;
+            string[] replacerParams;
+
+            Girl girl = ActorUtil.GetGirlById(Girls, Protagonist.HoldingGirl);
+            Holding h = ActorUtil.GetHoldingById(Holdings, Protagonist.HoldingId);
+
+            Protagonist.HoldingGirl = 0;
+
+            //Release Message
+            messageParams = new List<Object>();
+            replacerParams = new string[Replacer.Placeholder.Length];
+
+            messageParams.Add((int)h.Id);
+            messageParams.Add((int)girl.Id);
+            replacerParams[5] = girl.Name;
+            if (h.RequieredClothing.Count > 0)
+            {
+                replacerParams[6] = ActorUtil.GetClothingById(Clothes, girl.WornClothes[Convert.ToInt32(h.RequieredClothing[0]) - 1]).Description;
+            }
+            output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_STOP, messageParams), replacerParams) + Environment.NewLine;
+
+            //Girls Reaction
+            messageParams = new List<Object>();
+            replacerParams = new string[Replacer.Placeholder.Length];
+
+            messageParams.Add(girl.Affection);
+            messageParams.Add(girl.Pain);
+            messageParams.Add(girl.Contritement);
+            messageParams.Add((int)h.Id);
+            messageParams.Add((int)girl.Id);
+            replacerParams[0] = girl.Call;
+            replacerParams[1] = girl.Call;
+            replacerParams[5] = girl.Name;
+            replacerParams[7] = ActorUtil.GetRoomById(Rooms, Protagonist.CurrentRoom).Name;
+            if (h.RequieredClothing.Count > 0)
+            {
+                replacerParams[6] = ActorUtil.GetClothingById(Clothes, girl.WornClothes[Convert.ToInt32(h.RequieredClothing[0]) - 1]).Description;
+            }
+            if (Protagonist.Dragged)
+            {
+                output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_STOP_REACT, messageParams), replacerParams) + Environment.NewLine;
+            }
+            else
+            {
+                output += Replacer.Replace(Pool.GetMessage(MessageType.HOLDING_STOP_WITHOUT_DRAG, messageParams), replacerParams) + Environment.NewLine;
+            }
+
+            DisplayLine(output);
             FinishDefaultAction();
         }
 

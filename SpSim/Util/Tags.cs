@@ -30,6 +30,7 @@ namespace SpSim.Util
         public const string GIRL_RESISTANCE = "resistance";
         public const string GIRL_AFFECTION = "affection";
         public const string GIRL_SPANKABLE = "spankable";
+        public const string GIRL_CALL = "call";
         public const string GIRL_OWN_ROOM = "own_room";
         public const string GIRL_TOPCLOTH = "topcloth";
         public const string GIRL_BOTCLOTH = "botcloth";
@@ -39,6 +40,11 @@ namespace SpSim.Util
         public const string GIRL_SOCCLOTH = "soccloth";
         public const string GIRL_SHOCLOTH = "shocloth";
 
+        //Holdings
+        public const string HOLDING = "holding";
+        public const string HOLDING_ID = "id";
+        public const string HOLDING_NAME = "name";
+        public const string HOLDING_REQUIREDCLOTHING = "requiredClothing";
 
         //Implements
         public const string IMPLEMENT = "implement";
@@ -46,6 +52,36 @@ namespace SpSim.Util
         public const string IMPLEMENT_ID = "id";
         public const string IMPLEMENT_STRENGTH = "strength";
         public const string IMPLEMENT_SFX = "sfx";
+
+        //Messages
+        public const string MESSAGE_FILTER_ID = "id";
+        public const string MESSAGE_FILTER_LIKE = "reqlike";
+        public const string MESSAGE_FILTER_PAIN = "reqpain";
+        public const string MESSAGE_FILTER_CONTRITEMENT = "reqrepnt";
+        public const string MESSAGE_FILTER_HOLDING = "reqby";
+
+        public const string MESSAGE_LOOK_AT = "look";
+        public const string MESSAGE_PAIN_DOWN = "paindown";
+
+        public const string MESSAGE_PICKUP_IMPLEMENT = "reactpick";
+        public const string MESSAGE_ENTER_WITH_IMPLEMENT = "reactentercarrying";
+        public const string MESSAGE_SWAP_IMPLEMENT = "reactswap";
+        public const string MESSAGE_SWAP_WORSE = "reactworseswap";
+        public const string MESSAGE_DROP_IMPLEMENT = "reactdrop";
+
+        public const string MESSAGE_HOLDING_ANNOUNCE = "holdingannounce";
+        public const string MESSAGE_HOLDING_ANNOUNCE_REACT = "reactholdingannounce";
+        public const string MESSAGE_HOLDING_ANNOUNCE_WATCH = "watchholdingannounce";
+        public const string MESSAGE_HOLDING_START = "holdingstart";
+        public const string MESSAGE_HOLDING_START_REACT = "reactholdingstart";
+        public const string MESSAGE_HOLDING_START_WATCH = "holdingwatchstart";
+        public const string MESSAGE_HOLDING_DRAG = "drag";
+        public const string MESSAGE_HOLDING_DRAG_REACT = "reactdrag";
+        public const string MESSAGE_HOLDING_DRAG_WATCH = "watchdrag";
+        public const string MESSAGE_HOLDING_STOP = "holdingstop";
+        public const string MESSAGE_HOLDING_STOP_REACT = "reactholdingstop";
+        public const string MESSAGE_HOLDING_STOP_WITHOUTDRAG = "reactstopwithoutdrag";
+
 
         //Protagonist
         public const string PROTAGONIST = "protagonist";

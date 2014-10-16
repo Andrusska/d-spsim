@@ -12,6 +12,10 @@ namespace SpSim.Util
 {
     public class IOHelper
     {
+        private static string affectionWildcard = "1,2,3,4";
+        private static string painWildcard = "0,1,2,3,4,5";
+        private static string contWildcard = "0,1,2";
+        private static string reqbyWildcard = "";
 
         /// <summary>
         /// Imports the Xml-File and creates the Setting
@@ -29,8 +33,9 @@ namespace SpSim.Util
             output.Rooms.AddRange(ImportRooms(xml));
             output.Implements.AddRange(ImportImplements(xml));
             output.Clothes.AddRange(ImportClothes(xml));
+            output.Holdings.AddRange(ImportHoldings(xml));
             output.Girls.AddRange(ImportGirls(xml));
-
+            output.Pool = ImportMessages(xml);
             output.Prepare();
             return output;
         }
@@ -228,6 +233,39 @@ namespace SpSim.Util
         }
 
         /// <summary>
+        /// Imports the clothes
+        /// </summary>
+        private static List<Holding> ImportHoldings(XmlDocument xml)
+        {
+            List<Holding> output = new List<Holding>();
+            Holding hold;
+            XmlNodeList xmlnode;
+
+            xmlnode = xml.GetElementsByTagName(Tags.HOLDING);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                hold = new Holding();
+
+                hold.Id = Convert.ToInt64(xn[Tags.HOLDING_ID].InnerText.Trim());
+
+                hold.Name = xn[Tags.HOLDING_NAME].InnerText.Trim();
+
+                if (xn[Tags.HOLDING_REQUIREDCLOTHING] != null)
+                {
+                    hold.RequieredClothing.AddRange(xn[Tags.HOLDING_REQUIREDCLOTHING].InnerText.Split(','));
+                }
+
+                output.Add(hold);
+                reqbyWildcard += hold.Id + ", ";
+            }
+
+            reqbyWildcard = reqbyWildcard.Substring(0, reqbyWildcard.Length - 2);
+
+            return output;
+        }
+
+        /// <summary>
         /// Imports the girls
         /// </summary>
         private static List<Girl> ImportGirls(XmlDocument xml)
@@ -235,6 +273,7 @@ namespace SpSim.Util
             List<Girl> output = new List<Girl>();
             Girl girl;
             XmlNodeList xmlnode;
+            XmlNodeList calls;
             XmlNodeList clothPrefItems;
 
             string[] clothVlaues;
@@ -254,6 +293,7 @@ namespace SpSim.Util
 
                 girl.Resistance = Convert.ToInt32(xn[Tags.GIRL_RESISTANCE].InnerText);
                 girl.Affection = Convert.ToInt32(xn[Tags.GIRL_AFFECTION].InnerText);
+                girl.Contritement = Girl.GetContritementByAffection(girl.Affection);
                 girl.OwnRoom = Convert.ToInt64(xn[Tags.GIRL_OWN_ROOM].InnerText);
                 girl.CurrentRoom = girl.OwnRoom;
 
@@ -266,6 +306,16 @@ namespace SpSim.Util
                     else
                     {
                         girl.Spankable = false;
+                    }
+                }
+
+                calls = xml.GetElementsByTagName(Tags.GIRL_CALL);
+                foreach (XmlNode call in calls)
+                {
+                    if (Convert.ToInt64(call.Attributes["id"].Value) == girl.Id)
+                    {
+                        girl.Call = call.InnerText;
+                        break;
                     }
                 }
 
@@ -387,5 +437,1127 @@ namespace SpSim.Util
 
             return output;
         }
+
+        /// <summary>
+        /// Imports all the Messages
+        /// </summary>
+        private static MessagePool ImportMessages(XmlDocument xml)
+        {
+            MessagePool pool = new MessagePool();
+
+            pool.AddMessages(ImportMessagesLookAt(xml));
+            pool.AddMessages(ImportMessagesPainDown(xml));
+            pool.AddMessages(ImportMessagesPickUpImplement(xml));
+            pool.AddMessages(ImportMessagesEnterWithImplement(xml));
+            pool.AddMessages(ImportMessagesSwapImplement(xml));
+            pool.AddMessages(ImportMessagesSwapWorseImplement(xml));
+            pool.AddMessages(ImportMessagesDropImplement(xml));
+            pool.AddMessages(ImportMessagesHoldingAnnouce(xml));
+            pool.AddMessages(ImportMessagesHoldingAnnouceReact(xml));
+            pool.AddMessages(ImportMessagesHoldingAnnouceWatch(xml));
+            pool.AddMessages(ImportMessagesHoldingStart(xml));
+            pool.AddMessages(ImportMessagesHoldingSartReact(xml));
+            pool.AddMessages(ImportMessagesHoldingSartWatch(xml));
+            pool.AddMessages(ImportMessagesDrag(xml));
+            pool.AddMessages(ImportMessagesDragReact(xml));
+            pool.AddMessages(ImportMessagesDragWatch(xml));
+            pool.AddMessages(ImportMessagesHoldingStop(xml));
+            pool.AddMessages(ImportMessagesHoldingStopReact(xml));
+            pool.AddMessages(ImportMessagesHoldingStopWithoutDrag(xml));
+
+            return pool;
+        }
+
+        #region MessageImport
+
+        private static List<SpSim.Setting.Message> ImportMessagesLookAt(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_LOOK_AT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.LOOK_AT_GIRL);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesPainDown(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_PAIN_DOWN);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.PAIN_DOWN);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesPickUpImplement(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_PICKUP_IMPLEMENT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.PICKUP_IMPL);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesEnterWithImplement(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_ENTER_WITH_IMPLEMENT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.ENTER_IMPL);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesSwapImplement(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_SWAP_IMPLEMENT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.SWAP_IMPL);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesSwapWorseImplement(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_SWAP_WORSE);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.SWAP_WORSE_IMPL);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesDropImplement(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_DROP_IMPLEMENT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.DROP_IMPL);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingAnnouce(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_ANNOUNCE);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_ANNOUNCE);
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingAnnouceReact(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_ANNOUNCE_REACT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_REACT_ANNOUNCE);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingAnnouceWatch(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_ANNOUNCE_WATCH);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_WATCH_ANNOUNCE);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingStart(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_START);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_START);
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingSartReact(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_START_REACT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_START_REACT);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingSartWatch(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_START_WATCH);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_START_WATCH);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesDrag(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_DRAG);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.DRAG);
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesDragReact(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_DRAG_REACT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.DRAG_REACT);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesDragWatch(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_DRAG_WATCH);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.DRAG_WATCH);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingStop(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_STOP);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_STOP);
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingStopReact(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_STOP_REACT);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_STOP_REACT);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        private static List<SpSim.Setting.Message> ImportMessagesHoldingStopWithoutDrag(XmlDocument xml)
+        {
+            XmlNodeList xmlnode;
+
+            List<SpSim.Setting.Message> output = new List<SpSim.Setting.Message>();
+            SpSim.Setting.Message message;
+
+            xmlnode = xml.GetElementsByTagName(Tags.MESSAGE_HOLDING_STOP_WITHOUTDRAG);
+
+            foreach (XmlNode xn in xmlnode)
+            {
+                message = new SpSim.Setting.Message(xn.InnerText, MessageType.HOLDING_STOP_WITHOUT_DRAG);
+
+                //Affection requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_LIKE] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_LIKE].Value);
+                }
+                else
+                {
+                    message.Params.Add(affectionWildcard);
+                }
+
+                //Pain Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_PAIN] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_PAIN].Value);
+                }
+                else
+                {
+                    message.Params.Add(painWildcard);
+                }
+
+                //Contritement Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_CONTRITEMENT].Value);
+                }
+                else
+                {
+                    message.Params.Add(contWildcard);
+                }
+
+                //Holding Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_HOLDING] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_HOLDING].Value + "");
+                }
+                else
+                {
+                    message.Params.Add(reqbyWildcard);
+                }
+
+                //Id Requirement
+                if (xn.Attributes[Tags.MESSAGE_FILTER_ID] != null)
+                {
+                    message.Params.Add(xn.Attributes[Tags.MESSAGE_FILTER_ID].Value);
+                }
+                else
+                {
+                    message.Params.Add(0);
+                }
+
+                output.Add(message);
+            }
+
+            return output;
+        }
+
+        #endregion
     }
 }

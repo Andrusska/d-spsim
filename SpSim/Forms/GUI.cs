@@ -67,9 +67,11 @@ namespace SpSim.Forms
                 {
                     location.HandleSelection(Convert.ToInt32(Input.Text)); 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Display.AppendText(Environment.NewLine + "Invalid Input!" + Environment.NewLine);
+                    Display.AppendText(String.Format(
+                        "{0}An error has okued :V{0}Either your input was invalid or something is f*cked up.{0} If it seems to be the last case, please complain (and ideally post a screenshot with the stactrace) in 4chan/d's spanking thread and/or 8chan/spank's game thread and I`ll try my best to fix it.{0}{1}{0}{2}{0}{3}{0}"
+                        , Environment.NewLine, ex.Message, ex.TargetSite, ex.StackTrace));
                     location.PrintDefaultStatus();
                     location.EvaluateDefaultActions();
                     location.PrintAvailableActions();

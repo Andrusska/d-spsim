@@ -34,9 +34,24 @@ namespace SpSim.Setting
         public int Affection = 2;
 
         /// <summary>
+        /// Ho defiant is she?
+        /// </summary>
+        public int Contritement = 0;
+
+        /// <summary>
+        /// How sore is her bottom?
+        /// </summary>
+        public int Pain = 0;
+
+        /// <summary>
         /// Can you spank her?
         /// </summary>
         public bool Spankable = true;
+
+        /// <summary>
+        /// How does she call you
+        /// </summary>
+        public string Call = "you";
 
         /// <summary>
         /// Her own Room
@@ -62,6 +77,7 @@ namespace SpSim.Setting
             bool topless = false;
             bool bottomless = false;
             bool barefoot = false;
+            bool onepiece = false;
 
             long[] visibleClothes = new long[2];
             long[] footwear = new long[2];
@@ -70,6 +86,7 @@ namespace SpSim.Setting
             if (WornClothes[2] != 0)
             {
                 visibleClothes[0] = WornClothes[2];
+                onepiece = true;
             }
             else
             {
@@ -114,7 +131,11 @@ namespace SpSim.Setting
             }
             else
             {
-                if (topless || bottomless)
+                if (onepiece)
+                {
+                    output += string.Format("wears {0}", ActorUtil.GetClothingById(clothes, visibleClothes[0]).GetClothingDescription());
+                } 
+                else if (topless || bottomless)
                 {
                     output += "only wears ";
                     if (visibleClothes[0] != 0)
@@ -163,6 +184,23 @@ namespace SpSim.Setting
             }
 
             return output;
+        }
+
+        public static int GetContritementByAffection(int affection){
+            switch (affection)
+            {
+                case 0:
+                    return 0;
+                case 1:
+                    return 0;
+                case 2:
+                    return 1;
+                case 3:
+                    return 2;
+                case 4:
+                    return 2;
+                default: return 1;
+            }
         }
     }
 }
