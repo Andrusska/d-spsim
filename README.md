@@ -15,7 +15,14 @@ Currently I'm the only one working on this project, but help is always appreciat
 Update History:
 ===============
 
-- 23th September, 2014: Dress up your girls edition
+- 16th October, 2014: "Wedgie Simulator"-edition
+	- Added the modable messages and the message pooling
+	- Holding/Dragging around girls is now modable, too
+	- Added a detailed error-message to simplify bug reports
+	- Kicked most of the unused "old features" out of the default.xml (mostly the dynamic-girls stuff, girls will be static 	(for now)) 
+	- some other small fixes
+
+- 23th September, 2014: "Dress up your girls"-edition
 	- Added the girls
 	- Added girl interaction (go to room X, take off this, put on that)
 	- Changed the ClothingPrefs
@@ -23,7 +30,7 @@ Update History:
 	- All unused clothes can be dumped in one room with 
 	 ```<dumpclothes />```
 
-- 16th September, 2014: Pick up all the clothes edition
+- 16th September, 2014: "Pick up all the clothes"-edition
 	- Added the clothes import
 	- Bras for the world
 	- Reworked the default.xml clothes-section
@@ -31,7 +38,7 @@ Update History:
 	- Scatter clothes around the rooms with the new Tag:
 	 ```<scatteredClothes />```
 	
-- 14th September, 2014: Tidy up your house edition
+- 14th September, 2014: "Tidy up your house"-edition
 	- Basic Stuff
 	- Movement between rooms
 	- Default Actions (Look around etc.)
@@ -81,7 +88,5 @@ Changes so far:
   - Clothes need some rework
     - <covers> is changed to type and due to the introduction of bras, the value needs to be changed (depending on its old 		type). For the new typelisting look at default.xml's clothes explanation
 
-  - Some tags in the message section were renamed due to C#s file wide scanning
-    - messages/implement is now called msgimplement
-    - spanking/implement is now called announceimplement
+  - Some tags in the message section were renamed due to C#s file wide scanning, compare them with the new default.xml. Most of 	the original Tags are untouched, so you should easyly recognize how there names changed
     
