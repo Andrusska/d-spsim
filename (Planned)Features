@@ -1,5 +1,6 @@
 4chan:
 ======
+- Splitting the xml in different parts (location, characters, items?)
 
 - Basic scripting API
   - Events with requirements (beeing alone in room X, girl Y in the same room, carry item Z, etc)
@@ -11,6 +12,8 @@
   - Containers to hold the items/clothes (sometimes visible on closer inspection)
   
 - Obidience System
+
+- Disable some features to get a more domestic setting 
 
 - "Dynamic" girls
 
