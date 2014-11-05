@@ -65,6 +65,7 @@ namespace SpSim.Forms
             {
                 try
                 {
+                    Display.AppendText(String.Format("{0}[{1}]", Environment.NewLine, Input.Text));
                     location.HandleSelection(Convert.ToInt32(Input.Text)); 
                 }
                 catch (Exception ex)

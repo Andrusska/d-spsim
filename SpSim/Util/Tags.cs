@@ -58,6 +58,7 @@ namespace SpSim.Util
         public const string MESSAGE_FILTER_LIKE = "reqlike";
         public const string MESSAGE_FILTER_PAIN = "reqpain";
         public const string MESSAGE_FILTER_CONTRITEMENT = "reqrepnt";
+        public const string MESSAGE_FILTER_POSITION = "reqpos";
         public const string MESSAGE_FILTER_HOLDING = "reqby";
 
         public const string MESSAGE_LOOK_AT = "look";
